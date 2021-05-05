@@ -1,5 +1,5 @@
 {
-  "name": "test-simple-react-admin",
+  "name": "health-and-movement-admin",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -15,14 +15,14 @@
     "react-scripts": "1.1.5",
     "source-map-loader": "^0.2.4"
   },
-  "homepage": "https://benwinding.github.io/react-admin-firebase/",
+  "homepage": "https://moulie415.github.io/HealthAndMovementAdmin/",
   "devDependencies": {
     "concurrently": "4.1.1",
     "cpx": "1.5.0",
     "eslint": "^7.25.0",
     "eslint-plugin-jest": "^24.3.6",
     "eslint-plugin-prettier": "^3.4.0",
-    "gh-pages": "^2.0.1",
+    "gh-pages": "^3.1.0",
     "prettier": "^2.2.1"
   },
   "scripts": {
@@ -30,6 +30,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
+    "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
     "postinstall": "node ./overrides/patch.js"
   }
