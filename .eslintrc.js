@@ -1,8 +1,8 @@
- module.exports = {
+module.exports = {
   extends: [
     'plugin:jest/recommended',
     'prettier',
-    'plugin:prettier/recommended'
+    'plugin:prettier/recommended',
   ],
   plugins: ['react', 'jest'],
   env: {
@@ -31,11 +31,11 @@
     ],
     'react/prop-types': 'off',
     'import/no-cycle': 'off',
-    'react/jsx-props-no-spreading' : 'off',
-    'global-require' : 'off',
+    'react/jsx-props-no-spreading': 'off',
+    'global-require': 'off',
     'react/no-unused-prop-types': 'off',
     'consistent-return': 'off',
     'no-param-reassign': 'off',
-    'no-debugger': 'off'
+    'no-debugger': 'off',
   },
 };
