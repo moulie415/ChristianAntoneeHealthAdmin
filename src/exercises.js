@@ -85,7 +85,6 @@ export const ExerciseShow = props => (
       <ChipField source="area" />
       <ChipField source="level" />
       <TextField source="muscles" />
-      <TextField source="videoUrl" type="url" />
     </SimpleShowLayout>
   </Show>
 );
@@ -125,7 +124,12 @@ export const ExerciseCreate = props => (
           <TextInput label="muscle" />
         </SimpleFormIterator>
       </ArrayInput>
-      <TextInput source="videoUrl" type="url" />
+      <FileInput source="video" label="Video" accept="video/*">
+        <FileField source="src" title="title" />
+      </FileInput>
+      <ImageInput source="thumbnail" label="Thumbnail" accept="image/*">
+        <ImageField source="src" title="title" />
+      </ImageInput>
     </SimpleForm>
   </Create>
 );
@@ -165,7 +169,12 @@ export const ExerciseEdit = props => (
           <TextInput label="muscle" />
         </SimpleFormIterator>
       </ArrayInput>
-      <TextInput source="videoUrl" type="url" />
+      <FileInput source="video" label="Video" accept="video/*">
+        <FileField source="src" title="title" />
+      </FileInput>
+      <ImageInput source="thumbnail" label="Thumbnail" accept="image/*">
+        <ImageField source="src" title="title" />
+      </ImageInput>
     </SimpleForm>
   </Edit>
 );
