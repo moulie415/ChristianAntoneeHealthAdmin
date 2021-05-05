@@ -1,5 +1,5 @@
 // in src/posts.js
-import * as React from "react";
+import * as React from 'react';
 // tslint:disable-next-line:no-var-requires
 import {
   Datagrid,
@@ -28,10 +28,10 @@ import {
   SimpleFormIterator,
   ChipField,
   ArrayField,
-} from "react-admin";
-import RichTextInput from "ra-input-rich-text";
+} from 'react-admin';
+import RichTextInput from 'ra-input-rich-text';
 
-const ExercisesFilter = (props) => (
+const ExercisesFilter = props => (
   <Filter {...props}>
     <TextInput label="Search" source="name" alwaysOn />
   </Filter>
@@ -50,10 +50,11 @@ const ExercisesFilter = (props) => (
 //   </Filter>
 // );
 
-export const ExerciseList = (props) => (
+export const ExerciseList = props => (
   <List
     {...props}
-    filters={<ExercisesFilter />}
+    sort={{field: 'name', order: 'ASC'}}
+    // filters={<ExercisesFilter />}
     // filter={{ updatedby: "test@example.com" }}
   >
     <Datagrid>
@@ -74,12 +75,12 @@ export const ExerciseList = (props) => (
   </List>
 );
 
-export const ExerciseShow = (props) => (
+export const ExerciseShow = props => (
   <Show {...props}>
     <SimpleShowLayout>
       <TextField source="id" />
       <TextField source="name" />
-      <RichTextField source="description" />
+      <TextField source="description" options={{multiline: true}} />
       <ChipField source="type" />
       <ChipField source="area" />
       <ChipField source="level" />
@@ -88,67 +89,92 @@ export const ExerciseShow = (props) => (
   </Show>
 );
 
-export const ExerciseCreate = (props) => (
+export const ExerciseCreate = props => (
   <Create {...props}>
     <SimpleForm>
-      <TextInput source="id" />
-      <TextInput source="title" />
-      <RichTextInput source="body" />
-      <ReferenceInput
-        label="User"
-        source="user_id"
-        reference="users"
-        // filter={{ isAdmin: true }}
-      >
-        <SelectInput label="User" optionText="name" />
-      </ReferenceInput>
-      <FileInput source="files_multiple" multiple label="Files with (multiple)">
+      <TextInput source="name" />
+      <TextInput source="description" options={{multiline: true}} />
+      <SelectInput
+        source="type"
+        choices={[
+          {id: 'strength', name: 'strength'},
+          {id: 'flexibility', name: 'flexibility'},
+          {id: 'cardiovascular', name: 'cardiovascular'},
+          {id: 'balance', name: 'balance'},
+        ]}
+      />
+      <SelectInput
+        source="area"
+        choices={[
+          {id: 'upper', name: 'upper'},
+          {id: 'lower', name: 'lower'},
+          {id: 'full', name: 'full'},
+        ]}
+      />
+      <SelectInput
+        source="level"
+        choices={[
+          {id: 'beginner', name: 'beginner'},
+          {id: 'intermediate', name: 'intermediate'},
+          {id: 'advanced', name: 'advanced'},
+        ]}
+      />
+      <ArrayInput source="muscles">
+        <SimpleFormIterator>
+          <TextInput label="muscle" />
+        </SimpleFormIterator>
+      </ArrayInput>
+      <FileInput source="video" accept="video/*" label="Video">
         <FileField source="src" title="title" />
       </FileInput>
-      <ArrayInput source="files">
-        <SimpleFormIterator>
-          <FileInput source="file" label="Array Form Files">
-            <FileField source="src" title="title" />
-          </FileInput>
-        </SimpleFormIterator>
-      </ArrayInput>
-      <ArrayInput source="sections.mySection.items" label="Section items">
-        <SimpleFormIterator>
-          <TextInput source="name" label="Name" />
-          <ImageInput source="image" label="Image" accept="image/*">
-            <ImageField source="src" title="title" />
-          </ImageInput>
-        </SimpleFormIterator>
-      </ArrayInput>
+      <ImageInput source="thumbnail" label="Thumbnail" accept="image/*">
+        <ImageField source="src" title="title" />
+      </ImageInput>
     </SimpleForm>
   </Create>
 );
 
-export const ExerciseEdit = (props) => (
+export const ExerciseEdit = props => (
   <Edit {...props}>
     <SimpleForm>
-      <TextInput disabled source="id" />
       <TextInput source="name" />
-      <RichTextInput source="description" />
-
-      <FileInput source="files_multiple" multiple label="Files with (multiple)">
+      <TextInput source="description" options={{multiline: true}} />
+      <SelectInput
+        source="type"
+        choices={[
+          {id: 'strength', name: 'strength'},
+          {id: 'flexibility', name: 'flexibility'},
+          {id: 'cardiovascular', name: 'cardiovascular'},
+          {id: 'balance', name: 'balance'},
+        ]}
+      />
+      <SelectInput
+        source="area"
+        choices={[
+          {id: 'upper', name: 'upper'},
+          {id: 'lower', name: 'lower'},
+          {id: 'full', name: 'full'},
+        ]}
+      />
+      <SelectInput
+        source="level"
+        choices={[
+          {id: 'beginner', name: 'beginner'},
+          {id: 'intermediate', name: 'intermediate'},
+          {id: 'advanced', name: 'advanced'},
+        ]}
+      />
+      <ArrayInput source="muscles">
+        <SimpleFormIterator>
+          <TextInput label="muscle" />
+        </SimpleFormIterator>
+      </ArrayInput>
+      <FileInput source="video" accept="video/*" label="Video">
         <FileField source="src" title="title" />
       </FileInput>
-      <ArrayInput source="files">
-        <SimpleFormIterator>
-          <FileInput source="file" label="Array Form Files">
-            <FileField source="src" title="title" />
-          </FileInput>
-        </SimpleFormIterator>
-      </ArrayInput>
-      <ArrayInput source="sections.mySection.items" label="Section items">
-        <SimpleFormIterator>
-          <TextInput source="name" label="Name" />
-          <ImageInput source="image" label="Image" accept="image/*">
-            <ImageField source="src" title="title" />
-          </ImageInput>
-        </SimpleFormIterator>
-      </ArrayInput>
+      <ImageInput source="thumbnail" label="Thumbnail" accept="image/*">
+        <ImageField source="src" title="title" />
+      </ImageInput>
     </SimpleForm>
   </Edit>
 );

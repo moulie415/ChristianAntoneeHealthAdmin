@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-react": "^7.23.2",
     "firebase": "^7.9.1",
     "ra-input-rich-text": "^3.3.1",
     "react": "^16.5.1",
@@ -17,7 +19,11 @@
   "devDependencies": {
     "concurrently": "4.1.1",
     "cpx": "1.5.0",
-    "gh-pages": "^2.0.1"
+    "eslint": "^7.25.0",
+    "eslint-plugin-jest": "^24.3.6",
+    "eslint-plugin-prettier": "^3.4.0",
+    "gh-pages": "^2.0.1",
+    "prettier": "^2.2.1"
   },
   "scripts": {
     "start": "NODE_ENV=development BROWSER=none PORT=3333 react-scripts start",
