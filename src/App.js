@@ -1,15 +1,17 @@
 import * as React from 'react';
-import { ExerciseList, ExerciseShow, ExerciseCreate, ExerciseEdit } from './exercises';
-import { UserList, UserShow, UserCreate, UserEdit } from './users';
-import { Admin, Resource } from 'react-admin';
 import {
-  FirebaseDataProvider,
-  FirebaseAuthProvider,
-} from 'react-admin-firebase';
+  ExerciseList,
+  ExerciseShow,
+  ExerciseCreate,
+  ExerciseEdit,
+} from './exercises';
+import {UserList, UserShow, UserCreate, UserEdit} from './users';
+import {Admin, Resource} from 'react-admin';
+import {FirebaseDataProvider, FirebaseAuthProvider} from 'react-admin-firebase';
 import firebase from 'firebase';
 import UserIcon from '@material-ui/icons/People';
 
-import { firebaseConfig } from './FIREBASE_CONFIG';
+import {firebaseConfig} from './FIREBASE_CONFIG';
 import CustomLoginPage from './CustomLoginPage';
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);
@@ -38,8 +40,7 @@ class App extends React.Component {
       <Admin
         loginPage={CustomLoginPage}
         dataProvider={dataProvider}
-        authProvider={authProvider}
-      >
+        authProvider={authProvider}>
         <Resource
           name="exercises"
           list={ExerciseList}

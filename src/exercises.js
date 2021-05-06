@@ -37,6 +37,27 @@ const ExercisesFilter = props => (
   </Filter>
 );
 
+const muscles = [
+  {id: 'chest', name: 'Chest'},
+  {id: 'upperBack', name: 'Upper back'},
+  {id: 'midBack', name: 'Mid back'},
+  {id: 'lowBack', name: 'Low back'},
+  {id: 'shoulders', name: 'Shoulders'},
+  {id: 'biceps', name: 'Biceps'},
+  {id: 'triceps', name: 'Triceps'},
+  {id: 'abdominals', name: 'Abdominals'},
+  {id: 'obliques', name: 'Obliques'},
+  {id: 'leg', name: 'Leg Muscles'},
+  {id: 'gluteals', name: 'Gluteals'},
+  {id: 'hamstrings', name: 'Hamstrings'},
+  {id: 'quadriceps', name: 'Quadriceps'},
+  {id: 'calves', name: 'Calves'},
+  {id: 'hipFlexorss', name: 'Hip Flexors'},
+  {id: 'iliotibialBand', name: 'Iliotibial Band'},
+  {id: 'rotatorCuff', name: 'Rotator Cuff Muscles'},
+  {id: 'innerThigh', name: 'Inner Thigh Muscles'},
+];
+
 // const ReferenceFilter = (props) => (
 //   <Filter {...props}>
 //     <ReferenceInput
@@ -121,7 +142,7 @@ export const ExerciseCreate = props => (
       />
       <ArrayInput source="muscles">
         <SimpleFormIterator>
-          <TextInput label="muscle" />
+          <SelectInput choices={muscles} label="Muscle" />
         </SimpleFormIterator>
       </ArrayInput>
       <FileInput source="video" label="Video" accept="video/*">
@@ -166,7 +187,7 @@ export const ExerciseEdit = props => (
       />
       <ArrayInput source="muscles">
         <SimpleFormIterator>
-          <TextInput label="muscle" />
+          <SelectInput choices={muscles} label="Muscle" />
         </SimpleFormIterator>
       </ArrayInput>
       <FileInput source="video" label="Video" accept="video/*">
