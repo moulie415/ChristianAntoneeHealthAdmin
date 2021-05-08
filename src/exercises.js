@@ -52,7 +52,7 @@ const muscles = [
   {id: 'hamstrings', name: 'Hamstrings'},
   {id: 'quadriceps', name: 'Quadriceps'},
   {id: 'calves', name: 'Calves'},
-  {id: 'hipFlexorss', name: 'Hip Flexors'},
+  {id: 'hipFlexors', name: 'Hip Flexors'},
   {id: 'iliotibialBand', name: 'Iliotibial Band'},
   {id: 'rotatorCuff', name: 'Rotator Cuff Muscles'},
   {id: 'innerThigh', name: 'Inner Thigh Muscles'},
