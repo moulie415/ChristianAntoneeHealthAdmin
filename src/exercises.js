@@ -56,6 +56,9 @@ const muscles = [
   {id: 'iliotibialBand', name: 'Iliotibial Band'},
   {id: 'rotatorCuff', name: 'Rotator Cuff Muscles'},
   {id: 'innerThigh', name: 'Inner Thigh Muscles'},
+  {id: 'all', name: 'All Musles'},
+  {id: 'upperBody', name: 'Upper Body'},
+  {id: 'arms', name: 'Arms'},
 ];
 
 // const ReferenceFilter = (props) => (
