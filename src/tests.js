@@ -8,6 +8,8 @@ import {
   Create,
   Edit,
   Filter,
+  ImageField,
+  ImageInput,
   SimpleShowLayout,
   SimpleForm,
   TextField,
@@ -61,6 +63,12 @@ export const TestCreate = props => (
       </ArrayInput>
       <TextInput source="why" options={{multiline: true}} />
       <TextInput source="improve" options={{multiline: true}} />
+      <ImageInput source="men" label="Mens scores" accept="image/*">
+        <ImageField source="src" title="title" />
+      </ImageInput>
+      <ImageInput source="women" label="Womens scores" accept="image/*">
+        <ImageField source="src" title="title" />
+      </ImageInput>
     </SimpleForm>
   </Create>
 );
@@ -77,6 +85,12 @@ export const TestEdit = props => (
       </ArrayInput>
       <TextInput source="why" options={{multiline: true}} />
       <TextInput source="improve" options={{multiline: true}} />
+      <ImageInput source="men" label="Mens scores" accept="image/*">
+        <ImageField source="src" title="title" />
+      </ImageInput>
+      <ImageInput source="women" label="Womens scores" accept="image/*">
+        <ImageField source="src" title="title" />
+      </ImageInput>
     </SimpleForm>
   </Edit>
 );
