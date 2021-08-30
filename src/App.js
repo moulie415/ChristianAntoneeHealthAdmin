@@ -13,6 +13,7 @@ import UserIcon from '@material-ui/icons/People';
 
 import {firebaseConfig} from './FIREBASE_CONFIG';
 import CustomLoginPage from './CustomLoginPage';
+import {TestCreate, TestEdit, TestList, TestShow} from './tests';
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 
@@ -47,6 +48,13 @@ class App extends React.Component {
           show={ExerciseShow}
           create={ExerciseCreate}
           edit={ExerciseEdit}
+        />
+        <Resource
+          name="tests"
+          list={TestList}
+          show={TestShow}
+          create={TestCreate}
+          edit={TestEdit}
         />
         {/* <Resource
           name="users"
