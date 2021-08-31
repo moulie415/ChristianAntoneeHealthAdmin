@@ -20,12 +20,14 @@ import {
   ArrayInput,
   SimpleFormIterator,
 } from 'react-admin';
+import Table from './Table';
 
 const TestsFilter = props => (
   <Filter {...props}>
     <TextInput label="Search" source="name" alwaysOn />
   </Filter>
 );
+
 
 export const TestList = props => (
   <List {...props} sort={{field: 'name', order: 'ASC'}}>
@@ -63,12 +65,8 @@ export const TestCreate = props => (
       </ArrayInput>
       <TextInput source="why" options={{multiline: true}} />
       <TextInput source="improve" options={{multiline: true}} />
-      <ImageInput source="men" label="Mens scores" accept="image/*">
-        <ImageField source="src" title="title" />
-      </ImageInput>
-      <ImageInput source="women" label="Womens scores" accept="image/*">
-        <ImageField source="src" title="title" />
-      </ImageInput>
+      <Table gender="mens" />
+      <Table gender="womens" />
     </SimpleForm>
   </Create>
 );
@@ -85,12 +83,8 @@ export const TestEdit = props => (
       </ArrayInput>
       <TextInput source="why" options={{multiline: true}} />
       <TextInput source="improve" options={{multiline: true}} />
-      <ImageInput source="men" label="Mens scores" accept="image/*">
-        <ImageField source="src" title="title" />
-      </ImageInput>
-      <ImageInput source="women" label="Womens scores" accept="image/*">
-        <ImageField source="src" title="title" />
-      </ImageInput>
+      <Table gender="mens" />
+      <Table gender="womens" />
     </SimpleForm>
   </Edit>
 );
