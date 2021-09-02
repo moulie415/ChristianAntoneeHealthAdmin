@@ -11,6 +11,7 @@ import {
   ImageField,
   ImageInput,
   SimpleShowLayout,
+  SelectInput,
   SimpleForm,
   TextField,
   TextInput,
@@ -19,6 +20,7 @@ import {
   DeleteButton,
   ArrayInput,
   SimpleFormIterator,
+  NumberInput,
 } from 'react-admin';
 import Table from './Table';
 
@@ -27,7 +29,6 @@ const TestsFilter = props => (
     <TextInput label="Search" source="name" alwaysOn />
   </Filter>
 );
-
 
 export const TestList = props => (
   <List {...props} sort={{field: 'name', order: 'ASC'}}>
@@ -57,6 +58,15 @@ export const TestCreate = props => (
   <Create {...props}>
     <SimpleForm>
       <TextInput source="name" />
+      <SelectInput
+        source="type"
+        choices={[
+          {id: 'countdown', name: 'countdown'},
+          {id: 'countup', name: 'countup'},
+          {id: 'untimed', name: 'untimed'},
+        ]}
+      />
+      <NumberInput source="time" label="Time in seconds" />
       <TextInput source="summary" options={{multiline: true}} />
       <ArrayInput source="how">
         <SimpleFormIterator>
@@ -75,6 +85,15 @@ export const TestEdit = props => (
   <Edit {...props}>
     <SimpleForm>
       <TextInput source="name" />
+      <SelectInput
+        source="type"
+        choices={[
+          {id: 'countdown', name: 'countdown'},
+          {id: 'countup', name: 'countup'},
+          {id: 'untimed', name: 'untimed'},
+        ]}
+      />
+      <NumberInput source="time" label="Time in seconds" />
       <TextInput source="summary" options={{multiline: true}} />
       <ArrayInput source="how">
         <SimpleFormIterator>
