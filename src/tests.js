@@ -50,6 +50,7 @@ export const TestShow = props => (
       <TextField source="how" options={{multiline: true}} />
       <TextField source="why" options={{multiline: true}} />
       <TextField source="improve" options={{multiline: true}} />
+      <TextField source="metric" />
     </SimpleShowLayout>
   </Show>
 );
@@ -75,6 +76,7 @@ export const TestCreate = props => (
       </ArrayInput>
       <TextInput source="why" options={{multiline: true}} />
       <TextInput source="improve" options={{multiline: true}} />
+      <TextInput source="metric" />
       <Table gender="mens" />
       <Table gender="womens" />
     </SimpleForm>
@@ -102,6 +104,7 @@ export const TestEdit = props => (
       </ArrayInput>
       <TextInput source="why" options={{multiline: true}} />
       <TextInput source="improve" options={{multiline: true}} />
+      <TextInput source="metric" />
       <Table gender="mens" />
       <Table gender="womens" />
     </SimpleForm>
