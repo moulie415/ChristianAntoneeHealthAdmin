@@ -14,6 +14,12 @@ import UserIcon from '@material-ui/icons/People';
 import {firebaseConfig} from './FIREBASE_CONFIG';
 import CustomLoginPage from './CustomLoginPage';
 import {TestCreate, TestEdit, TestList, TestShow} from './tests';
+import {
+  QuickRoutineCreate,
+  QuickRoutineEdit,
+  QuickRoutineList,
+  QuickRoutineShow,
+} from './quickRoutines';
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 
@@ -55,6 +61,13 @@ class App extends React.Component {
           show={TestShow}
           create={TestCreate}
           edit={TestEdit}
+        />
+        <Resource
+          name="quickRoutines"
+          list={QuickRoutineList}
+          show={QuickRoutineShow}
+          create={QuickRoutineCreate}
+          edit={QuickRoutineEdit}
         />
         {/* <Resource
           name="users"

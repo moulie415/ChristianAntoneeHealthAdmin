@@ -1,4 +1,5 @@
 // in src/posts.js
+import {BooleanField, BooleanInput} from 'ra-ui-materialui';
 import * as React from 'react';
 // tslint:disable-next-line:no-var-requires
 import {
@@ -22,6 +23,7 @@ import {
   SimpleFormIterator,
   NumberInput,
 } from 'react-admin';
+import PercentileTable from './PercentileTable';
 import Table from './Table';
 
 const TestsFilter = props => (
@@ -50,6 +52,7 @@ export const TestShow = props => (
       <TextField source="how" options={{multiline: true}} />
       <TextField source="why" options={{multiline: true}} />
       <TextField source="improve" options={{multiline: true}} />
+      <BooleanField source="premium" />
       <TextField source="metric" />
     </SimpleShowLayout>
   </Show>
@@ -76,9 +79,11 @@ export const TestCreate = props => (
       </ArrayInput>
       <TextInput source="why" options={{multiline: true}} />
       <TextInput source="improve" options={{multiline: true}} />
+      <BooleanInput source="premium" />
       <TextInput source="metric" />
       <Table gender="mens" />
       <Table gender="womens" />
+      <PercentileTable />
     </SimpleForm>
   </Create>
 );
@@ -104,9 +109,11 @@ export const TestEdit = props => (
       </ArrayInput>
       <TextInput source="why" options={{multiline: true}} />
       <TextInput source="improve" options={{multiline: true}} />
+      <BooleanInput source="premium" />
       <TextInput source="metric" />
       <Table gender="mens" />
       <Table gender="womens" />
+      <PercentileTable />
     </SimpleForm>
   </Edit>
 );

@@ -28,6 +28,8 @@ import {
   SimpleFormIterator,
   ChipField,
   ArrayField,
+  BooleanInput,
+  BooleanField,
 } from 'react-admin';
 import RichTextInput from 'ra-input-rich-text';
 
@@ -92,6 +94,7 @@ export const ExerciseList = props => (
       {/* <ReferenceField label="User" source="user_id" reference="users">
         <TextField source="name" />
       </ReferenceField> */}
+      <BooleanField source="premium" />
       <ShowButton label="" />
       <EditButton label="" />
       <DeleteButton label="" redirect={false} />
@@ -109,6 +112,7 @@ export const ExerciseShow = props => (
       <ChipField source="area" />
       <ChipField source="level" />
       <TextField source="muscles" />
+      <BooleanField source="premium" />
     </SimpleShowLayout>
   </Show>
 );
@@ -154,6 +158,7 @@ export const ExerciseCreate = props => (
       <ImageInput source="thumbnail" label="Thumbnail" accept="image/*">
         <ImageField source="src" title="title" />
       </ImageInput>
+      <BooleanInput source="premium" />
     </SimpleForm>
   </Create>
 );
@@ -199,6 +204,7 @@ export const ExerciseEdit = props => (
       <ImageInput source="thumbnail" label="Thumbnail" accept="image/*">
         <ImageField source="src" title="title" />
       </ImageInput>
+      <BooleanInput source="premium" />
     </SimpleForm>
   </Edit>
 );
