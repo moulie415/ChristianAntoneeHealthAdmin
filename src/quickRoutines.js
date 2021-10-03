@@ -41,7 +41,7 @@ export const QuickRoutineShow = props => (
     <SimpleShowLayout>
       <TextField source="id" />
       <TextField source="name" />
-
+      <TextField source="description" options={{multiline: true}} />
       <BooleanField source="premium" />
     </SimpleShowLayout>
   </Show>
@@ -94,6 +94,8 @@ export const QuickRoutineCreate = props => (
           {id: 'advanced', name: 'Advanced'},
         ]}
       />
+
+      <TextInput source="description" options={{multiline: true}} />
 
       <FileInput source="video" label="Video" accept="video/*">
         <FileField source="src" title="title" />
@@ -152,6 +154,8 @@ export const QuickRoutineEdit = props => (
           {id: 'advanced', name: 'Advanced'},
         ]}
       />
+
+      <TextInput source="description" options={{multiline: true}} />
 
       <FileInput source="video" label="Video" accept="video/*">
         <FileField source="src" title="title" />
