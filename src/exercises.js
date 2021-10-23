@@ -63,6 +63,24 @@ const muscles = [
   {id: 'arms', name: 'Arms'},
 ];
 
+const equipment = [
+  {id: 'barbells', name: 'Barbells'},
+  {id: 'dumbbells', name: 'Dumbbells'},
+  {id: 'benches', name: 'Benches'},
+  {id: 'cableMachines', name: 'Cable machines'},
+  {id: 'kettlebells', name: 'Kettlebells'},
+  {id: 'pullUpBar', name: 'Pull-up Bar'},
+  {id: 'squatRack', name: 'Squat Rack'},
+  {id: 'exerciseBall', name: 'Exercise Ball'},
+  {id: 'bosuBall', name: 'Bosu Ball'},
+  {id: 'agilityLadder', name: 'Agility Ladder'},
+  {id: 'plyometricBox', name: 'Plyometric Box'},
+  {id: 'trxSuspensionTrainer', name: 'TRX Suspension Trainer'},
+  {id: 'medicineBalls', name: 'Medicine Balls'},
+  {id: 'landmine', name: 'Landmine'},
+  {id: 'exerciseStep', name: 'Exercise Step'},
+];
+
 // const ReferenceFilter = (props) => (
 //   <Filter {...props}>
 //     <ReferenceInput
@@ -126,9 +144,7 @@ export const ExerciseCreate = props => (
         source="type"
         choices={[
           {id: 'strength', name: 'strength'},
-          {id: 'flexibility', name: 'flexibility'},
           {id: 'cardiovascular', name: 'cardiovascular'},
-          {id: 'balance', name: 'balance'},
         ]}
       />
       <SelectInput
@@ -140,6 +156,13 @@ export const ExerciseCreate = props => (
         ]}
       />
       <SelectInput
+        source="cardioType"
+        choices={[
+          {id: 'hit', name: 'high intensity interval training'},
+          {id: 'sbit', name: 'skill based interval training'},
+        ]}
+      />
+      <SelectInput
         source="level"
         choices={[
           {id: 'beginner', name: 'beginner'},
@@ -147,6 +170,26 @@ export const ExerciseCreate = props => (
           {id: 'advanced', name: 'advanced'},
         ]}
       />
+      <SelectInput
+        source="warmUp"
+        choices={[
+          {id: 'circulatory', name: 'circulatory'},
+          {id: 'softTissue', name: 'soft tissue preparation'},
+          {id: 'dynamicStretching', name: 'dynamic stretching'},
+        ]}
+      />
+      <SelectInput
+        source="coolDown"
+        choices={[
+          {id: 'circulatory', name: 'circulatory'},
+          {id: 'staticStretching', name: 'static stretching'},
+        ]}
+      />
+      <ArrayInput source="equipment">
+        <SimpleFormIterator>
+          <SelectInput choices={equipment} label="Equipment" />
+        </SimpleFormIterator>
+      </ArrayInput>
       <ArrayInput source="muscles">
         <SimpleFormIterator>
           <SelectInput choices={muscles} label="Muscle" />
@@ -172,9 +215,7 @@ export const ExerciseEdit = props => (
         source="type"
         choices={[
           {id: 'strength', name: 'strength'},
-          {id: 'flexibility', name: 'flexibility'},
           {id: 'cardiovascular', name: 'cardiovascular'},
-          {id: 'balance', name: 'balance'},
         ]}
       />
       <SelectInput
@@ -186,6 +227,13 @@ export const ExerciseEdit = props => (
         ]}
       />
       <SelectInput
+        source="cardioType"
+        choices={[
+          {id: 'hit', name: 'high intensity interval training'},
+          {id: 'sbit', name: 'skill based interval training'},
+        ]}
+      />
+      <SelectInput
         source="level"
         choices={[
           {id: 'beginner', name: 'beginner'},
@@ -193,6 +241,26 @@ export const ExerciseEdit = props => (
           {id: 'advanced', name: 'advanced'},
         ]}
       />
+      <SelectInput
+        source="warmUp"
+        choices={[
+          {id: 'circulatory', name: 'circulatory'},
+          {id: 'softTissue', name: 'soft tissue preparation'},
+          {id: 'dynamicStretching', name: 'dynamic stretching'},
+        ]}
+      />
+      <SelectInput
+        source="coolDown"
+        choices={[
+          {id: 'circulatory', name: 'circulatory'},
+          {id: 'staticStretching', name: 'static stretching'},
+        ]}
+      />
+      <ArrayInput source="equipment">
+        <SimpleFormIterator>
+          <SelectInput choices={equipment} label="Equipment" />
+        </SimpleFormIterator>
+      </ArrayInput>
       <ArrayInput source="muscles">
         <SimpleFormIterator>
           <SelectInput choices={muscles} label="Muscle" />
