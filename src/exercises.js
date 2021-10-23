@@ -128,8 +128,13 @@ export const ExerciseShow = props => (
       <TextField source="description" options={{multiline: true}} />
       <ChipField source="type" />
       <ChipField source="area" />
+      <ChipField source="cardioType" />
       <ChipField source="level" />
+      <ChipField source="warmUp" />
+      <ChipField source="coolDown" />
+      <TextField source="equipment" />
       <TextField source="muscles" />
+      <TextField source="musclesSecondary" />
       <BooleanField source="premium" />
     </SimpleShowLayout>
   </Show>
@@ -191,6 +196,11 @@ export const ExerciseCreate = props => (
         </SimpleFormIterator>
       </ArrayInput>
       <ArrayInput source="muscles">
+        <SimpleFormIterator>
+          <SelectInput choices={muscles} label="Muscle" />
+        </SimpleFormIterator>
+      </ArrayInput>
+      <ArrayInput source="musclesSecondary">
         <SimpleFormIterator>
           <SelectInput choices={muscles} label="Muscle" />
         </SimpleFormIterator>
@@ -262,6 +272,11 @@ export const ExerciseEdit = props => (
         </SimpleFormIterator>
       </ArrayInput>
       <ArrayInput source="muscles">
+        <SimpleFormIterator>
+          <SelectInput choices={muscles} label="Muscle" />
+        </SimpleFormIterator>
+      </ArrayInput>
+      <ArrayInput source="musclesSecondary">
         <SimpleFormIterator>
           <SelectInput choices={muscles} label="Muscle" />
         </SimpleFormIterator>
