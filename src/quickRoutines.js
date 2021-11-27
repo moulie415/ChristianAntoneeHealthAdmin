@@ -41,7 +41,6 @@ export const QuickRoutineShow = props => (
     <SimpleShowLayout>
       <TextField source="id" />
       <TextField source="name" />
-      <TextField source="description" options={{multiline: true}} />
       <TextField source="exercises" options={{multiline: true}} />
       <BooleanField source="premium" />
     </SimpleShowLayout>
@@ -95,8 +94,6 @@ export const QuickRoutineCreate = props => (
           {id: 'advanced', name: 'Advanced'},
         ]}
       />
-
-      <TextInput source="description" options={{multiline: true}} />
 
       <ArrayInput source="exercises">
         <SimpleFormIterator>
@@ -161,8 +158,6 @@ export const QuickRoutineEdit = props => (
           {id: 'advanced', name: 'Advanced'},
         ]}
       />
-
-      <TextInput source="description" options={{multiline: true}} />
 
       <ArrayInput source="exercises">
         <SimpleFormIterator>
