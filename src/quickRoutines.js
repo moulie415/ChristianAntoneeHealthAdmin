@@ -80,9 +80,9 @@ export const QuickRoutineCreate = props => (
       <SelectInput
         source="duration"
         choices={[
-          {id: 10, name: 'Under 10 mins'},
-          {id: 20, name: 'Under 20 mins'},
+          {id: 15, name: 'Under 15 mins'},
           {id: 30, name: 'Under 30 mins'},
+          {id: 45, name: 'Under 45 mins'},
         ]}
       />
 
@@ -145,9 +145,9 @@ export const QuickRoutineEdit = props => (
       <SelectInput
         source="duration"
         choices={[
-          {id: 10, name: 'Under 10 mins'},
-          {id: 20, name: 'Under 20 mins'},
+          {id: 15, name: 'Under 15 mins'},
           {id: 30, name: 'Under 30 mins'},
+          {id: 45, name: 'Under 45 mins'},
         ]}
       />
       <SelectInput
