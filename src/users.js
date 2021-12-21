@@ -1,5 +1,5 @@
 // in src/User.js
-import * as React from "react";
+import * as React from 'react';
 // tslint:disable-next-line:no-var-requires
 import {
   Datagrid,
@@ -15,15 +15,15 @@ import {
   ShowButton,
   EditButton,
   DeleteButton,
-} from "react-admin";
+} from 'react-admin';
 
-const UserFilter = (props) => (
+const UserFilter = props => (
   <Filter {...props}>
     <TextInput label="Search" source="title" alwaysOn />
   </Filter>
 );
 
-export const UserList = (props) => (
+export const UserList = props => (
   <List {...props} filters={<UserFilter />}>
     <Datagrid>
       <TextField source="name" />
@@ -32,12 +32,12 @@ export const UserList = (props) => (
       <TextField source="lastupdate" />
       <ShowButton label="" />
       <EditButton label="" />
-      <DeleteButton label="" redirect={false}/>
+      <DeleteButton label="" redirect={false} />
     </Datagrid>
   </List>
 );
 
-export const UserShow = (props) => (
+export const UserShow = props => (
   <Show {...props}>
     <SimpleShowLayout>
       <TextField source="id" />
@@ -47,8 +47,8 @@ export const UserShow = (props) => (
   </Show>
 );
 
-export const UserCreate = (props) => (
-  <Create {...props} >
+export const UserCreate = props => (
+  <Create {...props}>
     <SimpleForm>
       <TextInput source="id" />
       <TextInput source="name" />
@@ -57,7 +57,7 @@ export const UserCreate = (props) => (
   </Create>
 );
 
-export const UserEdit = (props) => (
+export const UserEdit = props => (
   <Edit {...props}>
     <SimpleForm>
       <TextInput disabled source="id" />

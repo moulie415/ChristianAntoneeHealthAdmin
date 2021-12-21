@@ -20,6 +20,7 @@ import {
   QuickRoutineList,
   QuickRoutineShow,
 } from './quickRoutines';
+import { EducationCreate, EducationEdit, EducationList, EducationShow } from './education';
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 
@@ -68,6 +69,13 @@ class App extends React.Component {
           show={QuickRoutineShow}
           create={QuickRoutineCreate}
           edit={QuickRoutineEdit}
+        />
+         <Resource
+          name="education"
+          list={EducationList}
+          show={EducationShow}
+          create={EducationCreate}
+          edit={EducationEdit}
         />
         {/* <Resource
           name="users"
