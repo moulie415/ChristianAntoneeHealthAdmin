@@ -14,21 +14,27 @@ import {
   TextField,
   TextInput,
   ShowButton,
-  FileInput,
-  FileField,
   ImageField,
   ImageInput,
   EditButton,
   DeleteButton,
   ArrayInput,
   SimpleFormIterator,
-  NumberInput,
+  ReferenceArrayInput,
+  AutocompleteArrayInput,
+  ReferenceField,
 } from 'react-admin';
 
 export const QuickRoutineList = props => (
   <List {...props} sort={{field: 'name', order: 'ASC'}}>
     <Datagrid>
       <TextField source="name" />
+      <ReferenceField
+        label="Exercises"
+        source="exerciseIds"
+        reference="exercises">
+        <TextField source="name" />
+      </ReferenceField>
       <ShowButton label="" />
       <EditButton label="" />
       <DeleteButton label="" redirect={false} />
@@ -42,6 +48,12 @@ export const QuickRoutineShow = props => (
       <TextField source="id" />
       <TextField source="name" />
       <TextField source="exercises" options={{multiline: true}} />
+      <ReferenceField
+        label="Exercises"
+        source="exerciseIds"
+        reference="exercises">
+        <TextField source="name" />
+      </ReferenceField>
       <BooleanField source="premium" />
     </SimpleShowLayout>
   </Show>
@@ -101,9 +113,12 @@ export const QuickRoutineCreate = props => (
         </SimpleFormIterator>
       </ArrayInput>
 
-      <FileInput source="video" label="Video" accept="video/*">
-        <FileField source="src" title="title" />
-      </FileInput>
+      <ReferenceArrayInput
+        source="exerciseIds"
+        reference="exercises"
+        filterToQuery={searchText => ({name: searchText})}>
+        <AutocompleteArrayInput optionText="name" />
+      </ReferenceArrayInput>
       <ImageInput source="thumbnail" label="Thumbnail" accept="image/*">
         <ImageField source="src" title="title" />
       </ImageInput>
@@ -165,9 +180,12 @@ export const QuickRoutineEdit = props => (
         </SimpleFormIterator>
       </ArrayInput>
 
-      <FileInput source="video" label="Video" accept="video/*">
-        <FileField source="src" title="title" />
-      </FileInput>
+      <ReferenceArrayInput
+        source="exerciseIds"
+        reference="exercises"
+        filterToQuery={searchText => ({name: searchText})}>
+        <AutocompleteArrayInput optionText="name" />
+      </ReferenceArrayInput>
       <ImageInput source="thumbnail" label="Thumbnail" accept="image/*">
         <ImageField source="src" title="title" />
       </ImageInput>
