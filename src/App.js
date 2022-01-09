@@ -8,11 +8,9 @@ import {
 import {UserList, UserShow, UserCreate, UserEdit} from './users';
 import {Admin, Resource} from 'react-admin';
 import {FirebaseDataProvider, FirebaseAuthProvider} from 'react-admin-firebase';
-import firebase from 'firebase/compat/app';
-import 'firebase/compat/auth';
-import 'firebase/compat/firestore';
-import 'firebase/compat/app-check';
+import firebase from 'firebase';
 import UserIcon from '@material-ui/icons/People';
+
 import {firebaseConfig} from './FIREBASE_CONFIG';
 import CustomLoginPage from './CustomLoginPage';
 import {TestCreate, TestEdit, TestList, TestShow} from './tests';
@@ -22,30 +20,15 @@ import {
   QuickRoutineList,
   QuickRoutineShow,
 } from './quickRoutines';
-import {
-  EducationCreate,
-  EducationEdit,
-  EducationList,
-  EducationShow,
-} from './education';
+import { EducationCreate, EducationEdit, EducationList, EducationShow } from './education';
 
-const app = firebase.initializeApp(firebaseConfig);
+const firebaseApp = firebase.initializeApp(firebaseConfig);
 
-const {initializeAppCheck, ReCaptchaV3Provider} = require('firebase/app-check');
-
-const appCheck = initializeAppCheck(app, {
-  provider: new ReCaptchaV3Provider('6Lft57sdAAAAAEQYT85mxqG4BsdFV4L6Gn3Ir9BY'),
-
-  // Optional argument. If true, the SDK automatically refreshes App Check
-  // tokens as needed.
-  isTokenAutoRefreshEnabled: true,
-});
-
-const authProvider = FirebaseAuthProvider(firebaseConfig, {app});
+const authProvider = FirebaseAuthProvider(firebaseConfig);
 const dataProvider = FirebaseDataProvider(firebaseConfig, {
   logging: true,
   // rootRef: 'rootrefcollection/QQG2McwjR2Bohi9OwQzP',
-  app,
+  app: firebaseApp,
   // watch: ['posts'];
   // dontwatch: ['comments'];
   persistence: 'local',
@@ -87,7 +70,7 @@ class App extends React.Component {
           create={QuickRoutineCreate}
           edit={QuickRoutineEdit}
         />
-        <Resource
+         <Resource
           name="education"
           list={EducationList}
           show={EducationShow}
