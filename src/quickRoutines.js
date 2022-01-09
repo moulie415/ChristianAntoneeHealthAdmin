@@ -23,18 +23,23 @@ import {
   ReferenceArrayInput,
   AutocompleteArrayInput,
   ReferenceField,
+  ReferenceArrayField,
+  SingleFieldList,
+  ChipField,
 } from 'react-admin';
 
 export const QuickRoutineList = props => (
   <List {...props} sort={{field: 'name', order: 'ASC'}}>
     <Datagrid>
       <TextField source="name" />
-      <ReferenceField
+      <ReferenceArrayField
         label="Exercises"
-        source="exerciseIds"
-        reference="exercises">
-        <TextField source="name" />
-      </ReferenceField>
+        reference="exercises"
+        source="exerciseIds">
+        <SingleFieldList>
+          <ChipField source="name" />
+        </SingleFieldList>
+      </ReferenceArrayField>
       <ShowButton label="" />
       <EditButton label="" />
       <DeleteButton label="" redirect={false} />
@@ -48,12 +53,14 @@ export const QuickRoutineShow = props => (
       <TextField source="id" />
       <TextField source="name" />
       <TextField source="exercises" options={{multiline: true}} />
-      <ReferenceField
+      <ReferenceArrayField
         label="Exercises"
-        source="exerciseIds"
-        reference="exercises">
-        <TextField source="name" />
-      </ReferenceField>
+        reference="exercises"
+        source="exerciseIds">
+        <SingleFieldList>
+          <ChipField source="name" />
+        </SingleFieldList>
+      </ReferenceArrayField>
       <BooleanField source="premium" />
     </SimpleShowLayout>
   </Show>
