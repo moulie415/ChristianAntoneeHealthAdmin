@@ -1,7 +1,5 @@
-// in src/posts.js
 import {BooleanField, BooleanInput} from 'ra-ui-materialui';
 import * as React from 'react';
-// tslint:disable-next-line:no-var-requires
 import {
   Datagrid,
   List,
@@ -22,7 +20,6 @@ import {
   SimpleFormIterator,
   ReferenceArrayInput,
   AutocompleteArrayInput,
-  ReferenceField,
   ReferenceArrayField,
   SingleFieldList,
   ChipField,

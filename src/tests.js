@@ -1,16 +1,11 @@
-// in src/posts.js
 import {BooleanField, BooleanInput} from 'ra-ui-materialui';
 import * as React from 'react';
-// tslint:disable-next-line:no-var-requires
 import {
   Datagrid,
   List,
   Show,
   Create,
   Edit,
-  Filter,
-  ImageField,
-  ImageInput,
   SimpleShowLayout,
   SelectInput,
   SimpleForm,
@@ -26,11 +21,11 @@ import {
 import PercentileTable from './PercentileTable';
 import Table from './Table';
 
-const TestsFilter = props => (
-  <Filter {...props}>
-    <TextInput label="Search" source="name" alwaysOn />
-  </Filter>
-);
+// const TestsFilter = props => (
+//   <Filter {...props}>
+//     <TextInput label="Search" source="name" alwaysOn />
+//   </Filter>
+// );
 
 export const TestList = props => (
   <List {...props} sort={{field: 'name', order: 'ASC'}}>

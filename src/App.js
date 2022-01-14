@@ -5,12 +5,9 @@ import {
   ExerciseCreate,
   ExerciseEdit,
 } from './exercises';
-import {UserList, UserShow, UserCreate, UserEdit} from './users';
 import {Admin, Resource} from 'react-admin';
 import {FirebaseDataProvider, FirebaseAuthProvider} from 'react-admin-firebase';
 import firebase from 'firebase';
-import UserIcon from '@material-ui/icons/People';
-
 import {firebaseConfig} from './FIREBASE_CONFIG';
 import CustomLoginPage from './CustomLoginPage';
 import {TestCreate, TestEdit, TestList, TestShow} from './tests';
@@ -20,7 +17,13 @@ import {
   QuickRoutineList,
   QuickRoutineShow,
 } from './quickRoutines';
-import { EducationCreate, EducationEdit, EducationList, EducationShow } from './education';
+import {
+  EducationCreate,
+  EducationEdit,
+  EducationList,
+  EducationShow,
+} from './education';
+import {SettingsEdit, SettingsList, SettingsShow} from './settings';
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 
@@ -70,12 +73,18 @@ class App extends React.Component {
           create={QuickRoutineCreate}
           edit={QuickRoutineEdit}
         />
-         <Resource
+        <Resource
           name="education"
           list={EducationList}
           show={EducationShow}
           create={EducationCreate}
           edit={EducationEdit}
+        />
+        <Resource
+          name="settings"
+          list={SettingsList}
+          show={SettingsShow}
+          edit={SettingsEdit}
         />
         {/* <Resource
           name="users"

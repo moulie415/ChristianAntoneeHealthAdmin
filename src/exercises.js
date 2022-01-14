@@ -1,14 +1,10 @@
-// in src/posts.js
 import * as React from 'react';
-// tslint:disable-next-line:no-var-requires
 import {
   Datagrid,
   List,
   Show,
   Create,
   Edit,
-  Filter,
-  DateField,
   ImageField,
   ImageInput,
   SimpleShowLayout,
@@ -18,26 +14,21 @@ import {
   ShowButton,
   EditButton,
   DeleteButton,
-  RichTextField,
-  ReferenceField,
   SelectInput,
-  ReferenceInput,
   FileInput,
   FileField,
   ArrayInput,
   SimpleFormIterator,
   ChipField,
-  ArrayField,
   BooleanInput,
   BooleanField,
 } from 'react-admin';
-import RichTextInput from 'ra-input-rich-text';
 
-const ExercisesFilter = props => (
-  <Filter {...props}>
-    <TextInput label="Search" source="name" alwaysOn />
-  </Filter>
-);
+// const ExercisesFilter = props => (
+//   <Filter {...props}>
+//     <TextInput label="Search" source="name" alwaysOn />
+//   </Filter>
+// );
 
 const muscles = [
   {id: 'chest', name: 'Chest'},
