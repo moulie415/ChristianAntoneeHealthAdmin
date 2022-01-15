@@ -9,6 +9,8 @@ import {
   SimpleForm,
   ShowButton,
   EditButton,
+  Toolbar,
+  SaveButton,
 } from 'react-admin';
 
 export const SettingsList = props => (
@@ -29,9 +31,15 @@ export const SettingsShow = props => (
   </Show>
 );
 
+const SettingsEditToolbar = props => (
+  <Toolbar {...props}>
+    <SaveButton />
+  </Toolbar>
+);
+
 export const SettingsEdit = props => (
   <Edit {...props}>
-    <SimpleForm>
+    <SimpleForm toolbar={<SettingsEditToolbar />}>
       <BooleanInput source="ads" />
     </SimpleForm>
   </Edit>
