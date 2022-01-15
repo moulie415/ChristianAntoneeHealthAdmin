@@ -86,14 +86,14 @@ class App extends React.Component {
           show={SettingsShow}
           edit={SettingsEdit}
         />
-        {/* <Resource
+        <Resource
           name="users"
-          icon={UserIcon}
-          list={UserList}
-          show={UserShow}
-          create={UserCreate}
-          edit={UserEdit}
-        /> */}
+          // icon={UserIcon}
+          // list={UserList}
+          // show={UserShow}
+          // create={UserCreate}
+          // edit={UserEdit}
+        />
       </Admin>
     );
   }

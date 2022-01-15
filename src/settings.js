@@ -11,12 +11,22 @@ import {
   EditButton,
   Toolbar,
   SaveButton,
+  ReferenceArrayField,
+  ChipField,
+  SingleFieldList,
+  ReferenceArrayInput,
+  AutocompleteArrayInput,
 } from 'react-admin';
 
 export const SettingsList = props => (
   <List bulkActionButtons={false} {...props}>
     <Datagrid>
       <BooleanField source="ads" />
+      <ReferenceArrayField label="Admins" reference="users" source="admins">
+        <SingleFieldList>
+          <ChipField source="name" />
+        </SingleFieldList>
+      </ReferenceArrayField>
       <ShowButton label="" />
       <EditButton label="" />
     </Datagrid>
@@ -27,6 +37,11 @@ export const SettingsShow = props => (
   <Show {...props}>
     <SimpleShowLayout>
       <BooleanField source="ads" />
+      <ReferenceArrayField label="Admins" reference="users" source="admins">
+        <SingleFieldList>
+          <ChipField source="name" />
+        </SingleFieldList>
+      </ReferenceArrayField>
     </SimpleShowLayout>
   </Show>
 );
@@ -41,6 +56,12 @@ export const SettingsEdit = props => (
   <Edit {...props}>
     <SimpleForm toolbar={<SettingsEditToolbar />}>
       <BooleanInput source="ads" />
+      <ReferenceArrayInput
+        source="admins"
+        reference="users"
+        filterToQuery={searchText => ({name: searchText})}>
+        <AutocompleteArrayInput optionText="name" />
+      </ReferenceArrayInput>
     </SimpleForm>
   </Edit>
 );
