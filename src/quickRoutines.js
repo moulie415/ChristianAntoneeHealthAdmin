@@ -16,8 +16,6 @@ import {
   ImageInput,
   EditButton,
   DeleteButton,
-  ArrayInput,
-  SimpleFormIterator,
   ReferenceArrayInput,
   AutocompleteArrayInput,
   ReferenceArrayField,
@@ -49,7 +47,6 @@ export const QuickRoutineShow = props => (
     <SimpleShowLayout>
       <TextField source="id" />
       <TextField source="name" />
-      <TextField source="exercises" options={{multiline: true}} />
       <ReferenceArrayField
         label="Exercises"
         reference="exercises"
@@ -111,12 +108,6 @@ export const QuickRoutineCreate = props => (
         ]}
       />
 
-      <ArrayInput source="exercises">
-        <SimpleFormIterator>
-          <TextInput label="exercise" options={{multiline: true}} />
-        </SimpleFormIterator>
-      </ArrayInput>
-
       <ReferenceArrayInput
         source="exerciseIds"
         reference="exercises"
@@ -177,12 +168,6 @@ export const QuickRoutineEdit = props => (
           {id: 'advanced', name: 'Advanced'},
         ]}
       />
-
-      <ArrayInput source="exercises">
-        <SimpleFormIterator>
-          <TextInput label="exercise" options={{multiline: true}} />
-        </SimpleFormIterator>
-      </ArrayInput>
 
       <ReferenceArrayInput
         source="exerciseIds"
