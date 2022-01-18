@@ -47,6 +47,7 @@ export const TestShow = props => (
       <TextField source="how" options={{multiline: true}} />
       <BooleanField source="premium" />
       <TextField source="metric" />
+      <TextField source="source" />
     </SimpleShowLayout>
   </Show>
 );
@@ -75,6 +76,7 @@ export const TestCreate = props => (
       <Table gender="mens" />
       <Table gender="womens" />
       <PercentileTable />
+      <TextInput source="source" />
     </SimpleForm>
   </Create>
 );
@@ -103,6 +105,7 @@ export const TestEdit = props => (
       <Table gender="mens" />
       <Table gender="womens" />
       <PercentileTable />
+      <TextInput source="source" />
     </SimpleForm>
   </Edit>
 );
