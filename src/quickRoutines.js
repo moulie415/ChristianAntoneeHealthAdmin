@@ -21,6 +21,8 @@ import {
   ReferenceArrayField,
   SingleFieldList,
   ChipField,
+  ArrayInput,
+  SimpleFormIterator,
 } from 'react-admin';
 
 export const QuickRoutineList = props => (
@@ -114,6 +116,11 @@ export const QuickRoutineCreate = props => (
         filterToQuery={searchText => ({name: searchText})}>
         <AutocompleteArrayInput optionText="name" />
       </ReferenceArrayInput>
+      <ArrayInput source="instructions">
+        <SimpleFormIterator>
+          <TextInput label="instruction" />
+        </SimpleFormIterator>
+      </ArrayInput>
       <ImageInput source="thumbnail" label="Thumbnail" accept="image/*">
         <ImageField source="src" title="title" />
       </ImageInput>
@@ -175,6 +182,11 @@ export const QuickRoutineEdit = props => (
         filterToQuery={searchText => ({name: searchText})}>
         <AutocompleteArrayInput optionText="name" />
       </ReferenceArrayInput>
+      <ArrayInput source="instructions">
+        <SimpleFormIterator>
+          <TextInput label="instruction" />
+        </SimpleFormIterator>
+      </ArrayInput>
       <ImageInput source="thumbnail" label="Thumbnail" accept="image/*">
         <ImageField source="src" title="title" />
       </ImageInput>
