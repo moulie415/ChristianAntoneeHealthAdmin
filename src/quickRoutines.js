@@ -78,10 +78,13 @@ export const QuickRoutineCreate = props => (
       <SelectInput
         source="focus"
         choices={[
-          {id: 'strength', name: 'Strength'},
-          {id: 'mobility', name: 'Mobility'},
-          {id: 'balance', name: 'Balance'},
-          {id: 'intensity', name: 'Hight intensity'},
+          {
+            id: 'boneDensity',
+            name: 'bone density (weight bearing)',
+          },
+          {id: 'weight', name: 'weight management'},
+          {id: 'strength', name: 'strength for everyday activities'},
+          {id: 'core', name: 'core and low back strength'},
         ]}
       />
       <SelectInput
@@ -145,10 +148,13 @@ export const QuickRoutineEdit = props => (
       <SelectInput
         source="focus"
         choices={[
-          {id: 'strength', name: 'Strength'},
-          {id: 'mobility', name: 'Mobility'},
-          {id: 'balance', name: 'Balance'},
-          {id: 'intensity', name: 'Hight intensity'},
+          {
+            id: 'boneDensity',
+            name: 'bone density (weight bearing)',
+          },
+          {id: 'weight', name: 'weight management'},
+          {id: 'strength', name: 'strength for everyday activities'},
+          {id: 'core', name: 'core and low back strength'},
         ]}
       />
       <SelectInput

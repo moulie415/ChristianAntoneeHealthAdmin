@@ -119,7 +119,6 @@ export const ExerciseShow = props => (
       <TextField source="description" options={{multiline: true}} />
       <ChipField source="type" />
       <ChipField source="area" />
-      <ChipField source="cardioType" />
       <ChipField source="level" />
       <ChipField source="warmUp" />
       <ChipField source="coolDown" />
@@ -155,14 +154,6 @@ export const ExerciseCreate = props => (
           {id: 'upper', name: 'upper'},
           {id: 'lower', name: 'lower'},
           {id: 'full', name: 'full'},
-          {id: '', name: 'None'},
-        ]}
-      />
-      <SelectInput
-        source="cardioType"
-        choices={[
-          {id: 'hit', name: 'high intensity interval training'},
-          {id: 'sbit', name: 'skill based interval training'},
           {id: '', name: 'None'},
         ]}
       />
@@ -242,14 +233,6 @@ export const ExerciseEdit = props => (
           {id: 'upper', name: 'upper'},
           {id: 'lower', name: 'lower'},
           {id: 'full', name: 'full'},
-          {id: '', name: 'None'},
-        ]}
-      />
-      <SelectInput
-        source="cardioType"
-        choices={[
-          {id: 'hit', name: 'high intensity interval training'},
-          {id: 'sbit', name: 'skill based interval training'},
           {id: '', name: 'None'},
         ]}
       />
