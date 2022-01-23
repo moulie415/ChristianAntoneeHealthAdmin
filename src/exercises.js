@@ -139,8 +139,14 @@ export const ExerciseCreate = props => (
       <SelectInput
         source="type"
         choices={[
-          {id: 'strength', name: 'strength'},
-          {id: 'cardiovascular', name: 'cardiovascular'},
+          {
+            id: 'boneDensity',
+            name: 'bone density (weight bearing)',
+          },
+          {id: 'weight', name: 'weight management'},
+          {id: 'strength', name: 'strength for everyday activities'},
+          {id: 'core', name: 'core and low back strength'},
+          {id: '', name: 'None'},
         ]}
       />
       <SelectInput
@@ -149,6 +155,7 @@ export const ExerciseCreate = props => (
           {id: 'upper', name: 'upper'},
           {id: 'lower', name: 'lower'},
           {id: 'full', name: 'full'},
+          {id: '', name: 'None'},
         ]}
       />
       <SelectInput
@@ -156,6 +163,7 @@ export const ExerciseCreate = props => (
         choices={[
           {id: 'hit', name: 'high intensity interval training'},
           {id: 'sbit', name: 'skill based interval training'},
+          {id: '', name: 'None'},
         ]}
       />
       <SelectInput
@@ -164,6 +172,7 @@ export const ExerciseCreate = props => (
           {id: 'beginner', name: 'beginner'},
           {id: 'intermediate', name: 'intermediate'},
           {id: 'advanced', name: 'advanced'},
+          {id: '', name: 'None'},
         ]}
       />
       <SelectInput
@@ -172,6 +181,7 @@ export const ExerciseCreate = props => (
           {id: 'circulatory', name: 'circulatory'},
           {id: 'softTissue', name: 'soft tissue preparation'},
           {id: 'dynamicStretching', name: 'dynamic stretching'},
+          {id: '', name: 'None'},
         ]}
       />
       <SelectInput
@@ -179,6 +189,7 @@ export const ExerciseCreate = props => (
         choices={[
           {id: 'circulatory', name: 'circulatory'},
           {id: 'staticStretching', name: 'static stretching'},
+          {id: '', name: 'None'},
         ]}
       />
       <ArrayInput source="equipment">
@@ -215,8 +226,14 @@ export const ExerciseEdit = props => (
       <SelectInput
         source="type"
         choices={[
-          {id: 'strength', name: 'strength'},
-          {id: 'cardiovascular', name: 'cardiovascular'},
+          {
+            id: 'boneDensity',
+            name: 'bone density (weight bearing)',
+          },
+          {id: 'weight', name: 'weight management'},
+          {id: 'strength', name: 'strength for everyday activities'},
+          {id: 'core', name: 'core and low back strength'},
+          {id: '', name: 'None'},
         ]}
       />
       <SelectInput
@@ -225,6 +242,7 @@ export const ExerciseEdit = props => (
           {id: 'upper', name: 'upper'},
           {id: 'lower', name: 'lower'},
           {id: 'full', name: 'full'},
+          {id: '', name: 'None'},
         ]}
       />
       <SelectInput
@@ -232,6 +250,7 @@ export const ExerciseEdit = props => (
         choices={[
           {id: 'hit', name: 'high intensity interval training'},
           {id: 'sbit', name: 'skill based interval training'},
+          {id: '', name: 'None'},
         ]}
       />
       <SelectInput
@@ -240,6 +259,7 @@ export const ExerciseEdit = props => (
           {id: 'beginner', name: 'beginner'},
           {id: 'intermediate', name: 'intermediate'},
           {id: 'advanced', name: 'advanced'},
+          {id: '', name: 'None'},
         ]}
       />
       <SelectInput
@@ -248,6 +268,7 @@ export const ExerciseEdit = props => (
           {id: 'circulatory', name: 'circulatory'},
           {id: 'softTissue', name: 'soft tissue preparation'},
           {id: 'dynamicStretching', name: 'dynamic stretching'},
+          {id: '', name: 'None'},
         ]}
       />
       <SelectInput
@@ -255,6 +276,7 @@ export const ExerciseEdit = props => (
         choices={[
           {id: 'circulatory', name: 'circulatory'},
           {id: 'staticStretching', name: 'static stretching'},
+          {id: '', name: 'None'},
         ]}
       />
       <ArrayInput source="equipment">
