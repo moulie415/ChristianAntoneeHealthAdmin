@@ -7,7 +7,7 @@ import {
 } from './exercises';
 import {Admin, Resource} from 'react-admin';
 import {FirebaseDataProvider, FirebaseAuthProvider} from 'react-admin-firebase';
-import firebase from 'firebase';
+import firebase from 'firebase/compat/app';
 import {firebaseConfig} from './FIREBASE_CONFIG';
 import CustomLoginPage from './CustomLoginPage';
 import {TestCreate, TestEdit, TestList, TestShow} from './tests';
