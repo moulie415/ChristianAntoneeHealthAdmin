@@ -143,7 +143,6 @@ export const ExerciseCreate = props => (
             name: 'bone density (weight bearing)',
           },
           {id: 'weight', name: 'weight management'},
-          {id: 'strength', name: 'strength for everyday activities'},
           {id: 'core', name: 'core and low back strength'},
           {id: '', name: 'None'},
         ]}
@@ -222,7 +221,6 @@ export const ExerciseEdit = props => (
             name: 'bone density (weight bearing)',
           },
           {id: 'weight', name: 'weight management'},
-          {id: 'strength', name: 'strength for everyday activities'},
           {id: 'core', name: 'core and low back strength'},
           {id: '', name: 'None'},
         ]}

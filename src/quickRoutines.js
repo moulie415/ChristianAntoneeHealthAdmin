@@ -83,7 +83,6 @@ export const QuickRoutineCreate = props => (
             name: 'bone density (weight bearing)',
           },
           {id: 'weight', name: 'weight management'},
-          {id: 'strength', name: 'strength for everyday activities'},
           {id: 'core', name: 'core and low back strength'},
         ]}
       />
@@ -153,7 +152,6 @@ export const QuickRoutineEdit = props => (
             name: 'bone density (weight bearing)',
           },
           {id: 'weight', name: 'weight management'},
-          {id: 'strength', name: 'strength for everyday activities'},
           {id: 'core', name: 'core and low back strength'},
         ]}
       />
