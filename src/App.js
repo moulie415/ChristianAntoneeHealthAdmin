@@ -24,8 +24,17 @@ import {
   EducationShow,
 } from './education';
 import {SettingsEdit, SettingsList, SettingsShow} from './settings';
+import {initializeAppCheck, ReCaptchaV3Provider} from 'firebase/app-check';
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);
+
+const appCheck = initializeAppCheck(firebaseApp, {
+  provider: new ReCaptchaV3Provider('6Lft57sdAAAAAEQYT85mxqG4BsdFV4L6Gn3Ir9BY'),
+
+  // Optional argument. If true, the SDK automatically refreshes App Check
+  // tokens as needed.
+  isTokenAutoRefreshEnabled: true,
+});
 
 const authProvider = FirebaseAuthProvider(firebaseConfig);
 const dataProvider = FirebaseDataProvider(firebaseConfig, {
