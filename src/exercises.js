@@ -139,11 +139,13 @@ export const ExerciseCreate = props => (
         source="type"
         choices={[
           {
-            id: 'boneDensity',
-            name: 'bone density (weight bearing)',
+            id: 'strength',
+            name: 'Improve strength',
           },
-          {id: 'weight', name: 'weight management'},
-          {id: 'core', name: 'core and low back strength'},
+          {
+            id: 'fitness',
+            name: 'Improve fitness',
+          },
           {id: '', name: 'None'},
         ]}
       />
@@ -217,11 +219,13 @@ export const ExerciseEdit = props => (
         source="type"
         choices={[
           {
-            id: 'boneDensity',
-            name: 'bone density (weight bearing)',
+            id: 'strength',
+            name: 'Improve strength',
           },
-          {id: 'weight', name: 'weight management'},
-          {id: 'core', name: 'core and low back strength'},
+          {
+            id: 'fitness',
+            name: 'Improve fitness',
+          },
           {id: '', name: 'None'},
         ]}
       />

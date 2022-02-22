@@ -1,9 +1,9 @@
 // LoginPage.js
-import React from "react";
-import { Login, LoginForm } from "react-admin";
+import React from 'react';
+import {Login, LoginForm} from 'react-admin';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import firebase from 'firebase/compat/app';
-import ForgotPasswordButton from './CustomForgotPassword'
+import ForgotPasswordButton from './CustomForgotPassword';
 
 // Configure FirebaseUI.
 const uiConfig = {
@@ -14,15 +14,17 @@ const uiConfig = {
   // We will display Google and Facebook as auth providers.
   signInOptions: [
     firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-    firebase.auth.FacebookAuthProvider.PROVIDER_ID
-  ]
+    firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+  ],
 };
 
-const SignInScreen = () => <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()}/>;
+const SignInScreen = () => (
+  <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
+);
 
 const CustomLoginForm = props => (
   <div>
-    <div style={{fontFamily: "monospace", marginLeft: '15px'}}>
+    <div style={{fontFamily: 'monospace', marginLeft: '15px'}}>
       <p>Username: test@example.com</p>
       <p>Password: password</p>
     </div>
@@ -34,7 +36,7 @@ const CustomLoginForm = props => (
 
 const CustomLoginPage = props => (
   <Login {...props}>
-    <CustomLoginForm {...props}/>
+    <CustomLoginForm {...props} />
   </Login>
 );
 
