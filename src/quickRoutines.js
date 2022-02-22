@@ -91,7 +91,6 @@ export const QuickRoutineCreate = props => (
         choices={[
           {id: 'full', name: 'Full equipment'},
           {id: 'minimal', name: 'Minimal equipment'},
-          {id: 'none', name: 'No equipment'},
         ]}
       />
       <SelectInput
@@ -160,7 +159,6 @@ export const QuickRoutineEdit = props => (
         choices={[
           {id: 'full', name: 'Full equipment'},
           {id: 'minimal', name: 'Minimal equipment'},
-          {id: 'none', name: 'No equipment'},
         ]}
       />
       <SelectInput
