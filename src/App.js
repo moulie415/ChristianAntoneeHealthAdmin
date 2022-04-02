@@ -25,6 +25,13 @@ import {
 } from './education';
 import {SettingsEdit, SettingsList, SettingsShow} from './settings';
 import {initializeAppCheck, ReCaptchaV3Provider} from 'firebase/app-check';
+import {
+  PlanRequestCreate,
+  PlanRequestEdit,
+  PlanRequestList,
+  PlanRequestShow,
+} from './PlanRequests';
+import {UserCreate, UserEdit, UserList, UserShow} from './users';
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 
@@ -81,6 +88,7 @@ class App extends React.Component {
           show={QuickRoutineShow}
           create={QuickRoutineCreate}
           edit={QuickRoutineEdit}
+          options={{label: 'Workouts'}}
         />
         <Resource
           name="education"
@@ -97,12 +105,20 @@ class App extends React.Component {
         />
         <Resource
           name="users"
-          // icon={UserIcon}
-          // list={UserList}
-          // show={UserShow}
-          // create={UserCreate}
-          // edit={UserEdit}
+          options={{label: 'Plan requests'}}
+          list={PlanRequestList}
+          show={PlanRequestShow}
+          create={PlanRequestCreate}
+          edit={PlanRequestEdit}
         />
+        {/* <Resource
+          name="users"
+          // icon={UserIcon}
+          list={UserList}
+          show={UserShow}
+          create={UserCreate}
+          edit={UserEdit}
+        /> */}
       </Admin>
     );
   }
