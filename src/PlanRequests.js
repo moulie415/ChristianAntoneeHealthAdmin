@@ -1,6 +1,6 @@
-// in src/User.js
+import {Button} from '@material-ui/core';
 import * as React from 'react';
-// tslint:disable-next-line:no-var-requires
+import {doc, setDoc} from 'firebase/firestore';
 import {
   Datagrid,
   List,
@@ -23,6 +23,7 @@ import {
   SingleFieldList,
   ChipField,
 } from 'react-admin';
+import {db} from './App';
 import {StringToLabelObject} from './helpers';
 
 const UserFilter = props => (
@@ -43,33 +44,54 @@ export const PlanRequestList = props => (
   </List>
 );
 
-export const PlanRequestShow = props => (
-  <Show {...props}>
-    <SimpleShowLayout>
-      <TextField source="name" />
-      <EmailField source="email" />
-      <DateField source="dob" label="Date of birth" />
-      <TextField source="equipment" />
-      <TextField source="experience" />
-      <TextField source="gender" />
-      <TextField source="goal" />
-      <TextField source="unit" />
-      <NumberField source="height" />
-      <NumberField source="weight" />
-      <TextField source="injuries" />
-      <TextField source="lifestyle" />
-      <TextField source="medications" />
-      <TextField source="stressLevel" />
-      <ArrayField source="nutrition">
-        <SingleFieldList linkType={false}>
-          <StringToLabelObject>
-            <ChipField source="label" />
-          </StringToLabelObject>
-        </SingleFieldList>
-      </ArrayField>
-    </SimpleShowLayout>
-  </Show>
-);
+export const PlanRequestShow = props => {
+  const [loading, setLoading] = React.useState(false);
+  const id = props.id;
+  return (
+    <Show {...props}>
+      <SimpleShowLayout>
+        <TextField source="name" />
+        <EmailField source="email" />
+        <DateField source="dob" label="Date of birth" />
+        <TextField source="equipment" />
+        <TextField source="experience" />
+        <TextField source="gender" />
+        <TextField source="goal" />
+        <TextField source="unit" />
+        <NumberField source="height" />
+        <NumberField source="weight" />
+        <TextField source="injuries" />
+        <TextField source="lifestyle" />
+        <TextField source="medications" />
+        <TextField source="stressLevel" />
+        <ArrayField source="nutrition">
+          <SingleFieldList linkType={false}>
+            <StringToLabelObject>
+              <ChipField source="label" />
+            </StringToLabelObject>
+          </SingleFieldList>
+        </ArrayField>
+        <Button
+          onClick={async () => {
+            try {
+              setLoading(true);
+              await setDoc(doc(db, 'plans', id), {user: id});
+              props.history.push(`/plans/${id}`);
+              setLoading(false);
+            } catch (e) {
+              setLoading(false);
+            }
+          }}
+          disabled={loading}
+          variant="contained"
+          color="primary"
+          style={{marginTop: 10}}>
+          Create plan
+        </Button>
+      </SimpleShowLayout>
+    </Show>
+  );
+};
 
 export const PlanRequestCreate = props => (
   <Create {...props}>

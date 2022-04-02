@@ -11,6 +11,7 @@ import firebase from 'firebase/compat/app';
 import {firebaseConfig} from './FIREBASE_CONFIG';
 import CustomLoginPage from './CustomLoginPage';
 import {TestCreate, TestEdit, TestList, TestShow} from './tests';
+import FitnessCenterIcon from '@material-ui/icons/FitnessCenter';
 import {
   QuickRoutineCreate,
   QuickRoutineEdit,
@@ -25,6 +26,7 @@ import {
 } from './education';
 import {SettingsEdit, SettingsList, SettingsShow} from './settings';
 import {initializeAppCheck, ReCaptchaV3Provider} from 'firebase/app-check';
+import {getFirestore} from 'firebase/firestore';
 import {
   PlanRequestCreate,
   PlanRequestEdit,
@@ -32,8 +34,16 @@ import {
   PlanRequestShow,
 } from './PlanRequests';
 import {UserCreate, UserEdit, UserList, UserShow} from './users';
+import {PlansEdit, PlansList, PlansShow} from './Plans';
+import TimerIcon from '@material-ui/icons/Timer';
+import BookIcon from '@material-ui/icons/Book';
+import SettingsIcon from '@material-ui/icons/Settings';
+import EventAvailableIcon from '@material-ui/icons/EventAvailable';
+import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);
+
+export const db = getFirestore(firebaseApp);
 
 const appCheck = initializeAppCheck(firebaseApp, {
   provider: new ReCaptchaV3Provider('6Lft57sdAAAAAEQYT85mxqG4BsdFV4L6Gn3Ir9BY'),
@@ -74,6 +84,7 @@ class App extends React.Component {
           show={ExerciseShow}
           create={ExerciseCreate}
           edit={ExerciseEdit}
+          icon={FitnessCenterIcon}
         />
         <Resource
           name="tests"
@@ -81,6 +92,7 @@ class App extends React.Component {
           show={TestShow}
           create={TestCreate}
           edit={TestEdit}
+          icon={TimerIcon}
         />
         <Resource
           name="quickRoutines"
@@ -89,6 +101,7 @@ class App extends React.Component {
           create={QuickRoutineCreate}
           edit={QuickRoutineEdit}
           options={{label: 'Workouts'}}
+          icon={FitnessCenterIcon}
         />
         <Resource
           name="education"
@@ -96,20 +109,28 @@ class App extends React.Component {
           show={EducationShow}
           create={EducationCreate}
           edit={EducationEdit}
+          icon={BookIcon}
         />
         <Resource
           name="settings"
           list={SettingsList}
           show={SettingsShow}
           edit={SettingsEdit}
+          icon={SettingsIcon}
         />
         <Resource
           name="users"
           options={{label: 'Plan requests'}}
           list={PlanRequestList}
           show={PlanRequestShow}
-          create={PlanRequestCreate}
-          edit={PlanRequestEdit}
+          icon={CalendarTodayIcon}
+        />
+        <Resource
+          name="plans"
+          list={PlansList}
+          show={PlansShow}
+          edit={PlansEdit}
+          icon={EventAvailableIcon}
         />
         {/* <Resource
           name="users"
