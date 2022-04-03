@@ -105,7 +105,7 @@ export const PlansCreate = props => (
       <ArrayInput source="education" label="Educational resources">
         <SimpleFormIterator>
           <ReferenceInput label="Article" reference="education">
-            <AutocompleteInput source="category" />
+            <AutocompleteInput optionText="title" />
           </ReferenceInput>
         </SimpleFormIterator>
       </ArrayInput>
@@ -170,7 +170,7 @@ export const PlansEdit = props => (
       <ArrayInput source="education" label="Educational resources">
         <SimpleFormIterator>
           <ReferenceInput label="Article" reference="education">
-            <AutocompleteInput source="category" />
+            <AutocompleteInput optionText="title" />
           </ReferenceInput>
         </SimpleFormIterator>
       </ArrayInput>
