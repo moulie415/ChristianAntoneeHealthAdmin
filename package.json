@@ -5,6 +5,7 @@
   "dependencies": {
     "@material-ui/core": "^4.12.3",
     "firebase": "^9.6.10",
+    "patch-package": "^6.4.7",
     "ra-input-rich-text": "^3.19.10",
     "react": "^17.0.2",
     "react-admin": "^3.19.10",
@@ -31,7 +32,7 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "postinstall": "node ./overrides/patch.js"
+    "postinstall": "node ./overrides/patch.js && patch-package"
   },
   "browserslist": [
     ">0.2%",
