@@ -52,7 +52,7 @@ export const PlansCreate = props => (
   <Create {...props}>
     <SimpleForm>
       <ReferenceInput label="User" source="user" reference="users">
-        <AutocompleteInput source="name" />
+        <AutocompleteInput optionText="name" />
       </ReferenceInput>
       <ArrayInput source="workouts">
         <SimpleFormIterator>
@@ -63,7 +63,7 @@ export const PlansCreate = props => (
                 source="exercise"
                 label="Exercise"
                 reference="exercises">
-                <AutocompleteInput source="name" />
+                <AutocompleteInput optionText="name" />
               </ReferenceInput>
               <NumberInput source="sets" label="Sets" />
               <NumberInput source="reps" label="Reps" />
@@ -83,7 +83,7 @@ export const PlansCreate = props => (
       <ArrayInput source="tests" label="Tests">
         <SimpleFormIterator>
           <ReferenceInput source="test" label="Test" reference="tests">
-            <AutocompleteInput source="name" />
+            <AutocompleteInput optionText="name" />
           </ReferenceInput>
           <ArrayInput source="dates" label="Dates">
             <SimpleFormIterator>
@@ -128,7 +128,7 @@ export const PlansEdit = props => (
                 source="exercise"
                 label="Exercise"
                 reference="exercises">
-                <AutocompleteInput source="name" />
+                <AutocompleteInput optionText="name" />
               </ReferenceInput>
               <NumberInput source="sets" label="Sets" />
               <NumberInput source="reps" label="Reps" />
@@ -148,7 +148,7 @@ export const PlansEdit = props => (
       <ArrayInput source="tests" label="Tests">
         <SimpleFormIterator>
           <ReferenceInput source="test" label="Test" reference="tests">
-            <AutocompleteInput source="name" />
+            <AutocompleteInput optionText="name" />
           </ReferenceInput>
           <ArrayInput source="dates" label="Dates">
             <SimpleFormIterator>
