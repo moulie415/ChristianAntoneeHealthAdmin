@@ -60,8 +60,8 @@ export const PlansCreate = props => (
           <ArrayInput source="exercises" label="Exercises">
             <SimpleFormIterator>
               <ReferenceInput
-                label="Exercise"
                 source="exercise"
+                label="Exercise"
                 reference="exercises">
                 <AutocompleteInput source="name" />
               </ReferenceInput>
@@ -75,19 +75,19 @@ export const PlansCreate = props => (
           </ArrayInput>
           <ArrayInput source="dates" label="Dates">
             <SimpleFormIterator>
-              <DateInput source="date" label="Date" />
+              <DateInput label="Date" />
             </SimpleFormIterator>
           </ArrayInput>
         </SimpleFormIterator>
       </ArrayInput>
       <ArrayInput source="tests" label="Tests">
         <SimpleFormIterator>
-          <ReferenceInput label="Test" reference="tests">
+          <ReferenceInput source="test" label="Test" reference="tests">
             <AutocompleteInput source="name" />
           </ReferenceInput>
           <ArrayInput source="dates" label="Dates">
             <SimpleFormIterator>
-              <DateInput source="date" label="Date" />
+              <DateInput label="Date" />
             </SimpleFormIterator>
           </ArrayInput>
         </SimpleFormIterator>
@@ -105,7 +105,7 @@ export const PlansCreate = props => (
       <ArrayInput source="education" label="Educational resources">
         <SimpleFormIterator>
           <ReferenceInput label="Article" reference="education">
-            <AutocompleteInput source="title" />
+            <AutocompleteInput source="category" />
           </ReferenceInput>
         </SimpleFormIterator>
       </ArrayInput>
@@ -125,8 +125,8 @@ export const PlansEdit = props => (
           <ArrayInput source="exercises" label="Exercises">
             <SimpleFormIterator>
               <ReferenceInput
-                label="Exercise"
                 source="exercise"
+                label="Exercise"
                 reference="exercises">
                 <AutocompleteInput source="name" />
               </ReferenceInput>
@@ -140,35 +140,27 @@ export const PlansEdit = props => (
           </ArrayInput>
           <ArrayInput source="dates" label="Dates">
             <SimpleFormIterator>
-              <DateInput source="date" label="Date" />
+              <DateInput label="Date" />
             </SimpleFormIterator>
           </ArrayInput>
         </SimpleFormIterator>
       </ArrayInput>
       <ArrayInput source="tests" label="Tests">
         <SimpleFormIterator>
-          <ReferenceInput label="Test" reference="tests">
+          <ReferenceInput source="test" label="Test" reference="tests">
             <AutocompleteInput source="name" />
           </ReferenceInput>
           <ArrayInput source="dates" label="Dates">
             <SimpleFormIterator>
-              <DateInput source="date" label="Date" />
+              <DateInput label="Date" />
             </SimpleFormIterator>
           </ArrayInput>
         </SimpleFormIterator>
       </ArrayInput>
       <Typography>Nutritional planning</Typography>
-      <TextInput source="nutrition.preWorkout" label="Pre-workout" multiline />
-      <TextInput
-        source="nutrition.postWorkout"
-        label="Post-workout"
-        multiline
-      />
-      <TextInput
-        source="nutrition.general"
-        label="General recommendations"
-        multiline
-      />
+      <TextInput source="nutrition.preWorkout" label="Pre-workout" />
+      <TextInput source="nutrition.postWorkout" label="Post-workout" />
+      <TextInput source="nutrition.general" label="General recommendations" />
       <Typography>Sleep hygiene</Typography>
       <TextInput
         source="sleep.general"
@@ -178,7 +170,7 @@ export const PlansEdit = props => (
       <ArrayInput source="education" label="Educational resources">
         <SimpleFormIterator>
           <ReferenceInput label="Article" reference="education">
-            <AutocompleteInput source="title" />
+            <AutocompleteInput source="category" />
           </ReferenceInput>
         </SimpleFormIterator>
       </ArrayInput>
