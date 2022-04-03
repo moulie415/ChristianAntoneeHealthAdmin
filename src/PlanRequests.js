@@ -1,6 +1,6 @@
 import {Button} from '@material-ui/core';
 import * as React from 'react';
-import {doc, setDoc} from 'firebase/firestore';
+import {collection, addDoc} from 'firebase/firestore';
 import {
   Datagrid,
   List,
@@ -75,8 +75,8 @@ export const PlanRequestShow = props => {
           onClick={async () => {
             try {
               setLoading(true);
-              await setDoc(doc(db, 'plans', id), {user: id});
-              props.history.push(`/plans/${id}`);
+              const ref = await addDoc(collection(db, 'plans'), {user: id});
+              props.history.push(`/plans/${ref.id}`);
               setLoading(false);
             } catch (e) {
               setLoading(false);

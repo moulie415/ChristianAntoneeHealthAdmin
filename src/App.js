@@ -34,7 +34,7 @@ import {
   PlanRequestShow,
 } from './PlanRequests';
 import {UserCreate, UserEdit, UserList, UserShow} from './users';
-import {PlansEdit, PlansList, PlansShow} from './Plans';
+import {PlansCreate, PlansEdit, PlansList, PlansShow} from './Plans';
 import TimerIcon from '@material-ui/icons/Timer';
 import BookIcon from '@material-ui/icons/Book';
 import SettingsIcon from '@material-ui/icons/Settings';
@@ -130,6 +130,7 @@ class App extends React.Component {
           list={PlansList}
           show={PlansShow}
           edit={PlansEdit}
+          create={PlansCreate}
           icon={EventAvailableIcon}
         />
         {/* <Resource
