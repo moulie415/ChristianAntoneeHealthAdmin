@@ -23,6 +23,8 @@ import {
   ChipField,
   ArrayInput,
   SimpleFormIterator,
+  ReferenceInput,
+  AutocompleteInput,
 } from 'react-admin';
 
 export const QuickRoutineList = props => (
@@ -98,13 +100,19 @@ export const QuickRoutineCreate = props => (
           {id: 'advanced', name: 'Advanced'},
         ]}
       />
-
-      <ReferenceArrayInput
+      <ArrayInput label="Exercises" source="exerciseIds">
+        <SimpleFormIterator>
+          <ReferenceInput label="Exercise" reference="exercises">
+            <AutocompleteInput source="name" />
+          </ReferenceInput>
+        </SimpleFormIterator>
+      </ArrayInput>
+      {/* <ReferenceArrayInput
         source="exerciseIds"
         reference="exercises"
         filterToQuery={searchText => ({name: searchText})}>
         <AutocompleteArrayInput optionText="name" />
-      </ReferenceArrayInput>
+      </ReferenceArrayInput> */}
       <ArrayInput source="instructions">
         <SimpleFormIterator>
           <TextInput label="instruction" />
@@ -153,13 +161,19 @@ export const QuickRoutineEdit = props => (
           {id: 'advanced', name: 'Advanced'},
         ]}
       />
-
-      <ReferenceArrayInput
+      <ArrayInput label="Exercises" source="exerciseIds">
+        <SimpleFormIterator>
+          <ReferenceInput label="Exercise" reference="exercises">
+            <AutocompleteInput source="name" />
+          </ReferenceInput>
+        </SimpleFormIterator>
+      </ArrayInput>
+      {/* <ReferenceArrayInput
         source="exerciseIds"
         reference="exercises"
         filterToQuery={searchText => ({name: searchText})}>
         <AutocompleteArrayInput optionText="name" />
-      </ReferenceArrayInput>
+      </ReferenceArrayInput> */}
       <ArrayInput source="instructions">
         <SimpleFormIterator>
           <TextInput label="instruction" />
