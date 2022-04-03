@@ -76,6 +76,10 @@ export const PlansEdit = props => (
               </ReferenceInput>
               <NumberInput source="sets" label="Sets" />
               <NumberInput source="reps" label="Reps" />
+              <NumberInput source="duration" label="Duration (secs)" />
+              <NumberInput source="resistanceScale" label="Resistance scale" />
+              <NumberInput source="restTime" label="Rest time (secs)" />
+              <TextInput source="notes" label="Additional notes" multiline />
             </SimpleFormIterator>
           </ArrayInput>
           <ArrayInput source="dates" label="Dates">

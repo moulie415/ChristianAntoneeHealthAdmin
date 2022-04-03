@@ -43,8 +43,8 @@ export const TestShow = props => (
     <SimpleShowLayout>
       <TextField source="id" />
       <TextField source="name" />
-      <TextField source="summary" options={{multiline: true}} />
-      <TextField source="how" options={{multiline: true}} />
+      <TextField source="summary" multiline />
+      <TextField source="how" multiline />
       <BooleanField source="premium" />
       <TextField source="metric" />
       <TextField source="source" />
@@ -65,7 +65,7 @@ export const TestCreate = props => (
         ]}
       />
       <NumberInput source="time" label="Time in seconds" />
-      <TextInput source="summary" options={{multiline: true}} />
+      <TextInput source="summary" multiline />
       <ArrayInput source="how">
         <SimpleFormIterator>
           <TextInput label="step" />
@@ -94,7 +94,7 @@ export const TestEdit = props => (
         ]}
       />
       <NumberInput source="time" label="Time in seconds" />
-      <TextInput source="summary" options={{multiline: true}} />
+      <TextInput source="summary" multiline />
       <ArrayInput source="how">
         <SimpleFormIterator>
           <TextInput label="step" />
