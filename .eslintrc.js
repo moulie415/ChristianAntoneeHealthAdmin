@@ -3,6 +3,7 @@ module.exports = {
     'plugin:jest/recommended',
     'prettier',
     'plugin:prettier/recommended',
+    'plugin:react-hooks/recommended',
   ],
   plugins: ['react', 'jest'],
   env: {

@@ -40,6 +40,8 @@ import BookIcon from '@material-ui/icons/Book';
 import SettingsIcon from '@material-ui/icons/Settings';
 import EventAvailableIcon from '@material-ui/icons/EventAvailable';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
+import {ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 
@@ -74,66 +76,67 @@ const dataProvider = FirebaseDataProvider(firebaseConfig, {
 class App extends React.Component {
   render() {
     return (
-      <Admin
-        loginPage={CustomLoginPage}
-        dataProvider={dataProvider}
-        authProvider={authProvider}>
-        <Resource
-          name="exercises"
-          list={ExerciseList}
-          show={ExerciseShow}
-          create={ExerciseCreate}
-          edit={ExerciseEdit}
-          icon={FitnessCenterIcon}
-        />
-        <Resource
-          name="tests"
-          list={TestList}
-          show={TestShow}
-          create={TestCreate}
-          edit={TestEdit}
-          icon={TimerIcon}
-        />
-        <Resource
-          name="quickRoutines"
-          list={QuickRoutineList}
-          show={QuickRoutineShow}
-          create={QuickRoutineCreate}
-          edit={QuickRoutineEdit}
-          options={{label: 'Workouts'}}
-          icon={FitnessCenterIcon}
-        />
-        <Resource
-          name="education"
-          list={EducationList}
-          show={EducationShow}
-          create={EducationCreate}
-          edit={EducationEdit}
-          icon={BookIcon}
-        />
-        <Resource
-          name="settings"
-          list={SettingsList}
-          show={SettingsShow}
-          edit={SettingsEdit}
-          icon={SettingsIcon}
-        />
-        <Resource
-          name="users"
-          options={{label: 'Plan requests'}}
-          list={PlanRequestList}
-          show={PlanRequestShow}
-          icon={CalendarTodayIcon}
-        />
-        <Resource
-          name="plans"
-          list={PlansList}
-          show={PlansShow}
-          edit={PlansEdit}
-          create={PlansCreate}
-          icon={EventAvailableIcon}
-        />
-        {/* <Resource
+      <>
+        <Admin
+          loginPage={CustomLoginPage}
+          dataProvider={dataProvider}
+          authProvider={authProvider}>
+          <Resource
+            name="exercises"
+            list={ExerciseList}
+            show={ExerciseShow}
+            create={ExerciseCreate}
+            edit={ExerciseEdit}
+            icon={FitnessCenterIcon}
+          />
+          <Resource
+            name="tests"
+            list={TestList}
+            show={TestShow}
+            create={TestCreate}
+            edit={TestEdit}
+            icon={TimerIcon}
+          />
+          <Resource
+            name="quickRoutines"
+            list={QuickRoutineList}
+            show={QuickRoutineShow}
+            create={QuickRoutineCreate}
+            edit={QuickRoutineEdit}
+            options={{label: 'Workouts'}}
+            icon={FitnessCenterIcon}
+          />
+          <Resource
+            name="education"
+            list={EducationList}
+            show={EducationShow}
+            create={EducationCreate}
+            edit={EducationEdit}
+            icon={BookIcon}
+          />
+          <Resource
+            name="settings"
+            list={SettingsList}
+            show={SettingsShow}
+            edit={SettingsEdit}
+            icon={SettingsIcon}
+          />
+          <Resource
+            name="users"
+            options={{label: 'Plan requests'}}
+            list={PlanRequestList}
+            show={PlanRequestShow}
+            icon={CalendarTodayIcon}
+          />
+          <Resource
+            name="plans"
+            list={PlansList}
+            show={PlansShow}
+            edit={PlansEdit}
+            create={PlansCreate}
+            icon={EventAvailableIcon}
+          />
+          {/* <Resource
           name="users"
           // icon={UserIcon}
           list={UserList}
@@ -141,7 +144,9 @@ class App extends React.Component {
           create={UserCreate}
           edit={UserEdit}
         /> */}
-      </Admin>
+        </Admin>
+        <ToastContainer />
+      </>
     );
   }
 }
