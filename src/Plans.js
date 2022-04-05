@@ -27,6 +27,7 @@ import {doc, getDoc} from 'firebase/firestore';
 import {db} from './App';
 import {useFormState} from 'react-final-form';
 import {toast} from 'react-toastify';
+import {getFunctions, httpsCallable} from 'firebase/functions';
 
 export const PlansList = props => (
   <List {...props} bulkActionButtons={false}>
@@ -64,7 +65,11 @@ const isSent = async uid => {
   return false;
 };
 
-const send = async uid => {};
+const send = async uid => {
+  const functions = getFunctions();
+  const sendPlan = httpsCallable(functions, 'sendPlan');
+  await sendPlan({value: uid});
+};
 
 const UserInput = ({setUser, ...props}) => {
   const {values} = useFormState();
