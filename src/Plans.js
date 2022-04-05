@@ -170,10 +170,13 @@ export const PlansCreate = props => {
         <Button
           onClick={async () => {
             try {
+              setLoading(true);
               await send(user);
               setSent(true);
               toast.success('Plan sent');
+              setLoading(false);
             } catch (e) {
+              setLoading(false);
               toast.error('Error sending plan');
             }
           }}
@@ -282,10 +285,13 @@ export const PlansEdit = props => {
         <Button
           onClick={async () => {
             try {
+              setLoading(true);
               await send(user);
               toast.success('Plan sent');
               setSent(true);
+              setLoading(false);
             } catch (e) {
+              setLoading(false);
               toast.error('Error sending plan');
             }
           }}
