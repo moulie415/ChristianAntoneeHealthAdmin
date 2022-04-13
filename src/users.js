@@ -1,6 +1,5 @@
-// in src/User.js
+import {Button} from '@material-ui/core';
 import * as React from 'react';
-// tslint:disable-next-line:no-var-requires
 import {
   Datagrid,
   List,
@@ -15,7 +14,22 @@ import {
   ShowButton,
   EditButton,
   DeleteButton,
+  DateField,
+  EmailField,
+  NumberField,
+  ArrayField,
+  SimpleFormIterator,
+  SingleFieldList,
+  ChipField,
+  TopToolbar,
+  SortButton,
+  ExportButton,
 } from 'react-admin';
+import {db} from './App';
+import {StringToLabelObject} from './helpers';
+import PlanStatusField from './PlanStatusField';
+import CreatePlanButton from './CreatePlanButton';
+import {toast} from 'react-toastify';
 
 const UserFilter = props => (
   <Filter {...props}>
@@ -23,27 +37,72 @@ const UserFilter = props => (
   </Filter>
 );
 
-export const UserList = props => (
-  <List {...props} /*filters={<UserFilter />} */ bulkActionButtons={false}>
-    <Datagrid>
-      <TextField source="name" />
-      <TextField source="email" />
-      <ShowButton label="" />
-      {/* <EditButton label="" /> */}
-      {/* <DeleteButton label="" redirect={false} /> */}
-    </Datagrid>
-  </List>
+const ListActions = () => (
+  <TopToolbar>
+    <SortButton fields={['planStatus', 'name', 'email']} />
+    <ExportButton />
+  </TopToolbar>
 );
 
-export const UserShow = props => (
-  <Show {...props}>
-    <SimpleShowLayout>
-      <TextField source="name" />
-    </SimpleShowLayout>
-  </Show>
-);
+export const UsersList = props => {
+  const [loading, setLoading] = React.useState(false);
+  return (
+    <List {...props} bulkActionButtons={false} actions={<ListActions />}>
+      <Datagrid>
+        <TextField source="name" />
+        <EmailField source="email" />
+        <PlanStatusField source="planStatus" />
+        <CreatePlanButton
+          loading={loading}
+          setLoading={setLoading}
+          history={props.history}
+        />
+        <ShowButton label="" />
+        {/* <EditButton label="" />
+      <DeleteButton label="" redirect={false} /> */}
+      </Datagrid>
+    </List>
+  );
+};
 
-export const UserCreate = props => (
+export const UsersShow = props => {
+  const [loading, setLoading] = React.useState(false);
+  const {id} = props;
+  return (
+    <Show {...props}>
+      <SimpleShowLayout>
+        <TextField source="name" />
+        <EmailField source="email" />
+        <DateField source="dob" label="Date of birth" />
+        <TextField source="equipment" />
+        <TextField source="experience" />
+        <TextField source="gender" />
+        <TextField source="goal" />
+        <TextField source="unit" />
+        <NumberField source="height" />
+        <NumberField source="weight" />
+        <TextField source="injuries" />
+        <TextField source="lifestyle" />
+        <TextField source="medications" />
+        <TextField source="stressLevel" />
+        <ArrayField source="nutrition">
+          <SingleFieldList linkType={false}>
+            <StringToLabelObject>
+              <ChipField source="label" />
+            </StringToLabelObject>
+          </SingleFieldList>
+        </ArrayField>
+        <CreatePlanButton
+          loading={loading}
+          setLoading={setLoading}
+          history={props.history}
+        />
+      </SimpleShowLayout>
+    </Show>
+  );
+};
+
+export const UsersCreate = props => (
   <Create {...props}>
     <SimpleForm>
       <TextInput source="name" />
@@ -51,7 +110,7 @@ export const UserCreate = props => (
   </Create>
 );
 
-export const UserEdit = props => (
+export const UsersEdit = props => (
   <Edit {...props}>
     <SimpleForm>
       <TextInput source="name" />

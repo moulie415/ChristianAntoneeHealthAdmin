@@ -22,6 +22,7 @@ import {
   NumberInput,
   DateTimeInput,
   required,
+  DateField,
 } from 'react-admin';
 import {doc, getDoc} from 'firebase/firestore';
 import {db} from './App';
@@ -35,6 +36,7 @@ export const PlansList = props => (
       <ReferenceField label="User" source="user" reference="users">
         <TextField source="name" />
       </ReferenceField>
+      <DateField source="lastupdate" label="Last update" />
       <ShowButton label="" />
       <EditButton label="" />
       <DeleteButton label="" redirect={false} />

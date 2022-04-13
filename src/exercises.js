@@ -89,6 +89,7 @@ export const ExerciseList = props => (
   <List
     {...props}
     sort={{field: 'name', order: 'ASC'}}
+    perPage={200}
     // filters={<ExercisesFilter />}
     // filter={{ updatedby: "test@example.com" }}
   >

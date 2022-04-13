@@ -28,20 +28,21 @@ import {SettingsEdit, SettingsList, SettingsShow} from './settings';
 import {initializeAppCheck, ReCaptchaV3Provider} from 'firebase/app-check';
 import {getFirestore} from 'firebase/firestore';
 import {
-  PlanRequestCreate,
-  PlanRequestEdit,
-  PlanRequestList,
-  PlanRequestShow,
-} from './PlanRequests';
-import {UserCreate, UserEdit, UserList, UserShow} from './users';
+  UserCreate,
+  UserEdit,
+  UserList,
+  UserShow,
+  UsersList,
+  UsersShow,
+} from './users';
 import {PlansCreate, PlansEdit, PlansList, PlansShow} from './Plans';
 import TimerIcon from '@material-ui/icons/Timer';
 import BookIcon from '@material-ui/icons/Book';
 import SettingsIcon from '@material-ui/icons/Settings';
 import EventAvailableIcon from '@material-ui/icons/EventAvailable';
-import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import PersonIcon from '@material-ui/icons/Person';
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 
@@ -123,10 +124,9 @@ class App extends React.Component {
           />
           <Resource
             name="users"
-            options={{label: 'Plan requests'}}
-            list={PlanRequestList}
-            show={PlanRequestShow}
-            icon={CalendarTodayIcon}
+            list={UsersList}
+            show={UsersShow}
+            icon={PersonIcon}
           />
           <Resource
             name="plans"
