@@ -165,20 +165,21 @@ export const PlansCreate = props => {
                   source="reps"
                   label="Reps"
                 />
-                <NumberInput
-                  className={iteratorClasses.input}
-                  source="duration"
-                  label="Duration (secs)"
-                />
+
                 <NumberInput
                   className={iteratorClasses.input}
                   source="resistanceScale"
                   label="Resistance scale"
                 />
-                <NumberInput
+                <TextInput
+                  className={iteratorClasses.input}
+                  source="duration"
+                  label="Duration"
+                />
+                <TextInput
                   className={iteratorClasses.input}
                   source="restTime"
-                  label="Rest time (secs)"
+                  label="Rest time"
                 />
                 <TextInput
                   className={iteratorClasses.input}
@@ -189,7 +190,7 @@ export const PlansCreate = props => {
               </SimpleFormIterator>
             </ArrayInput>
             <ArrayInput source="dates" label="Dates">
-              <SimpleFormIterator  classes={dateIteratorClasses}>
+              <SimpleFormIterator classes={dateIteratorClasses}>
                 <DateInput label="Date" style={{width: 150}} />
               </SimpleFormIterator>
             </ArrayInput>
@@ -304,20 +305,21 @@ export const PlansEdit = props => {
                   source="reps"
                   label="Reps"
                 />
-                <NumberInput
-                  className={iteratorClasses.input}
-                  source="duration"
-                  label="Duration (secs)"
-                />
+
                 <NumberInput
                   className={iteratorClasses.input}
                   source="resistanceScale"
                   label="Resistance scale"
                 />
-                <NumberInput
+                <TextInput
+                  className={iteratorClasses.input}
+                  source="duration"
+                  label="Duration"
+                />
+                <TextInput
                   className={iteratorClasses.input}
                   source="restTime"
-                  label="Rest time (secs)"
+                  label="Rest time"
                 />
                 <TextInput
                   className={iteratorClasses.input}
