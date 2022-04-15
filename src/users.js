@@ -24,6 +24,7 @@ import {
   TopToolbar,
   SortButton,
   ExportButton,
+  FunctionField,
 } from 'react-admin';
 import {db} from './App';
 import {StringToLabelObject} from './helpers';
@@ -36,6 +37,16 @@ const UserFilter = props => (
     <TextInput label="Search" source="title" alwaysOn />
   </Filter>
 );
+
+const getPlanStatusString = record => {
+  if (record.status === 3) {
+    return 'Complete';
+  }
+  if (record.status === 2) {
+    return 'Pending';
+  }
+  return 'Uninitialized';
+};
 
 const ListActions = () => (
   <TopToolbar>
@@ -58,8 +69,8 @@ export const UsersList = props => {
           history={props.history}
         />
         <ShowButton label="" />
-        {/* <EditButton label="" />
-      <DeleteButton label="" redirect={false} /> */}
+        <EditButton label="" />
+        {/* <DeleteButton label="" redirect={false} /> */}
       </Datagrid>
     </List>
   );
@@ -73,6 +84,7 @@ export const UsersShow = props => {
       <SimpleShowLayout>
         <TextField source="name" />
         <EmailField source="email" />
+        <FunctionField label="Plan status" render={getPlanStatusString} />
         <DateField source="dob" label="Date of birth" />
         <TextField source="equipment" />
         <TextField source="experience" />
@@ -110,10 +122,39 @@ export const UsersCreate = props => (
   </Create>
 );
 
-export const UsersEdit = props => (
-  <Edit {...props}>
-    <SimpleForm>
-      <TextInput source="name" />
-    </SimpleForm>
-  </Edit>
-);
+export const UsersEdit = props => {
+  const [loading, setLoading] = React.useState(false);
+  return (
+    <Edit {...props}>
+      <SimpleForm>
+        <TextField source="name" />
+        <EmailField source="email" />
+        <FunctionField label="Plan status" render={getPlanStatusString} />
+        <DateField source="dob" label="Date of birth" />
+        <TextField source="equipment" />
+        <TextField source="experience" />
+        <TextField source="gender" />
+        <TextField source="goal" />
+        <TextField source="unit" />
+        <NumberField source="height" />
+        <NumberField source="weight" />
+        <TextField source="injuries" />
+        <TextField source="lifestyle" />
+        <TextField source="medications" />
+        <TextField source="stressLevel" />
+        <ArrayField source="nutrition">
+          <SingleFieldList linkType={false}>
+            <StringToLabelObject>
+              <ChipField source="label" />
+            </StringToLabelObject>
+          </SingleFieldList>
+        </ArrayField>
+        <CreatePlanButton
+          loading={loading}
+          setLoading={setLoading}
+          history={props.history}
+        />
+      </SimpleForm>
+    </Edit>
+  );
+};

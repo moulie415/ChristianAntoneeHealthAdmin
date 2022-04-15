@@ -27,14 +27,7 @@ import {
 import {SettingsEdit, SettingsList, SettingsShow} from './settings';
 import {initializeAppCheck, ReCaptchaV3Provider} from 'firebase/app-check';
 import {getFirestore} from 'firebase/firestore';
-import {
-  UserCreate,
-  UserEdit,
-  UserList,
-  UserShow,
-  UsersList,
-  UsersShow,
-} from './users';
+import {UsersEdit, UsersList, UsersShow} from './users';
 import {PlansCreate, PlansEdit, PlansList, PlansShow} from './Plans';
 import TimerIcon from '@material-ui/icons/Timer';
 import BookIcon from '@material-ui/icons/Book';
@@ -127,6 +120,7 @@ class App extends React.Component {
             list={UsersList}
             show={UsersShow}
             icon={PersonIcon}
+            edit={UsersEdit}
           />
           <Resource
             name="plans"
@@ -136,14 +130,6 @@ class App extends React.Component {
             create={PlansCreate}
             icon={EventAvailableIcon}
           />
-          {/* <Resource
-          name="users"
-          // icon={UserIcon}
-          list={UserList}
-          show={UserShow}
-          create={UserCreate}
-          edit={UserEdit}
-        /> */}
         </Admin>
         <ToastContainer />
       </>
