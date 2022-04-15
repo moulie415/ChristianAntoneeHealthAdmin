@@ -25,11 +25,21 @@ import {
   SortButton,
   ExportButton,
   FunctionField,
+  ReferenceArrayField,
+  ReferenceField,
 } from 'react-admin';
 import {db} from './App';
 import {StringToLabelObject} from './helpers';
 import PlanStatusField from './PlanStatusField';
 import CreatePlanButton from './CreatePlanButton';
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  orderBy,
+  limit,
+} from 'firebase/firestore';
 import {toast} from 'react-toastify';
 
 const UserFilter = props => (
@@ -37,6 +47,16 @@ const UserFilter = props => (
     <TextInput label="Search" source="title" alwaysOn />
   </Filter>
 );
+
+const getPlans = async uid => {
+  const q = query(
+    collection(db, 'plans'),
+    where('user', '==', uid),
+    orderBy('lastupdate', 'desc'),
+  );
+  const plans = await getDocs(q);
+  return plans.docs.map(d => d.data());
+};
 
 const getPlanStatusString = record => {
   if (record.status === 3) {
@@ -79,6 +99,12 @@ export const UsersList = props => {
 export const UsersShow = props => {
   const [loading, setLoading] = React.useState(false);
   const {id} = props;
+  React.useEffect(() => {
+    const checkPlans = async () => {
+      const plans = await getPlans(id);
+    };
+    checkPlans();
+  }, [id]);
   return (
     <Show {...props}>
       <SimpleShowLayout>
@@ -124,6 +150,13 @@ export const UsersCreate = props => (
 
 export const UsersEdit = props => {
   const [loading, setLoading] = React.useState(false);
+  const {id} = props;
+  React.useEffect(() => {
+    const checkPlans = async () => {
+      const plans = await getPlans(id);
+    };
+    checkPlans();
+  }, [id]);
   return (
     <Edit {...props}>
       <SimpleForm>
