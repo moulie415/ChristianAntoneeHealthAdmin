@@ -8,8 +8,24 @@ const PlanStatusField = props => {
     }
     return 'Uninitialized';
   };
+  const getColor = status => {
+    if (status === 3) {
+      return 'green';
+    }
+    if (status === 2) {
+      return 'red';
+    }
+    return 'Uninitialized';
+  };
+
   return props.record ? (
-    <span>{getString(props.record.planStatus)}</span>
+    <span
+      style={{
+        color: getColor(props.record.planStatus),
+        fontWeight: props.record.planStatus === 2 ? 'bold' : 'normal',
+      }}>
+      {getString(props.record.planStatus)}
+    </span>
   ) : null;
 };
 

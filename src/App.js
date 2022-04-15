@@ -36,6 +36,7 @@ import EventAvailableIcon from '@material-ui/icons/EventAvailable';
 import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import PersonIcon from '@material-ui/icons/Person';
+import UserIcon from './UserIcon';
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 
@@ -119,7 +120,7 @@ class App extends React.Component {
             name="users"
             list={UsersList}
             show={UsersShow}
-            icon={PersonIcon}
+            icon={UserIcon}
             edit={UsersEdit}
           />
           <Resource

@@ -1,4 +1,4 @@
-import {Button} from '@material-ui/core';
+import {Button, Chip, FormLabel} from '@material-ui/core';
 import * as React from 'react';
 import {
   Datagrid,
@@ -27,6 +27,7 @@ import {
   FunctionField,
   ReferenceArrayField,
   ReferenceField,
+  ImageField,
 } from 'react-admin';
 import {db} from './App';
 import {StringToLabelObject} from './helpers';
@@ -42,6 +43,7 @@ import {
   limitToLast,
 } from 'firebase/firestore';
 import {toast} from 'react-toastify';
+import * as moment from 'moment';
 
 const UserFilter = props => (
   <Filter {...props}>
@@ -53,11 +55,15 @@ const getPlans = async uid => {
   const q = query(
     collection(db, 'plans'),
     where('user', '==', uid),
-    orderBy('lastupdate'),
+    orderBy('createdate'),
     limitToLast(50),
   );
   const plans = await getDocs(q);
-  return plans.docs.map(d => d.data());
+  return plans.docs
+    .map(d => {
+      return {...d.data(), id: d.id};
+    })
+    .reverse();
 };
 
 const getPlanStatusString = record => {
@@ -80,7 +86,11 @@ const ListActions = () => (
 export const UsersList = props => {
   const [loading, setLoading] = React.useState(false);
   return (
-    <List {...props} bulkActionButtons={false} actions={<ListActions />}>
+    <List
+      {...props}
+      bulkActionButtons={false}
+      perPage={50}
+      actions={<ListActions />}>
       <Datagrid>
         <TextField source="name" />
         <EmailField source="email" />
@@ -118,9 +128,23 @@ export const UsersShow = props => {
   return (
     <Show {...props}>
       <SimpleShowLayout>
+        <ImageField source="avatar" title="avatar" />
         <TextField source="name" />
         <EmailField source="email" />
         <FunctionField label="Plan status" render={getPlanStatusString} />
+        <FormLabel style={{fontSize: 12}}>Plans</FormLabel>
+        <div style={{display: 'flex', flexDirection: 'row'}}>
+          {plans.map(p => {
+            return (
+              <Chip
+                key={p}
+                style={{marginRight: 10}}
+                onClick={() => props.history.push(`/plans/${p.id}`)}
+                label={moment(p.createdate.toDate()).format('DD/MM/YYYY')}
+              />
+            );
+          })}
+        </div>
         <DateField source="dob" label="Date of birth" />
         <TextField source="equipment" />
         <TextField source="experience" />
@@ -176,6 +200,7 @@ export const UsersEdit = props => {
   return (
     <Edit {...props}>
       <SimpleForm toolbar={null}>
+        <ImageField source="avatar" title="avatar" />
         <TextField source="name" />
         <EmailField source="email" />
         <FunctionField label="Plan status" render={getPlanStatusString} />

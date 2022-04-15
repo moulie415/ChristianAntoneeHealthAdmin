@@ -13,6 +13,7 @@ const CreatePlanButton = ({loading, setLoading, history, ...props}) => {
           const ref = await addDoc(collection(db, 'plans'), {
             user: id,
             lastupdate: new Date(),
+            createdate: new Date(),
           });
           history.push(`/plans/${ref.id}`);
           setLoading(false);
