@@ -189,8 +189,8 @@ export const PlansCreate = props => {
               </SimpleFormIterator>
             </ArrayInput>
             <ArrayInput source="dates" label="Dates">
-              <SimpleFormIterator>
-                <DateInput label="Date" />
+              <SimpleFormIterator  classes={dateIteratorClasses}>
+                <DateInput label="Date" style={{width: 150}} />
               </SimpleFormIterator>
             </ArrayInput>
           </SimpleFormIterator>
@@ -201,8 +201,8 @@ export const PlansCreate = props => {
               <AutocompleteInput optionText="name" />
             </ReferenceInput>
             <ArrayInput source="dates" label="Dates">
-              <SimpleFormIterator>
-                <DateInput label="Date" />
+              <SimpleFormIterator classes={dateIteratorClasses}>
+                <DateInput label="Date" style={{width: 150}} />
               </SimpleFormIterator>
             </ArrayInput>
           </SimpleFormIterator>
