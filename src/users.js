@@ -61,10 +61,10 @@ const getPlans = async uid => {
 };
 
 const getPlanStatusString = record => {
-  if (record.status === 3) {
+  if (record.planStatus === 3) {
     return 'Complete';
   }
-  if (record.status === 2) {
+  if (record.planStatus === 2) {
     return 'Pending';
   }
   return 'Uninitialized';
@@ -100,12 +100,16 @@ export const UsersList = props => {
 
 export const UsersShow = props => {
   const [loading, setLoading] = React.useState(false);
+  const [plans, setPlans] = React.useState([]);
   const {id} = props;
+
   React.useEffect(() => {
     const checkPlans = async () => {
       try {
         const plans = await getPlans(id);
+        setPlans(plans);
       } catch (e) {
+        console.log(e);
         toast.error('Error fetching plans');
       }
     };
@@ -156,11 +160,13 @@ export const UsersCreate = props => (
 
 export const UsersEdit = props => {
   const [loading, setLoading] = React.useState(false);
+  const [plans, setPlans] = React.useState([]);
   const {id} = props;
   React.useEffect(() => {
     const checkPlans = async () => {
       try {
         const plans = await getPlans(id);
+        setPlans(plans);
       } catch (e) {
         toast.error('Error fetching plans');
       }
@@ -169,7 +175,7 @@ export const UsersEdit = props => {
   }, [id]);
   return (
     <Edit {...props}>
-      <SimpleForm>
+      <SimpleForm toolbar={null}>
         <TextField source="name" />
         <EmailField source="email" />
         <FunctionField label="Plan status" render={getPlanStatusString} />
