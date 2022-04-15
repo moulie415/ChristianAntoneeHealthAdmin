@@ -33,19 +33,31 @@ import {makeStyles} from '@material-ui/styles';
 
 const useIteratorStyle = makeStyles(() => ({
   root: {
-    display: 'flex',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
+    // display: 'flex',
+    // flexDirection: 'row',
+    // flexWrap: 'wrap',
   },
   form: {
     width: '100%',
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
   },
   line: {
     border: 0,
   },
   input: {
     width: 200,
-  }
+    marginRight: 10,
+  },
+}));
+
+const useDateIteratorStyle = makeStyles(() => ({
+  root: {
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
 }));
 
 export const PlansList = props => (
@@ -125,6 +137,8 @@ export const PlansCreate = props => {
     };
     checkIfSent();
   }, [setSent, user]);
+  const iteratorClasses = useIteratorStyle();
+  const dateIteratorClasses = useDateIteratorStyle();
   return (
     <Create {...props}>
       <SimpleForm>
@@ -133,22 +147,45 @@ export const PlansCreate = props => {
           <SimpleFormIterator>
             <TextInput source="name" label="Workout name" />
             <ArrayInput source="exercises" label="Exercises">
-              <SimpleFormIterator>
+              <SimpleFormIterator classes={iteratorClasses}>
                 <ReferenceInput
+                  className={iteratorClasses.input}
                   source="exercise"
                   label="Exercise"
                   reference="exercises">
                   <AutocompleteInput optionText="name" />
                 </ReferenceInput>
-                <NumberInput source="sets" label="Sets" />
-                <NumberInput source="reps" label="Reps" />
-                <NumberInput source="duration" label="Duration (secs)" />
                 <NumberInput
+                  className={iteratorClasses.input}
+                  source="sets"
+                  label="Sets"
+                />
+                <NumberInput
+                  className={iteratorClasses.input}
+                  source="reps"
+                  label="Reps"
+                />
+                <NumberInput
+                  className={iteratorClasses.input}
+                  source="duration"
+                  label="Duration (secs)"
+                />
+                <NumberInput
+                  className={iteratorClasses.input}
                   source="resistanceScale"
                   label="Resistance scale"
                 />
-                <NumberInput source="restTime" label="Rest time (secs)" />
-                <TextInput source="notes" label="Additional notes" multiline />
+                <NumberInput
+                  className={iteratorClasses.input}
+                  source="restTime"
+                  label="Rest time (secs)"
+                />
+                <TextInput
+                  className={iteratorClasses.input}
+                  source="notes"
+                  label="Additional notes"
+                  multiline
+                />
               </SimpleFormIterator>
             </ArrayInput>
             <ArrayInput source="dates" label="Dates">
@@ -240,6 +277,7 @@ export const PlansEdit = props => {
     checkIfSent();
   }, [setSent, user]);
   const iteratorClasses = useIteratorStyle();
+  const dateIteratorClasses = useDateIteratorStyle();
   return (
     <Edit {...props}>
       <SimpleForm>
@@ -256,25 +294,33 @@ export const PlansEdit = props => {
                   reference="exercises">
                   <AutocompleteInput optionText="name" />
                 </ReferenceInput>
-                <NumberInput style={{width: 200}} source="sets" label="Sets" />
-                <NumberInput style={{width: 200}} source="reps" label="Reps" />
                 <NumberInput
-                  style={{width: 200}}
+                  className={iteratorClasses.input}
+                  source="sets"
+                  label="Sets"
+                />
+                <NumberInput
+                  className={iteratorClasses.input}
+                  source="reps"
+                  label="Reps"
+                />
+                <NumberInput
+                  className={iteratorClasses.input}
                   source="duration"
                   label="Duration (secs)"
                 />
                 <NumberInput
-                  style={{width: 200}}
+                  className={iteratorClasses.input}
                   source="resistanceScale"
                   label="Resistance scale"
                 />
                 <NumberInput
-                  style={{width: 200}}
+                  className={iteratorClasses.input}
                   source="restTime"
                   label="Rest time (secs)"
                 />
                 <TextInput
-                  style={{width: 200}}
+                  className={iteratorClasses.input}
                   source="notes"
                   label="Additional notes"
                   multiline
@@ -282,8 +328,8 @@ export const PlansEdit = props => {
               </SimpleFormIterator>
             </ArrayInput>
             <ArrayInput {...props} source="dates" label="Dates">
-              <SimpleFormIterator classes={iteratorClasses}>
-                <DateInput label="Date" />
+              <SimpleFormIterator classes={dateIteratorClasses}>
+                <DateInput label="Date" style={{width: 150}} />
               </SimpleFormIterator>
             </ArrayInput>
           </SimpleFormIterator>
@@ -294,8 +340,8 @@ export const PlansEdit = props => {
               <AutocompleteInput optionText="name" />
             </ReferenceInput>
             <ArrayInput source="dates" label="Dates">
-              <SimpleFormIterator>
-                <DateInput label="Date" />
+              <SimpleFormIterator classes={dateIteratorClasses}>
+                <DateInput label="Date" style={{width: 150}} />
               </SimpleFormIterator>
             </ArrayInput>
           </SimpleFormIterator>
