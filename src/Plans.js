@@ -30,6 +30,8 @@ import {useFormState} from 'react-final-form';
 import {toast} from 'react-toastify';
 import {getFunctions, httpsCallable} from 'firebase/functions';
 import {makeStyles} from '@material-ui/styles';
+import DuplicatePlanButton from './DuplicatePlanButton';
+import SendPlanButton from './SendPlanButton';
 
 const useIteratorStyle = makeStyles(() => ({
   root: {
@@ -146,6 +148,7 @@ export const PlansCreate = props => {
     <Create {...props}>
       <SimpleForm>
         <UserInput setUser={setUser} />
+
         <ArrayInput source="workouts">
           <SimpleFormIterator>
             <TextInput source="name" label="Workout name" />
@@ -228,7 +231,7 @@ export const PlansCreate = props => {
             </ReferenceInput>
           </SimpleFormIterator>
         </ArrayInput>
-        <Button
+        <SendPlanButton
           onClick={async () => {
             try {
               setLoading(true);
@@ -241,11 +244,9 @@ export const PlansCreate = props => {
               toast.error('Error sending plan');
             }
           }}
-          disabled={sent || loading}
-          variant="contained"
-          color="primary">
-          Send
-        </Button>
+          sent={sent}
+          loading={loading}
+        />
       </SimpleForm>
     </Create>
   );
@@ -369,7 +370,7 @@ export const PlansEdit = props => {
             color="primary"
           </SimpleFormIterator>
         </ArrayInput>
-        <Button
+        <SendPlanButton
           onClick={async () => {
             try {
               setLoading(true);
@@ -382,11 +383,14 @@ export const PlansEdit = props => {
               toast.error('Error sending plan');
             }
           }}
-          disabled={sent || loading}
-          variant="contained"
-          color="primary">
-          Send
-        </Button>
+          sent={sent}
+          loading={loading}
+        />
+        <DuplicatePlanButton
+          loading={loading}
+          setLoading={setLoading}
+          history={props.history}
+        />
       </SimpleForm>
     </Edit>
   );

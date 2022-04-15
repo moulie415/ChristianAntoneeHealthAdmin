@@ -119,7 +119,6 @@ export const UsersShow = props => {
         const plans = await getPlans(id);
         setPlans(plans);
       } catch (e) {
-        console.log(e);
         toast.error('Error fetching plans');
       }
     };
