@@ -39,6 +39,7 @@ import {
   getDocs,
   orderBy,
   limit,
+  limitToLast,
 } from 'firebase/firestore';
 import {toast} from 'react-toastify';
 
@@ -52,7 +53,8 @@ const getPlans = async uid => {
   const q = query(
     collection(db, 'plans'),
     where('user', '==', uid),
-    orderBy('lastupdate', 'desc'),
+    orderBy('lastupdate'),
+    limitToLast(50),
   );
   const plans = await getDocs(q);
   return plans.docs.map(d => d.data());
@@ -101,7 +103,11 @@ export const UsersShow = props => {
   const {id} = props;
   React.useEffect(() => {
     const checkPlans = async () => {
-      const plans = await getPlans(id);
+      try {
+        const plans = await getPlans(id);
+      } catch (e) {
+        toast.error('Error fetching plans');
+      }
     };
     checkPlans();
   }, [id]);
@@ -153,7 +159,11 @@ export const UsersEdit = props => {
   const {id} = props;
   React.useEffect(() => {
     const checkPlans = async () => {
-      const plans = await getPlans(id);
+      try {
+        const plans = await getPlans(id);
+      } catch (e) {
+        toast.error('Error fetching plans');
+      }
     };
     checkPlans();
   }, [id]);
