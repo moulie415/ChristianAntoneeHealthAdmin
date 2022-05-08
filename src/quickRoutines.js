@@ -100,19 +100,14 @@ export const QuickRoutineCreate = props => (
           {id: 'advanced', name: 'Advanced'},
         ]}
       />
-      <ArrayInput label="Exercises" source="exerciseIds">
-        <SimpleFormIterator>
-          <ReferenceInput label="Exercise" reference="exercises">
-            <AutocompleteInput optionText="name" />
-          </ReferenceInput>
-        </SimpleFormIterator>
-      </ArrayInput>
-      {/* <ReferenceArrayInput
-        source="exerciseIds"
+      <ReferenceArrayInput
+        label="Exercises"
         reference="exercises"
-        filterToQuery={searchText => ({name: searchText})}>
+        filterToQuery={searchText => ({name: searchText})}
+        source="exerciseIds">
         <AutocompleteArrayInput optionText="name" />
-      </ReferenceArrayInput> */}
+      </ReferenceArrayInput>
+
       <ArrayInput source="instructions">
         <SimpleFormIterator>
           <TextInput label="instruction" />
@@ -161,19 +156,12 @@ export const QuickRoutineEdit = props => (
           {id: 'advanced', name: 'Advanced'},
         ]}
       />
-      <ArrayInput label="Exercises" source="exerciseIds">
-        <SimpleFormIterator>
-          <ReferenceInput label="Exercise" reference="exercises">
-            <AutocompleteInput optionText="name" />
-          </ReferenceInput>
-        </SimpleFormIterator>
-      </ArrayInput>
-      {/* <ReferenceArrayInput
+      <ReferenceArrayInput
         source="exerciseIds"
         reference="exercises"
         filterToQuery={searchText => ({name: searchText})}>
         <AutocompleteArrayInput optionText="name" />
-      </ReferenceArrayInput> */}
+      </ReferenceArrayInput>
       <ArrayInput source="instructions">
         <SimpleFormIterator>
           <TextInput label="instruction" />

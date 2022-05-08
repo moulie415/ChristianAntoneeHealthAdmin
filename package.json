@@ -4,17 +4,17 @@
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.12.3",
-    "firebase": "^9.6.10",
-    "moment": "^2.29.2",
+    "firebase": "^9.8.0",
+    "moment": "^2.29.3",
     "patch-package": "^6.4.7",
     "ra-input-rich-text": "^3.19.10",
     "react": "^17.0.2",
-    "react-admin": "^3.19.10",
+    "react-admin": "^3.19.11",
     "react-admin-firebase": "^3.3.1",
     "react-dom": "^17.0.2",
-    "react-final-form": "^6.5.2",
+    "react-final-form": "^6.5.9",
     "react-firebaseui": "^6.0.0",
-    "react-scripts": "^5.0.0",
+    "react-scripts": "^5.0.1",
     "react-toastify": "^8.2.0",
     "source-map-loader": "^0.2.4"
   },
@@ -27,7 +27,7 @@
     "eslint-plugin-jest": "^24.3.6",
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-react": "^7.29.4",
-    "eslint-plugin-react-hooks": "^4.4.0",
+    "eslint-plugin-react-hooks": "^4.5.0",
     "prettier": "^2.6.1"
   },
   "scripts": {

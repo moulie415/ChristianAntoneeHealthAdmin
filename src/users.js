@@ -28,6 +28,7 @@ import {
   ReferenceArrayField,
   ReferenceField,
   ImageField,
+  BooleanField,
 } from 'react-admin';
 import {db} from './App';
 import {StringToLabelObject} from './helpers';
@@ -130,6 +131,8 @@ export const UsersShow = props => {
         <ImageField source="avatar" title="avatar" />
         <TextField source="name" />
         <EmailField source="email" />
+        <BooleanField source="premium" />
+        <BooleanField source="usedFreePlan" />
         <FunctionField label="Plan status" render={getPlanStatusString} />
         <FormLabel style={{fontSize: 12}}>Plans</FormLabel>
         <div style={{display: 'flex', flexDirection: 'row'}}>
@@ -202,6 +205,8 @@ export const UsersEdit = props => {
         <ImageField source="avatar" title="avatar" />
         <TextField source="name" />
         <EmailField source="email" />
+        <BooleanField source="premium" />
+        <BooleanField source="usedFreePlan" />
         <FunctionField label="Plan status" render={getPlanStatusString} />
         <DateField source="dob" label="Date of birth" />
         <TextField source="equipment" />

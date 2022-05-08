@@ -367,7 +367,6 @@ export const PlansEdit = props => {
             <ReferenceInput label="Article" reference="education">
               <AutocompleteInput optionText="title" />
             </ReferenceInput>
-            color="primary"
           </SimpleFormIterator>
         </ArrayInput>
         <SendPlanButton
