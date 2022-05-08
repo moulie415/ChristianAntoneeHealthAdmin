@@ -157,6 +157,9 @@ export const PlansCreate = props => {
                 <ReferenceInput
                   className={iteratorClasses.input}
                   source="exercise"
+                  sort={{field: 'name', order: 'ASC'}}
+                  // filterToQuery={searchText => ({name: searchText})}
+                  perPage={200}
                   label="Exercise"
                   reference="exercises">
                   <AutocompleteInput optionText="name" />
@@ -295,6 +298,9 @@ export const PlansEdit = props => {
                 <ReferenceInput
                   className={iteratorClasses.input}
                   source="exercise"
+                  sort={{field: 'name', order: 'ASC'}}
+                  perPage={200}
+                  // filterToQuery={searchText => ({name: searchText})}
                   label="Exercise"
                   reference="exercises">
                   <AutocompleteInput optionText="name" />

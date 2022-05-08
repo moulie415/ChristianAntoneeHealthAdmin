@@ -103,7 +103,9 @@ export const QuickRoutineCreate = props => (
       <ReferenceArrayInput
         label="Exercises"
         reference="exercises"
-        filterToQuery={searchText => ({name: searchText})}
+        sort={{field: 'name', order: 'ASC'}}
+        // filterToQuery={searchText => ({name: searchText})}
+        perPage={200}
         source="exerciseIds">
         <AutocompleteArrayInput optionText="name" />
       </ReferenceArrayInput>
@@ -157,9 +159,12 @@ export const QuickRoutineEdit = props => (
         ]}
       />
       <ReferenceArrayInput
+        label="Exercises"
         source="exerciseIds"
         reference="exercises"
-        filterToQuery={searchText => ({name: searchText})}>
+        sort={{field: 'name', order: 'ASC'}}
+        // filterToQuery={searchText => ({name: searchText})}
+        perPage={200}>
         <AutocompleteArrayInput optionText="name" />
       </ReferenceArrayInput>
       <ArrayInput source="instructions">
