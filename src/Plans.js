@@ -157,25 +157,22 @@ export const PlansCreate = props => {
                 <ReferenceInput
                   className={iteratorClasses.input}
                   source="exercise"
-                  sort={{field: 'name', order: 'ASC'}}
-                  // filterToQuery={searchText => ({name: searchText})}
-                  perPage={200}
                   label="Exercise"
                   reference="exercises">
                   <AutocompleteInput optionText="name" />
                 </ReferenceInput>
-                <NumberInput
+                <TextInput
                   className={iteratorClasses.input}
                   source="sets"
                   label="Sets"
                 />
-                <NumberInput
+                <TextInput
                   className={iteratorClasses.input}
                   source="reps"
                   label="Reps"
                 />
 
-                <NumberInput
+                <TextInput
                   className={iteratorClasses.input}
                   source="resistanceScale"
                   label="Resistance scale"
@@ -298,25 +295,22 @@ export const PlansEdit = props => {
                 <ReferenceInput
                   className={iteratorClasses.input}
                   source="exercise"
-                  sort={{field: 'name', order: 'ASC'}}
-                  perPage={200}
-                  // filterToQuery={searchText => ({name: searchText})}
                   label="Exercise"
                   reference="exercises">
                   <AutocompleteInput optionText="name" />
                 </ReferenceInput>
-                <NumberInput
+                <TextInput
                   className={iteratorClasses.input}
                   source="sets"
                   label="Sets"
                 />
-                <NumberInput
+                <TextInput
                   className={iteratorClasses.input}
                   source="reps"
                   label="Reps"
                 />
 
-                <NumberInput
+                <TextInput
                   className={iteratorClasses.input}
                   source="resistanceScale"
                   label="Resistance scale"
@@ -373,6 +367,7 @@ export const PlansEdit = props => {
             <ReferenceInput label="Article" reference="education">
               <AutocompleteInput optionText="title" />
             </ReferenceInput>
+            color="primary"
           </SimpleFormIterator>
         </ArrayInput>
         <SendPlanButton

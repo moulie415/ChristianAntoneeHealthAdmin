@@ -109,12 +109,7 @@ export const QuickRoutineCreate = props => (
         source="exerciseIds">
         <AutocompleteArrayInput optionText="name" />
       </ReferenceArrayInput>
-
-      <ArrayInput source="instructions">
-        <SimpleFormIterator>
-          <TextInput label="instruction" />
-        </SimpleFormIterator>
-      </ArrayInput>
+      <TextInput label="instructions" />
       <ImageInput source="thumbnail" label="Thumbnail" accept="image/*">
         <ImageField source="src" title="title" />
       </ImageInput>
@@ -167,11 +162,7 @@ export const QuickRoutineEdit = props => (
         perPage={200}>
         <AutocompleteArrayInput optionText="name" />
       </ReferenceArrayInput>
-      <ArrayInput source="instructions">
-        <SimpleFormIterator>
-          <TextInput label="instruction" />
-        </SimpleFormIterator>
-      </ArrayInput>
+      <TextInput label="instructions" />
       <ImageInput source="thumbnail" label="Thumbnail" accept="image/*">
         <ImageField source="src" title="title" />
       </ImageInput>
