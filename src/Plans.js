@@ -158,6 +158,7 @@ export const PlansCreate = props => {
                   className={iteratorClasses.input}
                   source="exercise"
                   label="Exercise"
+                  perPage={200}
                   reference="exercises">
                   <AutocompleteInput optionText="name" />
                 </ReferenceInput>
@@ -295,6 +296,7 @@ export const PlansEdit = props => {
                 <ReferenceInput
                   className={iteratorClasses.input}
                   source="exercise"
+                  perPage={200}
                   label="Exercise"
                   reference="exercises">
                   <AutocompleteInput optionText="name" />
