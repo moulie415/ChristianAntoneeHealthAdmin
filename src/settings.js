@@ -28,6 +28,10 @@ export const SettingsList = props => (
         </SingleFieldList>
       </ReferenceArrayField>
       <BooleanField source="emailPlanRequests" label="Email plan requests" />
+      <BooleanField
+        source="planRequestNotifications"
+        label="Plan request push notification"
+      />
       <ShowButton label="" />
       <EditButton label="" />
     </Datagrid>
@@ -44,6 +48,10 @@ export const SettingsShow = props => (
         </SingleFieldList>
       </ReferenceArrayField>
       <BooleanField source="emailPlanRequests" label="Email plan requests" />
+      <BooleanField
+        source="planRequestNotifications"
+        label="Plan request push notification"
+      />
     </SimpleShowLayout>
   </Show>
 );
@@ -65,6 +73,10 @@ export const SettingsEdit = props => (
         <AutocompleteArrayInput optionText="name" />
       </ReferenceArrayInput>
       <BooleanInput source="emailPlanRequests" label="Email plan requests" />
+      <BooleanInput
+        source="planRequestNotifications"
+        label="Plan request push notification"
+      />
     </SimpleForm>
   </Edit>
 );
