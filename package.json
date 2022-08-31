@@ -36,7 +36,10 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "postinstall": "node ./overrides/patch.js && patch-package"
+    "postinstall": "patch-package"
+  },
+  "engines": {
+    "node": "16.13.1"
   },
   "browserslist": [
     ">0.2%",
