@@ -1,4 +1,7 @@
+import {useRecordContext} from 'react-admin';
+
 const PlanStatusField = props => {
+  const record = useRecordContext();
   const getString = status => {
     if (status === 3) {
       return 'Complete';
@@ -18,13 +21,13 @@ const PlanStatusField = props => {
     return 'Uninitialized';
   };
 
-  return props.record ? (
+  return record ? (
     <span
       style={{
-        color: getColor(props.record.planStatus),
-        fontWeight: props.record.planStatus === 2 ? 'bold' : 'normal',
+        color: getColor(ecord.planStatus),
+        fontWeight: record.planStatus === 2 ? 'bold' : 'normal',
       }}>
-      {getString(props.record.planStatus)}
+      {getString(record.planStatus)}
     </span>
   ) : null;
 };

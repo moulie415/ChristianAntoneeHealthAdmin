@@ -1,7 +1,10 @@
 import {cloneElement} from 'react';
+import {useRecordContext} from 'react-admin';
 
-export const StringToLabelObject = ({record, children, ...rest}) =>
-  cloneElement(children, {
+export const StringToLabelObject = ({children, ...rest}) => {
+  const record = useRecordContext();
+  return cloneElement(children, {
     record: {label: record},
     ...rest,
   });
+};
