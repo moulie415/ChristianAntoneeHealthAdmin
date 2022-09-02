@@ -11,7 +11,7 @@ import firebase from 'firebase/compat/app';
 import {firebaseConfig} from './FIREBASE_CONFIG';
 import CustomLoginPage from './CustomLoginPage';
 import {TestCreate, TestEdit, TestList, TestShow} from './tests';
-import FitnessCenterIcon from '@material-ui/icons/FitnessCenter';
+import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 import {
   QuickRoutineCreate,
   QuickRoutineEdit,
@@ -29,13 +29,13 @@ import {initializeAppCheck, ReCaptchaV3Provider} from 'firebase/app-check';
 import {getFirestore} from 'firebase/firestore';
 import {UsersEdit, UsersList, UsersShow} from './users';
 import {PlansCreate, PlansEdit, PlansList, PlansShow} from './Plans';
-import TimerIcon from '@material-ui/icons/Timer';
-import BookIcon from '@material-ui/icons/Book';
-import SettingsIcon from '@material-ui/icons/Settings';
-import EventAvailableIcon from '@material-ui/icons/EventAvailable';
+import TimerIcon from '@mui/icons-material/Timer';
+import BookIcon from '@mui/icons-material/Book';
+import SettingsIcon from '@mui/icons-material/Settings';
+import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import PersonIcon from '@material-ui/icons/Person';
+import PersonIcon from '@mui/icons-material/Person';
 import UserIcon from './UserIcon';
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);

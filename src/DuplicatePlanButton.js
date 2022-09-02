@@ -2,9 +2,9 @@ import React from 'react';
 import {collection, addDoc} from 'firebase/firestore';
 import {toast} from 'react-toastify';
 import {db} from './App';
-import {Button} from '@material-ui/core';
 import {useNavigate} from 'react-router-dom';
 import {useRecordContext} from 'react-admin';
+import Button from '@mui/material/Button';
 
 const DuplicatePlanButton = ({loading, setLoading}) => {
   const record = useRecordContext();

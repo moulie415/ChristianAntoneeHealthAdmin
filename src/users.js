@@ -1,4 +1,5 @@
-import {Button, Chip, FormLabel} from '@material-ui/core';
+import Chip from '@mui/material/Chip';
+import FormLabel from '@mui/material/FormLabel';
 import * as React from 'react';
 import {
   Datagrid,

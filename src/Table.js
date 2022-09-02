@@ -1,5 +1,17 @@
 import React from 'react';
-import {Field} from 'react-final-form';
+import {useController} from 'react-hook-form';
+
+const MyInput = ({gender, name}) => {
+  const controller = useController({name: `${gender}${name}`});
+  return (
+    <input
+      {...controller.field}
+      style={{width: 60}}
+      component="input"
+      type="number"
+    />
+  );
+};
 
 const Table = ({gender}) => {
   return (
@@ -9,745 +21,265 @@ const Table = ({gender}) => {
         <tr>
           <th>Age</th>
           <th>
-            <Field
-              style={{width: 60}}
-              name={`${gender}.age.col1.lower`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".age.col1.lower" />
             -
-            <Field
-              style={{width: 60}}
-              name={`${gender}.age.col1.higher`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".age.col1.higher" />
           </th>
           <th>
-            <Field
-              style={{width: 60}}
-              name={`${gender}.age.col2.lower`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".age.col2.lower" />
             -
-            <Field
-              style={{width: 60}}
-              name={`${gender}.age.col2.higher`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".age.col2.higher" />
           </th>
           <th>
-            <Field
-              style={{width: 60}}
-              name={`${gender}.age.col3.lower`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".age.col3.lower" />
             -
-            <Field
-              style={{width: 60}}
-              name={`${gender}.age.col3.higher`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".age.col3.higher" />
           </th>
           <th>
-            <Field
-              style={{width: 60}}
-              name={`${gender}.age.col4.lower`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".age.col4.lower" />
             -
-            <Field
-              style={{width: 60}}
-              name={`${gender}.age.col4.higher`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".age.col4.higher" />
           </th>
           <th>
-            <Field
-              style={{width: 60}}
-              name={`${gender}.age.col5.lower`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".age.col5.lower" />
             -
-            <Field
-              style={{width: 60}}
-              name={`${gender}.age.col5.higher`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".age.col5.higher" />
           </th>
           <th>
-            <Field
-              style={{width: 60}}
-              name={`${gender}.age.col6.lower`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".age.col6.lower" />
             -
-            <Field
-              style={{width: 60}}
-              name={`${gender}.age.col6.higher`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".age.col6.higher" />
           </th>
         </tr>
         <tr>
           <td>Excellent</td>
           <td>
-            <Field
-              style={{width: 60}}
-              name={`${gender}.excellent.col1.lower`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".excellent.col1.lower" />
             -
-            <Field
-              style={{width: 60}}
-              name={`${gender}.excellent.col1.higher`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".excellent.col1.higher" />
           </td>
           <td>
-            <Field
-              style={{width: 60}}
-              name={`${gender}.excellent.col2.lower`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".excellent.col2.lower" />
             -
-            <Field
-              style={{width: 60}}
-              name={`${gender}.excellent.col2.higher`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".excellent.col2.higher" />
           </td>
           <td>
-            <Field
-              style={{width: 60}}
-              name={`${gender}.excellent.col3.lower`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".excellent.col3.lower" />
             -
-            <Field
-              style={{width: 60}}
-              name={`${gender}.excellent.col3.higher`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".excellent.col3.higher" />
           </td>
           <td>
-            <Field
-              style={{width: 60}}
-              name={`${gender}.excellent.col4.lower`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".excellent.col4.lower" />
             -
-            <Field
-              style={{width: 60}}
-              name={`${gender}.excellent.col4.higher`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".excellent.col4.higher" />
           </td>
           <td>
-            <Field
-              style={{width: 60}}
-              name={`${gender}.excellent.col5.lower`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".excellent.col5.lower" />
             -
-            <Field
-              style={{width: 60}}
-              name={`${gender}.excellent.col5.higher`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".excellent.col5.higher" />
           </td>
           <td>
-            <Field
-              style={{width: 60}}
-              name={`${gender}.excellent.col6.lower`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".excellent.col6.lower" />
             -
-            <Field
-              style={{width: 60}}
-              name={`${gender}.excellent.col6.higher`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".excellent.col6.higher" />
           </td>
         </tr>
         <tr>
           <td>Good</td>
           <td>
-            <Field
-              style={{width: 60}}
-              name={`${gender}.good.col1.lower`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".good.col1.lower" />
             -
-            <Field
-              style={{width: 60}}
-              name={`${gender}.good.col1.higher`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".good.col1.higher" />
           </td>
           <td>
-            <Field
-              style={{width: 60}}
-              name={`${gender}.good.col2.lower`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".good.col2.lower" />
             -
-            <Field
-              style={{width: 60}}
-              name={`${gender}.good.col2.higher`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".good.col2.higher" />
           </td>
           <td>
-            <Field
-              style={{width: 60}}
-              name={`${gender}.good.col3.lower`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".good.col3.lower" />
             -
-            <Field
-              style={{width: 60}}
-              name={`${gender}.good.col3.higher`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".good.col3.higher" />
           </td>
           <td>
-            <Field
-              style={{width: 60}}
-              name={`${gender}.good.col4.lower`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".good.col4.lower" />
             -
-            <Field
-              style={{width: 60}}
-              name={`${gender}.good.col4.higher`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".good.col4.higher" />
           </td>
           <td>
-            <Field
-              style={{width: 60}}
-              name={`${gender}.good.col5.lower`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".good.col5.lower" />
             -
-            <Field
-              style={{width: 60}}
-              name={`${gender}.good.col5.higher`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".good.col5.higher" />
           </td>
           <td>
-            <Field
-              style={{width: 60}}
-              name={`${gender}.good.col6.lower`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".good.col6.lower" />
             -
-            <Field
-              style={{width: 60}}
-              name={`${gender}.good.col6.higher`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".good.col6.higher" />
           </td>
         </tr>
         <tr>
           <td>Above Average</td>
           <td>
-            <Field
-              style={{width: 60}}
-              name={`${gender}.aboveAverage.col1.lower`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".aboveAverage.col1.lower" />
             -
-            <Field
-              style={{width: 60}}
-              name={`${gender}.aboveAverage.col1.higher`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".aboveAverage.col1.higher" />
           </td>
           <td>
-            <Field
-              style={{width: 60}}
-              name={`${gender}.aboveAverage.col2.lower`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".aboveAverage.col2.lower" />
             -
-            <Field
-              style={{width: 60}}
-              name={`${gender}.aboveAverage.col2.higher`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".aboveAverage.col2.higher" />
           </td>
           <td>
-            <Field
-              style={{width: 60}}
-              name={`${gender}.aboveAverage.col3.lower`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".aboveAverage.col3.lower" />
             -
-            <Field
-              style={{width: 60}}
-              name={`${gender}.aboveAverage.col3.higher`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".aboveAverage.col3.higher" />
           </td>
           <td>
-            <Field
-              style={{width: 60}}
-              name={`${gender}.aboveAverage.col4.lower`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".aboveAverage.col4.lower" />
             -
-            <Field
-              style={{width: 60}}
-              name={`${gender}.aboveAverage.col4.higher`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".aboveAverage.col4.higher" />
           </td>
           <td>
-            <Field
-              style={{width: 60}}
-              name={`${gender}.aboveAverage.col5.lower`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".aboveAverage.col5.lower" />
             -
-            <Field
-              style={{width: 60}}
-              name={`${gender}.aboveAverage.col5.higher`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".aboveAverage.col5.higher" />
           </td>
           <td>
-            <Field
-              style={{width: 60}}
-              name={`${gender}.aboveAverage.col6.lower`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".aboveAverage.col6.lower" />
             -
-            <Field
-              style={{width: 60}}
-              name={`${gender}.aboveAverage.col6.higher`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".aboveAverage.col6.higher" />
           </td>
         </tr>
         <tr>
           <td>Average</td>
           <td>
-            <Field
-              style={{width: 60}}
-              name={`${gender}.average.col1.lower`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".average.col1.lower" />
             -
-            <Field
-              style={{width: 60}}
-              name={`${gender}.average.col1.higher`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".average.col1.higher" />
           </td>
           <td>
-            <Field
-              style={{width: 60}}
-              name={`${gender}.average.col2.lower`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".average.col2.lower" />
             -
-            <Field
-              style={{width: 60}}
-              name={`${gender}.average.col2.higher`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".average.col2.higher" />
           </td>
           <td>
-            <Field
-              style={{width: 60}}
-              name={`${gender}.average.col3.lower`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".average.col3.lower" />
             -
-            <Field
-              style={{width: 60}}
-              name={`${gender}.average.col3.higher`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".average.col3.higher" />
           </td>
           <td>
-            <Field
-              style={{width: 60}}
-              name={`${gender}.average.col4.lower`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".average.col4.lower" />
             -
-            <Field
-              style={{width: 60}}
-              name={`${gender}.average.col4.higher`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".average.col4.higher" />
           </td>
           <td>
-            <Field
-              style={{width: 60}}
-              name={`${gender}.average.col5.lower`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".average.col5.lower" />
             -
-            <Field
-              style={{width: 60}}
-              name={`${gender}.average.col5.higher`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".average.col5.higher" />
           </td>
           <td>
-            <Field
-              style={{width: 60}}
-              name={`${gender}.average.col6.lower`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".average.col6.lower" />
             -
-            <Field
-              style={{width: 60}}
-              name={`${gender}.average.col6.higher`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".average.col6.higher" />
           </td>
         </tr>
         <tr>
           <td>Below Average</td>
           <td>
-            <Field
-              style={{width: 60}}
-              name={`${gender}.belowAverage.col1.lower`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".belowAverage.col1.lower" />
             -
-            <Field
-              style={{width: 60}}
-              name={`${gender}.belowAverage.col1.higher`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".belowAverage.col1.higher" />
           </td>
           <td>
-            <Field
-              style={{width: 60}}
-              name={`${gender}.belowAverage.col2.lower`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".belowAverage.col2.lower" />
             -
-            <Field
-              style={{width: 60}}
-              name={`${gender}.belowAverage.col2.higher`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".belowAverage.col2.higher" />
           </td>
           <td>
-            <Field
-              style={{width: 60}}
-              name={`${gender}.belowAverage.col3.lower`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".belowAverage.col3.lower" />
             -
-            <Field
-              style={{width: 60}}
-              name={`${gender}.belowAverage.col3.higher`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".belowAverage.col3.higher" />
           </td>
           <td>
-            <Field
-              style={{width: 60}}
-              name={`${gender}.belowAverage.col4.lower`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".belowAverage.col4.lower" />
             -
-            <Field
-              style={{width: 60}}
-              name={`${gender}.belowAverage.col4.higher`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".belowAverage.col4.higher" />
           </td>
           <td>
-            <Field
-              style={{width: 60}}
-              name={`${gender}.belowAverage.col5.lower`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".belowAverage.col5.lower" />
             -
-            <Field
-              style={{width: 60}}
-              name={`${gender}.belowAverage.col5.higher`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".belowAverage.col5.higher" />
           </td>
           <td>
-            <Field
-              style={{width: 60}}
-              name={`${gender}.belowAverage.col6.lower`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".belowAverage.col6.lower" />
             -
-            <Field
-              style={{width: 60}}
-              name={`${gender}.belowAverage.col6.higher`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".belowAverage.col6.higher" />
           </td>
         </tr>
         <tr>
           <td>Poor</td>
           <td>
-            <Field
-              style={{width: 60}}
-              name={`${gender}.poor.col1.lower`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".poor.col1.lower" />
             -
-            <Field
-              style={{width: 60}}
-              name={`${gender}.poor.col1.higher`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".poor.col1.higher" />
           </td>
           <td>
-            <Field
-              style={{width: 60}}
-              name={`${gender}.poor.col2.lower`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".poor.col2.lower" />
             -
-            <Field
-              style={{width: 60}}
-              name={`${gender}.poor.col2.higher`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".poor.col2.higher" />
           </td>
           <td>
-            <Field
-              style={{width: 60}}
-              name={`${gender}.poor.col3.lower`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".poor.col3.lower" />
             -
-            <Field
-              style={{width: 60}}
-              name={`${gender}.poor.col3.higher`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".poor.col3.higher" />
           </td>
           <td>
-            <Field
-              style={{width: 60}}
-              name={`${gender}.poor.col4.lower`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".poor.col4.lower" />
             -
-            <Field
-              style={{width: 60}}
-              name={`${gender}.poor.col4.higher`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".poor.col4.higher" />
           </td>
           <td>
-            <Field
-              style={{width: 60}}
-              name={`${gender}.poor.col5.lower`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".poor.col5.lower" />
             -
-            <Field
-              style={{width: 60}}
-              name={`${gender}.poor.col5.higher`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".poor.col5.higher" />
           </td>
           <td>
-            <Field
-              style={{width: 60}}
-              name={`${gender}.poor.col6.lower`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".poor.col6.lower" />
             -
-            <Field
-              style={{width: 60}}
-              name={`${gender}.poor.col6.higher`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".poor.col6.higher" />
           </td>
         </tr>
         <tr>
           <td>Very Poor</td>
           <td>
-            <Field
-              style={{width: 60}}
-              name={`${gender}.veryPoor.col1.lower`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".veryPoor.col1.lower" />
             -
-            <Field
-              style={{width: 60}}
-              name={`${gender}.veryPoor.col1.higher`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".veryPoor.col1.higher" />
           </td>
           <td>
-            <Field
-              style={{width: 60}}
-              name={`${gender}.veryPoor.col2.lower`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".veryPoor.col2.lower" />
             -
-            <Field
-              style={{width: 60}}
-              name={`${gender}.veryPoor.col2.higher`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".veryPoor.col2.higher" />
           </td>
           <td>
-            <Field
-              style={{width: 60}}
-              name={`${gender}.veryPoor.col3.lower`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".veryPoor.col3.lower" />
             -
-            <Field
-              style={{width: 60}}
-              name={`${gender}.veryPoor.col3.higher`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".veryPoor.col3.higher" />
           </td>
           <td>
-            <Field
-              style={{width: 60}}
-              name={`${gender}.veryPoor.col4.lower`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".veryPoor.col4.lower" />
             -
-            <Field
-              style={{width: 60}}
-              name={`${gender}.veryPoor.col4.higher`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".veryPoor.col4.higher" />
           </td>
           <td>
-            <Field
-              style={{width: 60}}
-              name={`${gender}.veryPoor.col5.lower`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".veryPoor.col5.lower" />
             -
-            <Field
-              style={{width: 60}}
-              name={`${gender}.veryPoor.col5.higher`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".veryPoor.col5.higher" />
           </td>
           <td>
-            <Field
-              style={{width: 60}}
-              name={`${gender}.veryPoor.col6.lower`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".veryPoor.col6.lower" />
             -
-            <Field
-              style={{width: 60}}
-              name={`${gender}.veryPoor.col6.higher`}
-              component="input"
-              type="number"
-            />
+            <MyInput gender={gender} name=".veryPoor.col6.higher" />
           </td>
         </tr>
       </tbody>

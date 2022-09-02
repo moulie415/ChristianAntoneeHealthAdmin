@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import PersonIcon from '@material-ui/icons/Person';
+import PersonIcon from '@mui/icons-material/Person';
 import {collection, query, where, onSnapshot} from 'firebase/firestore';
 import {db} from './App';
 

@@ -1,4 +1,4 @@
-import {Button, Typography} from '@material-ui/core';
+import Typography from '@mui/material/Typography';
 import * as React from 'react';
 import {
   Datagrid,
@@ -26,7 +26,7 @@ import {
 } from 'react-admin';
 import {doc, getDoc} from 'firebase/firestore';
 import {db} from './App';
-import {useFormState} from 'react-final-form';
+import {useWatch} from 'react-hook-form';
 import {toast} from 'react-toastify';
 import {getFunctions, httpsCallable} from 'firebase/functions';
 import {makeStyles} from '@material-ui/styles';
@@ -109,12 +109,12 @@ const send = async uid => {
 };
 
 const UserInput = ({setUser, ...props}) => {
-  const {values} = useFormState();
+  const user = useWatch({name: 'user'});
   React.useEffect(() => {
-    if (values.user) {
-      setUser(values.user);
+    if (user) {
+      setUser(user);
     }
-  }, [values, setUser]);
+  }, [user, setUser]);
   return (
     <ReferenceInput
       label="User"
@@ -254,12 +254,12 @@ export const PlansCreate = props => {
 };
 
 const UserField = ({setUser, ...props}) => {
-  const {values} = useFormState();
+  const user = useWatch({name: 'user'});
   React.useEffect(() => {
-    if (values.user) {
-      setUser(values.user);
+    if (user) {
+      setUser(user);
     }
-  }, [values, setUser]);
+  }, [setUser, user]);
   return (
     <ReferenceField label="User" source="user" reference="users" {...props}>
       <TextField source="name" />

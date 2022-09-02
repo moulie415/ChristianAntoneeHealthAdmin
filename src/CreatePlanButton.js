@@ -1,4 +1,4 @@
-import {Button} from '@material-ui/core';
+import Button from '@mui/material/Button';
 import {collection, addDoc} from 'firebase/firestore';
 import {toast} from 'react-toastify';
 import {db} from './App';
