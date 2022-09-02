@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@material-ui/core": "^4.12.3",
     "@mui/icons-material": "^5.10.3",
     "@mui/material": "^5.10.3",
+    "@mui/styles": "^5.10.3",
     "firebase": "^9.8.0",
     "moment": "^2.29.3",
     "patch-package": "^6.4.7",

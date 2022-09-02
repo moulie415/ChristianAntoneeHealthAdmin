@@ -29,7 +29,7 @@ import {db} from './App';
 import {useWatch} from 'react-hook-form';
 import {toast} from 'react-toastify';
 import {getFunctions, httpsCallable} from 'firebase/functions';
-import {makeStyles} from '@material-ui/styles';
+import {makeStyles} from '@mui/styles';
 import DuplicatePlanButton from './DuplicatePlanButton';
 import SendPlanButton from './SendPlanButton';
 
