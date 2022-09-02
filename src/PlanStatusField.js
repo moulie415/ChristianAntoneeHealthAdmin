@@ -24,7 +24,7 @@ const PlanStatusField = props => {
   return record ? (
     <span
       style={{
-        color: getColor(ecord.planStatus),
+        color: getColor(record.planStatus),
         fontWeight: record.planStatus === 2 ? 'bold' : 'normal',
       }}>
       {getString(record.planStatus)}
