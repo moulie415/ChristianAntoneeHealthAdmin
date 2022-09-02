@@ -45,6 +45,7 @@ import {
 } from 'firebase/firestore';
 import {toast} from 'react-toastify';
 import * as moment from 'moment';
+import {useNavigate, useParams} from 'react-router-dom';
 
 const UserFilter = props => (
   <Filter {...props}>
@@ -96,11 +97,7 @@ export const UsersList = props => {
         <TextField source="name" />
         <EmailField source="email" />
         <PlanStatusField source="planStatus" />
-        <CreatePlanButton
-          loading={loading}
-          setLoading={setLoading}
-          history={props.history}
-        />
+        <CreatePlanButton loading={loading} setLoading={setLoading} />
         <ShowButton label="" />
         <EditButton label="" />
         {/* <DeleteButton label="" redirect={false} /> */}
@@ -112,7 +109,8 @@ export const UsersList = props => {
 export const UsersShow = props => {
   const [loading, setLoading] = React.useState(false);
   const [plans, setPlans] = React.useState([]);
-  const {id} = props;
+  const {id} = useParams();
+  const navigate = useNavigate();
 
   React.useEffect(() => {
     const checkPlans = async () => {
@@ -141,7 +139,7 @@ export const UsersShow = props => {
               <Chip
                 key={p}
                 style={{marginRight: 10}}
-                onClick={() => props.history.push(`/plans/${p.id}`)}
+                onClick={() => navigate(`/plans/${p.id}`)}
                 label={moment(p.createdate.toDate()).format('DD/MM/YYYY')}
               />
             );
@@ -166,11 +164,7 @@ export const UsersShow = props => {
             </StringToLabelObject>
           </SingleFieldList>
         </ArrayField>
-        <CreatePlanButton
-          loading={loading}
-          setLoading={setLoading}
-          history={props.history}
-        />
+        <CreatePlanButton loading={loading} setLoading={setLoading} />
       </SimpleShowLayout>
     </Show>
   );
@@ -187,7 +181,8 @@ export const UsersCreate = props => (
 export const UsersEdit = props => {
   const [loading, setLoading] = React.useState(false);
   const [plans, setPlans] = React.useState([]);
-  const {id} = props;
+  const {id} = useParams();
+
   React.useEffect(() => {
     const checkPlans = async () => {
       try {
@@ -227,11 +222,7 @@ export const UsersEdit = props => {
             </StringToLabelObject>
           </SingleFieldList>
         </ArrayField>
-        <CreatePlanButton
-          loading={loading}
-          setLoading={setLoading}
-          history={props.history}
-        />
+        <CreatePlanButton loading={loading} setLoading={setLoading} />
       </SimpleForm>
     </Edit>
   );

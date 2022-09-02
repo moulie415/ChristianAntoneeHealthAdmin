@@ -2,9 +2,13 @@ import {Button} from '@material-ui/core';
 import {collection, addDoc} from 'firebase/firestore';
 import {toast} from 'react-toastify';
 import {db} from './App';
+import {useRecordContext} from 'react-admin';
+import {useNavigate} from 'react-router-dom';
 
-const CreatePlanButton = ({loading, setLoading, history, ...props}) => {
-  const {id, planStatus} = props.record;
+const CreatePlanButton = ({loading, setLoading}) => {
+  const record = useRecordContext();
+  const navigate = useNavigate();
+  const {id, planStatus} = record;
   return planStatus === 2 ? (
     <Button
       onClick={async () => {
@@ -15,7 +19,7 @@ const CreatePlanButton = ({loading, setLoading, history, ...props}) => {
             lastupdate: new Date(),
             createdate: new Date(),
           });
-          history.push(`/plans/${ref.id}`);
+          navigate(`/plans/${ref.id}`);
           setLoading(false);
         } catch (e) {
           setLoading(false);
