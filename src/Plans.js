@@ -63,11 +63,8 @@ const useDateIteratorStyle = makeStyles(() => ({
 }));
 
 export const PlansList = props => (
-  <List
-    {...props}
-    bulkActionButtons={false}
-    sort={{field: 'createdate', order: 'DESC'}}>
-    <Datagrid>
+  <List {...props} sort={{field: 'createdate', order: 'DESC'}}>
+    <Datagrid bulkActionButtons={false}>
       <ReferenceField label="User" source="user" reference="users">
         <TextField source="name" />
       </ReferenceField>

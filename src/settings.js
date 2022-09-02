@@ -19,8 +19,8 @@ import {
 } from 'react-admin';
 
 export const SettingsList = props => (
-  <List bulkActionButtons={false} {...props}>
-    <Datagrid>
+  <List {...props}>
+    <Datagrid bulkActionButtons={false}>
       <BooleanField source="ads" />
       <ReferenceArrayField label="Admins" reference="users" source="admins">
         <SingleFieldList>
