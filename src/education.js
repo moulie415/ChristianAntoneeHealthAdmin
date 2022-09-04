@@ -1,3 +1,5 @@
+import {Label} from '@mui/icons-material';
+import {Typography} from '@mui/material';
 import {RichTextInput} from 'ra-input-rich-text';
 import React from 'react';
 import {
@@ -19,7 +21,9 @@ import {
   EditButton,
   DeleteButton,
   SelectInput,
+  useRecordContext,
 } from 'react-admin';
+import {useWatch} from 'react-hook-form';
 
 export const EducationList = props => (
   <List {...props}>
@@ -34,15 +38,36 @@ export const EducationList = props => (
   </List>
 );
 
-export const EducationShow = props => (
-  <Show {...props}>
-    <SimpleShowLayout>
-      <TextField source="title" />
-      <ChipField source="category" />
-      <BooleanField source="premium" />
-    </SimpleShowLayout>
-  </Show>
-);
+const CustomBodyField = () => {
+  const {body} = useRecordContext();
+  return (
+    <>
+      <p
+        style={{
+          fontSize: '0.75em',
+          fontFamily: 'Roboto, Helvetica,Arial,sans-serif',
+          color: 'rgba(0,0,0,0.6)',
+        }}>
+        Body
+      </p>
+      <div dangerouslySetInnerHTML={{__html: body}}></div>
+    </>
+  );
+};
+
+export const EducationShow = props => {
+  return (
+    <Show {...props}>
+      <SimpleShowLayout>
+        <TextField source="title" />
+        <ChipField source="category" />
+        <ImageField source="image.src" />
+        <BooleanField source="premium" />
+        <CustomBodyField />
+      </SimpleShowLayout>
+    </Show>
+  );
+};
 
 export const EducationCreate = props => {
   return (
