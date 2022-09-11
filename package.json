@@ -5,7 +5,10 @@
   "dependencies": {
     "@mui/icons-material": "^5.10.3",
     "@mui/material": "^5.10.3",
+    "draft-js": "^0.11.7",
+    "draftjs-to-html": "^0.9.1",
     "firebase": "^9.9.4",
+    "html-to-draftjs": "^1.5.0",
     "moment": "^2.29.3",
     "patch-package": "^6.4.7",
     "ra-input-rich-text": "^4.3.1",
@@ -13,6 +16,7 @@
     "react-admin": "^4.3.1",
     "react-admin-firebase": "^4.0.2",
     "react-dom": "^18.2.0",
+    "react-draft-wysiwyg": "^1.15.0",
     "react-firebaseui": "^6.0.0",
     "react-hook-form": "^7.34.2",
     "react-scripts": "^5.0.1",

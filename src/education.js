@@ -1,7 +1,5 @@
-import {Label} from '@mui/icons-material';
-import {Typography} from '@mui/material';
 import {RichTextInput} from 'ra-input-rich-text';
-import React from 'react';
+import React, {useState} from 'react';
 import {
   Datagrid,
   List,
@@ -22,8 +20,19 @@ import {
   DeleteButton,
   SelectInput,
   useRecordContext,
+  useInput,
 } from 'react-admin';
-import {useWatch} from 'react-hook-form';
+import {
+  EditorState,
+  convertToRaw,
+  convertFromHTML,
+  ContentState,
+} from 'draft-js';
+import {Editor} from 'react-draft-wysiwyg';
+import draftToHtml from 'draftjs-to-html';
+import htmlToDraft from 'html-to-draftjs';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import {useController} from 'react-hook-form';
 
 export const EducationList = props => (
   <List {...props}>
@@ -52,6 +61,47 @@ const CustomBodyField = () => {
       </p>
       <div dangerouslySetInnerHTML={{__html: body}}></div>
     </>
+  );
+};
+
+const CustomBodyInput = () => {
+  const record = useRecordContext();
+  const body = record?.body;
+
+  const {field} = useController({name: 'body'});
+
+  const getStateFromBody = () => {
+    const blocksFromHTML = convertFromHTML(body);
+    const state = ContentState.createFromBlockArray(
+      blocksFromHTML.contentBlocks,
+      blocksFromHTML.entityMap,
+    );
+    return EditorState.createWithContent(state);
+  };
+
+  const [editorState, setEditorState] = useState(
+    body ? getStateFromBody() : EditorState.createEmpty(),
+  );
+  return (
+    <div
+      style={{
+        border: '1px solid rgba(0, 0, 0, 0.23)',
+        padding: 10,
+        borderRadius: 5,
+      }}>
+      <Editor
+        editorState={editorState}
+        wrapperClassName="demo-wrapper"
+        editorClassName="demo-editor"
+        onEditorStateChange={state => {
+          field.onChange(
+            draftToHtml(convertToRaw(editorState.getCurrentContent())),
+          );
+          setEditorState(state);
+        }}
+        placeholder="Enter content here..."
+      />
+    </div>
   );
 };
 
@@ -85,7 +135,7 @@ export const EducationCreate = props => {
         <ImageInput source="image" label="Image" accept="image/*">
           <ImageField source="src" title="title" />
         </ImageInput>
-        <RichTextInput source="body" multiline />
+        <CustomBodyInput />
         <BooleanInput source="premium" />
       </SimpleForm>
     </Create>
@@ -107,7 +157,8 @@ export const EducationEdit = props => (
       <ImageInput source="image" label="Image" accept="image/*">
         <ImageField source="src" title="title" />
       </ImageInput>
-      <RichTextInput source="body" multiline />
+      {/* <RichTextInput source="body" multiline /> */}
+      <CustomBodyInput />
       <BooleanInput source="premium" />
     </SimpleForm>
   </Edit>
