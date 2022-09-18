@@ -21,6 +21,7 @@ import {
   SelectInput,
   useRecordContext,
   useInput,
+  RichTextField,
 } from 'react-admin';
 import {
   EditorState,
@@ -113,7 +114,7 @@ export const EducationShow = props => {
         <ChipField source="category" />
         <ImageField source="image.src" />
         <BooleanField source="premium" />
-        <CustomBodyField />
+        <RichTextField source="body" />
       </SimpleShowLayout>
     </Show>
   );
@@ -135,7 +136,8 @@ export const EducationCreate = props => {
         <ImageInput source="image" label="Image" accept="image/*">
           <ImageField source="src" title="title" />
         </ImageInput>
-        <CustomBodyInput />
+        <RichTextInput source="body" multiline />
+        {/* <CustomBodyInput /> */}
         <BooleanInput source="premium" />
       </SimpleForm>
     </Create>
@@ -157,8 +159,8 @@ export const EducationEdit = props => (
       <ImageInput source="image" label="Image" accept="image/*">
         <ImageField source="src" title="title" />
       </ImageInput>
-      {/* <RichTextInput source="body" multiline /> */}
-      <CustomBodyInput />
+      <RichTextInput source="body" multiline />
+      {/* <CustomBodyInput /> */}
       <BooleanInput source="premium" />
     </SimpleForm>
   </Edit>
