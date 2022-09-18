@@ -136,7 +136,7 @@ export const EducationCreate = props => {
         <ImageInput source="image" label="Image" accept="image/*">
           <ImageField source="src" title="title" />
         </ImageInput>
-        <RichTextInput source="body" multiline />
+        <RichTextInput source="body" multiline fullWidth />
         {/* <CustomBodyInput /> */}
         <BooleanInput source="premium" />
       </SimpleForm>
@@ -159,7 +159,7 @@ export const EducationEdit = props => (
       <ImageInput source="image" label="Image" accept="image/*">
         <ImageField source="src" title="title" />
       </ImageInput>
-      <RichTextInput source="body" multiline />
+      <RichTextInput source="body" multiline fullWidth />
       {/* <CustomBodyInput /> */}
       <BooleanInput source="premium" />
     </SimpleForm>
