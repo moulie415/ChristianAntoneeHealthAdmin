@@ -118,6 +118,7 @@ export const ExerciseShow = props => (
       <TextField source="id" />
       <TextField source="name" />
       <TextField source="description" multiline />
+      <TextField source="parameters" multiline />
       <ChipField source="type" />
       <ChipField source="area" />
       <ChipField source="level" />
@@ -136,6 +137,7 @@ export const ExerciseCreate = props => (
     <SimpleForm>
       <TextInput source="name" />
       <TextInput source="description" multiline />
+      <TextInput source="parameters" multiline />
       <SelectInput
         source="type"
         choices={[
@@ -216,6 +218,7 @@ export const ExerciseEdit = props => (
     <SimpleForm>
       <TextInput source="name" />
       <TextInput source="description" multiline />
+      <TextInput source="parameters" multiline />
       <SelectInput
         source="type"
         choices={[
