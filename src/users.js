@@ -95,6 +95,7 @@ export const UsersList = props => {
         <EmailField source="email" />
         <PlanStatusField source="planStatus" />
         <CreatePlanButton loading={loading} setLoading={setLoading} />
+        <BooleanField source="premium" />
         <ShowButton label="" />
         <EditButton label="" />
         {/* <DeleteButton label="" redirect={false} /> */}
