@@ -27,6 +27,14 @@ export const SettingsList = props => (
           <ChipField source="name" />
         </SingleFieldList>
       </ReferenceArrayField>
+      <ReferenceArrayField
+        label="Premium friends"
+        reference="users"
+        source="premiumFriends">
+        <SingleFieldList>
+          <ChipField source="name" />
+        </SingleFieldList>
+      </ReferenceArrayField>
       <BooleanField source="emailPlanRequests" label="Email plan requests" />
       <BooleanField
         source="planRequestNotifications"
@@ -43,6 +51,14 @@ export const SettingsShow = props => (
     <SimpleShowLayout>
       <BooleanField source="ads" />
       <ReferenceArrayField label="Admins" reference="users" source="admins">
+        <SingleFieldList>
+          <ChipField source="name" />
+        </SingleFieldList>
+      </ReferenceArrayField>
+      <ReferenceArrayField
+        label="Premium friends"
+        reference="users"
+        source="premiumFriends">
         <SingleFieldList>
           <ChipField source="name" />
         </SingleFieldList>
@@ -68,6 +84,12 @@ export const SettingsEdit = props => (
       <BooleanInput source="ads" />
       <ReferenceArrayInput
         source="admins"
+        reference="users"
+        filterToQuery={searchText => ({name: searchText})}>
+        <AutocompleteArrayInput optionText="name" />
+      </ReferenceArrayInput>
+      <ReferenceArrayInput
+        source="premiumFriends"
         reference="users"
         filterToQuery={searchText => ({name: searchText})}>
         <AutocompleteArrayInput optionText="name" />
