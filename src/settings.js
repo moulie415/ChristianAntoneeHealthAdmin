@@ -40,6 +40,7 @@ export const SettingsList = props => (
         source="planRequestNotifications"
         label="Plan request push notification"
       />
+      <BooleanField source="plansEnabled" label="Plans enabled" />
       <ShowButton label="" />
       <EditButton label="" />
     </Datagrid>
@@ -68,6 +69,7 @@ export const SettingsShow = props => (
         source="planRequestNotifications"
         label="Plan request push notification"
       />
+      <BooleanField source="plansEnabled" label="Plans enabled" />
     </SimpleShowLayout>
   </Show>
 );
@@ -99,6 +101,7 @@ export const SettingsEdit = props => (
         source="planRequestNotifications"
         label="Plan request push notification"
       />
+      <BooleanInput source="plansEnabled" label="Plans enabled" />
     </SimpleForm>
   </Edit>
 );
