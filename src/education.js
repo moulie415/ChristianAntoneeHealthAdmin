@@ -22,6 +22,7 @@ import {
   useRecordContext,
   useInput,
   RichTextField,
+  required,
 } from 'react-admin';
 import {
   EditorState,
@@ -124,8 +125,9 @@ export const EducationCreate = props => {
   return (
     <Create {...props}>
       <SimpleForm>
-        <TextInput source="title" />
+        <TextInput validate={[required()]} source="title" />
         <SelectInput
+          validate={[required()]}
           source="category"
           choices={[
             {id: 'exercise', name: 'Exercise Articles'},
@@ -133,10 +135,15 @@ export const EducationCreate = props => {
             {id: 'nutritional', name: 'Nutritional Info'},
           ]}
         />
-        <ImageInput source="image" label="Image" accept="image/*">
+        <ImageInput
+          validate={[required()]}
+          source="image"
+          label="Image"
+          accept="image/*"
+        >
           <ImageField source="src" title="title" />
         </ImageInput>
-        <RichTextInput source="body" multiline fullWidth />
+        <RichTextInput validate={[required()]} source="body" multiline fullWidth />
         {/* <CustomBodyInput /> */}
         <BooleanInput source="premium" />
       </SimpleForm>
