@@ -115,7 +115,7 @@ export const PlansCreate = props => {
       <SimpleForm>
         <UserInput setUser={setUser} />
 
-        <ArrayInput source="workouts">
+        <ArrayInput defaultValue={[]} source="workouts">
           <SimpleFormIterator>
             <TextInput source="name" label="Workout name" />
             <ArrayInput source="exercises" label="Exercises">
@@ -143,7 +143,7 @@ export const PlansCreate = props => {
             </ArrayInput>
           </SimpleFormIterator>
         </ArrayInput>
-        <ArrayInput source="tests" label="Tests">
+        <ArrayInput defaultValue={[]} source="tests" label="Tests">
           <SimpleFormIterator inline>
             <ReferenceInput source="test" label="Test" reference="tests">
               <AutocompleteInput optionText="name" />
@@ -165,7 +165,10 @@ export const PlansCreate = props => {
           label="General recommendations"
           multiline
         />
-        <ArrayInput source="education" label="Educational resources">
+        <ArrayInput
+          defaultValue={[]}
+          source="education"
+          label="Educational resources">
           <SimpleFormIterator inline>
             <ReferenceInput label="Article" reference="education">
               <AutocompleteInput optionText="title" />
@@ -227,17 +230,27 @@ export const PlansEdit = props => {
     <Edit {...props}>
       <SimpleForm>
         <UserField setUser={setUser} />
-        <ArrayInput {...props} source="workouts">
+        <ArrayInput {...props} validate={[required()]} source="workouts">
           <SimpleFormIterator>
-            <TextInput source="name" label="Workout name" />
-            <ArrayInput source="exercises" label="Exercises">
+            <TextInput
+              validate={[required()]}
+              source="name"
+              label="Workout name"
+            />
+            <ArrayInput
+              validate={[required()]}
+              source="exercises"
+              label="Exercises">
               <SimpleFormIterator inline>
                 <ReferenceInput
                   source="exercise"
                   perPage={200}
                   label="Exercise"
                   reference="exercises">
-                  <AutocompleteInput optionText="name" />
+                  <AutocompleteInput
+                    validate={[required()]}
+                    optionText="name"
+                  />
                 </ReferenceInput>
                 <TextInput source="sets" label="Sets" />
                 <TextInput source="reps" label="Reps" />
@@ -248,19 +261,23 @@ export const PlansEdit = props => {
                 <TextInput source="notes" label="Additional notes" multiline />
               </SimpleFormIterator>
             </ArrayInput>
-            <ArrayInput {...props} source="dates" label="Dates">
+            <ArrayInput
+              {...props}
+              validate={[required()]}
+              source="dates"
+              label="Dates">
               <SimpleFormIterator inline>
                 <DateInput label="Date" />
               </SimpleFormIterator>
             </ArrayInput>
           </SimpleFormIterator>
         </ArrayInput>
-        <ArrayInput source="tests" label="Tests">
+        <ArrayInput defaultValue={[]} source="tests" label="Tests">
           <SimpleFormIterator inline>
             <ReferenceInput source="test" label="Test" reference="tests">
-              <AutocompleteInput optionText="name" />
+              <AutocompleteInput validate={[required()]} optionText="name" />
             </ReferenceInput>
-            <ArrayInput source="dates" label="Dates">
+            <ArrayInput validate={[required()]} source="dates" label="Dates">
               <SimpleFormIterator>
                 <DateInput label="Date" />
               </SimpleFormIterator>
@@ -268,16 +285,32 @@ export const PlansEdit = props => {
           </SimpleFormIterator>
         </ArrayInput>
         <Typography>Nutritional planning</Typography>
-        <TextInput source="nutrition.preWorkout" label="Pre-workout" />
-        <TextInput source="nutrition.postWorkout" label="Post-workout" />
-        <TextInput source="nutrition.general" label="General recommendations" />
+        <TextInput
+          source="nutrition.preWorkout"
+          label="Pre-workout"
+          defaultValue=""
+        />
+        <TextInput
+          source="nutrition.postWorkout"
+          label="Post-workout"
+          defaultValue=""
+        />
+        <TextInput
+          source="nutrition.general"
+          label="General recommendations"
+          defaultValue=""
+        />
         <Typography>Sleep hygiene</Typography>
         <TextInput
           source="sleep.general"
           label="General recommendations"
           multiline
+          defaultValue=""
         />
-        <ArrayInput source="education" label="Educational resources">
+        <ArrayInput
+          defaultValue={[]}
+          source="education"
+          label="Educational resources">
           <SimpleFormIterator inline>
             <ReferenceInput label="Article" reference="education">
               <AutocompleteInput optionText="title" />
