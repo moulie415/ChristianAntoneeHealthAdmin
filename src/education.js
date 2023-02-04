@@ -139,11 +139,15 @@ export const EducationCreate = props => {
           validate={[required()]}
           source="image"
           label="Image"
-          accept="image/*"
-        >
+          accept="image/*">
           <ImageField source="src" title="title" />
         </ImageInput>
-        <RichTextInput validate={[required()]} source="body" multiline fullWidth />
+        <RichTextInput
+          validate={[required()]}
+          source="body"
+          multiline
+          fullWidth
+        />
         {/* <CustomBodyInput /> */}
         <BooleanInput source="premium" />
       </SimpleForm>
