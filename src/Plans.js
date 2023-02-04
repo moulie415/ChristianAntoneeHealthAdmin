@@ -113,19 +113,29 @@ export const PlansCreate = props => {
   return (
     <Create {...props}>
       <SimpleForm>
-        <UserInput setUser={setUser} />
+        <UserInput validate={[required()]} setUser={setUser} />
 
-        <ArrayInput defaultValue={[]} source="workouts">
+        <ArrayInput defaultValue={[]} validate={[required()]} source="workouts">
           <SimpleFormIterator>
-            <TextInput source="name" label="Workout name" />
-            <ArrayInput source="exercises" label="Exercises">
+            <TextInput
+              source="name"
+              validate={[required()]}
+              label="Workout name"
+            />
+            <ArrayInput
+              validate={[required()]}
+              source="exercises"
+              label="Exercises">
               <SimpleFormIterator inline>
                 <ReferenceInput
                   source="exercise"
                   label="Exercise"
                   perPage={200}
                   reference="exercises">
-                  <AutocompleteInput optionText="name" />
+                  <AutocompleteInput
+                    validate={[required()]}
+                    optionText="name"
+                  />
                 </ReferenceInput>
                 <TextInput source="sets" label="Sets" />
                 <TextInput source="reps" label="Reps" />
@@ -136,7 +146,7 @@ export const PlansCreate = props => {
                 <TextInput source="notes" label="Additional notes" multiline />
               </SimpleFormIterator>
             </ArrayInput>
-            <ArrayInput source="dates" label="Dates">
+            <ArrayInput validate={[required()]} source="dates" label="Dates">
               <SimpleFormIterator inline>
                 <DateInput label="Date" />
               </SimpleFormIterator>
@@ -156,14 +166,27 @@ export const PlansCreate = props => {
           </SimpleFormIterator>
         </ArrayInput>
         <Typography>Nutritional planning</Typography>
-        <TextInput source="nutrition.preWorkout" label="Pre-workout" />
-        <TextInput source="nutrition.postWorkout" label="Post-workout" />
-        <TextInput source="nutrition.general" label="General recommendations" />
+        <TextInput
+          source="nutrition.preWorkout"
+          label="Pre-workout"
+          defaultValue=""
+        />
+        <TextInput
+          source="nutrition.postWorkout"
+          label="Post-workout"
+          defaultValue=""
+        />
+        <TextInput
+          source="nutrition.general"
+          label="General recommendations"
+          defaultValue=""
+        />
         <Typography>Sleep hygiene</Typography>
         <TextInput
           source="sleep.general"
           label="General recommendations"
           multiline
+          defaultValue=""
         />
         <ArrayInput
           defaultValue={[]}
@@ -285,14 +308,27 @@ export const PlansEdit = props => {
           </SimpleFormIterator>
         </ArrayInput>
         <Typography>Nutritional planning</Typography>
-        <TextInput source="nutrition.preWorkout" label="Pre-workout" />
-        <TextInput source="nutrition.postWorkout" label="Post-workout" />
-        <TextInput source="nutrition.general" label="General recommendations" />
+        <TextInput
+          source="nutrition.preWorkout"
+          label="Pre-workout"
+          defaultValue=""
+        />
+        <TextInput
+          source="nutrition.postWorkout"
+          label="Post-workout"
+          defaultValue=""
+        />
+        <TextInput
+          source="nutrition.general"
+          label="General recommendations"
+          defaultValue=""
+        />
         <Typography>Sleep hygiene</Typography>
         <TextInput
           source="sleep.general"
           label="General recommendations"
           multiline
+          defaultValue=""
         />
         <ArrayInput
           defaultValue={[]}
