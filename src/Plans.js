@@ -285,27 +285,14 @@ export const PlansEdit = props => {
           </SimpleFormIterator>
         </ArrayInput>
         <Typography>Nutritional planning</Typography>
-        <TextInput
-          source="nutrition.preWorkout"
-          label="Pre-workout"
-          defaultValue=""
-        />
-        <TextInput
-          source="nutrition.postWorkout"
-          label="Post-workout"
-          defaultValue=""
-        />
-        <TextInput
-          source="nutrition.general"
-          label="General recommendations"
-          defaultValue=""
-        />
+        <TextInput source="nutrition.preWorkout" label="Pre-workout" />
+        <TextInput source="nutrition.postWorkout" label="Post-workout" />
+        <TextInput source="nutrition.general" label="General recommendations" />
         <Typography>Sleep hygiene</Typography>
         <TextInput
           source="sleep.general"
           label="General recommendations"
           multiline
-          defaultValue=""
         />
         <ArrayInput
           defaultValue={[]}
