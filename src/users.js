@@ -14,22 +14,19 @@ import {
   TextInput,
   ShowButton,
   EditButton,
-  DeleteButton,
   DateField,
   EmailField,
   NumberField,
   ArrayField,
-  SimpleFormIterator,
   SingleFieldList,
   ChipField,
   TopToolbar,
-  SortButton,
   ExportButton,
   FunctionField,
-  ReferenceArrayField,
-  ReferenceField,
   ImageField,
   BooleanField,
+  NumberInput,
+  FilterButton,
 } from 'react-admin';
 import {db} from './App';
 import {StringToLabelObject} from './helpers';
@@ -81,7 +78,16 @@ const getPlanStatusString = record => {
 
 const ListActions = () => (
   <TopToolbar>
-    <SortButton fields={['planStatus', 'name', 'email']} />
+    <FilterButton
+      filters={[
+        <NumberInput
+          label="Plan status pending"
+          source="planStatus"
+          defaultValue={2}
+        />,
+      ]}
+    />
+    {/* <SortButton fields={['planStatus', 'name', 'email']} /> */}
     <ExportButton />
   </TopToolbar>
 );
@@ -89,7 +95,11 @@ const ListActions = () => (
 export const UsersList = props => {
   const [loading, setLoading] = React.useState(false);
   return (
-    <List {...props} perPage={50} actions={<ListActions />}>
+    <List
+      {...props}
+      perPage={50}
+      actions={<ListActions />}
+      sort={{planStatus: 2}}>
       <Datagrid bulkActionButtons={false}>
         <TextField source="name" />
         <EmailField source="email" />
