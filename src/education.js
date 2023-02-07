@@ -58,6 +58,7 @@ const CustomBodyField = () => {
 };
 
 const CustomBodyInput = () => {
+  console.log(process.env)
   const record = useRecordContext();
 
   const editorRef = useRef(null);
