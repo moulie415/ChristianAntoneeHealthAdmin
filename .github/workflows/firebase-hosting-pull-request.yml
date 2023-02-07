@@ -16,6 +16,7 @@ jobs:
           cd src
           touch FIREBASE_CONFIG.js
           echo "$FIREBASE_CONFIG" >> FIREBASE_CONFIG.js
+          echo "$REACT_APP_TINY_API_KEY" >> .env
       - run: npm i -f && npm run build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
