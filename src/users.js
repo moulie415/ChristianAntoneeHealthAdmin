@@ -95,11 +95,7 @@ const ListActions = () => (
 export const UsersList = props => {
   const [loading, setLoading] = React.useState(false);
   return (
-    <List
-      {...props}
-      perPage={50}
-      actions={<ListActions />}
-      sort={{planStatus: 2}}>
+    <List {...props} perPage={50} actions={<ListActions />}>
       <Datagrid bulkActionButtons={false}>
         <TextField source="name" />
         <EmailField source="email" />
