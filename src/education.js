@@ -1,5 +1,5 @@
 import {RichTextInput} from 'ra-input-rich-text';
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import {
   Datagrid,
   List,
@@ -25,6 +25,10 @@ import {
   required,
 } from 'react-admin';
 import {useController} from 'react-hook-form';
+import {Editor} from '@tinymce/tinymce-react';
+import {useRef} from 'react';
+import EducationArticlePreview from './EducationArticlePreview';
+import {useCallback} from 'react';
 
 export const EducationList = props => (
   <List {...props}>
@@ -40,61 +44,88 @@ export const EducationList = props => (
 );
 
 const CustomBodyField = () => {
-  const {body} = useRecordContext();
+  const record = useRecordContext();
   return (
-    <>
-      <p
-        style={{
-          fontSize: '0.75em',
-          fontFamily: 'Roboto, Helvetica,Arial,sans-serif',
-          color: 'rgba(0,0,0,0.6)',
-        }}>
-        Body
-      </p>
-      <div dangerouslySetInnerHTML={{__html: body}}></div>
-    </>
+    <EducationArticlePreview
+      key="preview"
+      image={record?.image?.src}
+      title={record?.title}
+      body={record?.body}
+      createdate={record?.createdate}
+      category={record?.category}
+    />
   );
 };
 
 const CustomBodyInput = () => {
   const record = useRecordContext();
-  const body = record?.body;
+
+  const editorRef = useRef(null);
 
   const {field} = useController({name: 'body'});
 
-  // const getStateFromBody = () => {
-  //   const blocksFromHTML = convertFromHTML(body);
-  //   const state = ContentState.createFromBlockArray(
-  //     blocksFromHTML.contentBlocks,
-  //     blocksFromHTML.entityMap,
-  //   );
-  //   return EditorState.createWithContent(state);
-  // };
+  const onEditorChange = useCallback(() => {
+    if (editorRef.current) {
+      field.onChange(editorRef.current.getContent());
+    }
+  }, [field]);
 
-  // const [editorState, setEditorState] = useState(
-  //   body ? getStateFromBody() : EditorState.createEmpty(),
-  // );
-  // return (
-  //   <div
-  //     style={{
-  //       border: '1px solid rgba(0, 0, 0, 0.23)',
-  //       padding: 10,
-  //       borderRadius: 5,
-  //     }}>
-  //     <Editor
-  //       editorState={editorState}
-  //       wrapperClassName="demo-wrapper"
-  //       editorClassName="demo-editor"
-  //       onEditorStateChange={state => {
-  //         field.onChange(
-  //           draftToHtml(convertToRaw(editorState.getCurrentContent())),
-  //         );
-  //         setEditorState(state);
-  //       }}
-  //       placeholder="Enter content here..."
-  //     />
-  //   </div>
-  // );
+  return (
+    <div style={{display: 'flex'}}>
+      <Editor
+        key="editor"
+        apiKey={process.env.REACT_APP_TINY_API_KEY}
+        onInit={(evt, editor) => (editorRef.current = editor)}
+        initialValue={record?.body}
+        onEditorChange={onEditorChange}
+        init={{
+          height: 500,
+          menubar: true,
+          plugins: [
+            'a11ychecker',
+            'advlist',
+            'advcode',
+            'advtable',
+            'autolink',
+            'checklist',
+            'export',
+            'lists',
+            'link',
+            'image',
+            'charmap',
+            'preview',
+            'anchor',
+            'searchreplace',
+            'visualblocks',
+            'powerpaste',
+            'fullscreen',
+            'formatpainter',
+            'insertdatetime',
+            'media',
+            'table',
+            'help',
+            'wordcount',
+          ],
+          toolbar:
+            'undo redo | casechange blocks | bold italic backcolor | \
+      alignleft aligncenter alignright alignjustify | \
+      bullist numlist checklist outdent indent | removeformat | a11ycheck code table help',
+          content_style:
+            'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
+        }}
+      />
+      <div style={{width: 20}} />
+      <EducationArticlePreview
+        key="preview"
+        image={record?.image?.src}
+        body={record?.body}
+        editorRef={editorRef}
+        title={record?.title}
+        createdate={record?.createdate}
+        category={record?.category}
+      />
+    </div>
+  );
 };
 
 export const EducationShow = props => {
@@ -105,7 +136,7 @@ export const EducationShow = props => {
         <ChipField source="category" />
         <ImageField source="image.src" />
         <BooleanField source="premium" />
-        <RichTextField source="body" />
+        <CustomBodyField />
       </SimpleShowLayout>
     </Show>
   );
@@ -132,13 +163,13 @@ export const EducationCreate = props => {
           accept="image/*">
           <ImageField source="src" title="title" />
         </ImageInput>
-        <RichTextInput
+        {/* <RichTextInput
           validate={[required()]}
           source="body"
           multiline
           fullWidth
-        />
-        {/* <CustomBodyInput /> */}
+        /> */}
+        <CustomBodyInput />
         <BooleanInput source="premium" />
       </SimpleForm>
     </Create>
@@ -160,8 +191,8 @@ export const EducationEdit = props => (
       <ImageInput source="image" label="Image" accept="image/*">
         <ImageField source="src" title="title" />
       </ImageInput>
-      <RichTextInput source="body" multiline fullWidth />
-      {/* <CustomBodyInput /> */}
+      {/* <RichTextInput source="body" multiline fullWidth /> */}
+      <CustomBodyInput />
       <BooleanInput source="premium" />
     </SimpleForm>
   </Edit>

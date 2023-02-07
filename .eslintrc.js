@@ -19,8 +19,8 @@ module.exports = {
     ecmaFeatures: {
       jsx: true,
     },
-    ecmaVersion: 2018,
-    sourceType: 'module',
+    ecmaVersion: 2020,
+    sourceType: 'module'
   },
   rules: {
     'linebreak-style': 'off',
