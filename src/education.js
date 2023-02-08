@@ -107,7 +107,7 @@ const CustomBodyInput = () => {
             'wordcount',
           ],
           toolbar:
-            'undo redo | casechange blocks | bold italic backcolor | \
+            'undo redo | casechange blocks | fontsizeselect fontselect forecolor backcolor bold italic lineheight | \
       alignleft aligncenter alignright alignjustify | \
       bullist numlist checklist outdent indent | removeformat | a11ycheck code table help',
           content_style:
