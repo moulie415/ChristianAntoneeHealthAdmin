@@ -24,7 +24,7 @@ function EducationArticlePreview({
   return (
     <div>
       <div style={{fontWeight: 'bold', marginBottom: 5}}>
-        Preview (very rough, check in app once finished)
+        Preview (rough estimate, varies based off device resolution)
       </div>
 
       <div
