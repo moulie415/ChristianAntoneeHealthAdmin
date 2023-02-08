@@ -11,9 +11,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Create config file
+      - name: Setup env
         env:
           FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
+          REACT_APP_TINY_API_KEY: ${{ secrets.REACT_APP_TINY_API_KEY }}
         run: |
           touch .env
           echo "REACT_APP_TINY_API_KEY=$REACT_APP_TINY_API_KEY" >> .env
