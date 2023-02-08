@@ -5,7 +5,7 @@ import moment from 'moment';
 export const getEducationCategoryString = category => {
   switch (category) {
     case 'exercise':
-      return 'Education Articles';
+      return 'Exercise Articles';
     case 'nutritional':
       return 'Nutritional Info';
     default:
