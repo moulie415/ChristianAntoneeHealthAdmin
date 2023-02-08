@@ -13,7 +13,7 @@ jobs:
         env:
           FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
         run: |
-          touch.env
+          touch .env
           echo "$REACT_APP_TINY_API_KEY" >> .env
           cd src
           touch FIREBASE_CONFIG.js
