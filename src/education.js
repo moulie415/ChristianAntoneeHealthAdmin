@@ -112,6 +112,8 @@ const CustomBodyInput = () => {
       bullist numlist checklist outdent indent | removeformat | a11ycheck code table help',
           content_style:
             'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
+          line_height_formats:
+            '8pt 9pt 10pt 11pt 12pt 14pt 16pt 18pt 20pt 22pt 24pt 26pt 36pt',
         }}
       />
       <div style={{width: 20}} />
