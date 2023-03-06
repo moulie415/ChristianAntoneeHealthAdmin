@@ -298,9 +298,9 @@ export const PlansEdit = props => {
         <ArrayInput defaultValue={[]} source="tests" label="Tests">
           <SimpleFormIterator inline>
             <ReferenceInput source="test" label="Test" reference="tests">
-              <AutocompleteInput validate={[required()]} optionText="name" />
+              <AutocompleteInput optionText="name" />
             </ReferenceInput>
-            <ArrayInput validate={[required()]} source="dates" label="Dates">
+            <ArrayInput source="dates" label="Dates">
               <SimpleFormIterator>
                 <DateInput label="Date" />
               </SimpleFormIterator>
