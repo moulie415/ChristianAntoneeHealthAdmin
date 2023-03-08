@@ -8,8 +8,8 @@ import {useNavigate} from 'react-router-dom';
 const CreatePlanButton = ({loading, setLoading}) => {
   const record = useRecordContext();
   const navigate = useNavigate();
-  const {id, planStatus} = record;
-  return planStatus === 2 ? (
+  const {id} = record;
+  return (
     <Button
       onClick={async () => {
         try {
@@ -32,7 +32,7 @@ const CreatePlanButton = ({loading, setLoading}) => {
       style={{marginTop: 10}}>
       Create plan
     </Button>
-  ) : null;
+  );
 };
 
 export default CreatePlanButton;

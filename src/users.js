@@ -30,7 +30,6 @@ import {
 } from 'react-admin';
 import {db} from './App';
 import {StringToLabelObject} from './helpers';
-import PlanStatusField from './PlanStatusField';
 import CreatePlanButton from './CreatePlanButton';
 import {
   collection,
@@ -66,26 +65,16 @@ const getPlans = async uid => {
     .reverse();
 };
 
-const getPlanStatusString = record => {
-  if (record.planStatus === 3) {
-    return 'Complete';
-  }
-  if (record.planStatus === 2) {
-    return 'Pending';
-  }
-  return 'Uninitialized';
-};
-
 const ListActions = () => (
   <TopToolbar>
     <FilterButton
-      filters={[
-        <NumberInput
-          label="Plan status pending"
-          source="planStatus"
-          defaultValue={2}
-        />,
-      ]}
+    // filters={[
+    //   <NumberInput
+    //     label="Plan status pending"
+    //     source="planStatus"
+    //     defaultValue={2}
+    //   />,
+    // ]}
     />
     {/* <SortButton fields={['planStatus', 'name', 'email']} /> */}
     <ExportButton />
@@ -99,8 +88,8 @@ export const UsersList = props => {
       <Datagrid bulkActionButtons={false}>
         <TextField source="name" />
         <EmailField source="email" />
-        <PlanStatusField source="planStatus" />
         <CreatePlanButton loading={loading} setLoading={setLoading} />
+        <BooleanField source="client" />
         <BooleanField source="premium" />
         <ShowButton label="" />
         <EditButton label="" />
@@ -133,9 +122,8 @@ export const UsersShow = props => {
         <ImageField source="avatar" title="avatar" />
         <TextField source="name" />
         <EmailField source="email" />
+        <BooleanField source="client" />
         <BooleanField source="premium" />
-        <BooleanField source="usedFreePlan" />
-        <FunctionField label="Plan status" render={getPlanStatusString} />
         <FormLabel style={{fontSize: 12}}>Plans</FormLabel>
         <div style={{display: 'flex', flexDirection: 'row'}}>
           {plans.map(p => {
@@ -150,11 +138,11 @@ export const UsersShow = props => {
           })}
         </div>
         <DateField source="dob" label="Date of birth" />
-        <TextField source="equipment" />
-        <TextField source="experience" />
+        {/* <TextField source="equipment" />
+        <TextField source="experience" /> */}
         <TextField source="gender" />
         <TextField source="goal" />
-        <TextField source="unit" />
+        {/* <TextField source="unit" />
         <NumberField source="height" />
         <NumberField source="weight" />
         <TextField source="injuries" />
@@ -167,7 +155,7 @@ export const UsersShow = props => {
               <ChipField source="label" />
             </StringToLabelObject>
           </SingleFieldList>
-        </ArrayField>
+        </ArrayField> */}
         <CreatePlanButton loading={loading} setLoading={setLoading} />
       </SimpleShowLayout>
     </Show>
@@ -204,15 +192,14 @@ export const UsersEdit = props => {
         <ImageField source="avatar" title="avatar" />
         <TextField source="name" />
         <EmailField source="email" />
+        <BooleanInput source="client" />
         <BooleanField source="premium" />
-        <BooleanField source="usedFreePlan" />
-        <FunctionField label="Plan status" render={getPlanStatusString} />
         <DateField source="dob" label="Date of birth" />
-        <TextField source="equipment" />
+        {/* <TextField source="equipment" />
         <TextField source="experience" />
-        <TextField source="gender" />
+        <TextField source="gender" /> */}
         <TextField source="goal" />
-        <TextField source="unit" />
+        {/* <TextField source="unit" />
         <NumberField source="height" />
         <NumberField source="weight" />
         <TextField source="injuries" />
@@ -225,7 +212,7 @@ export const UsersEdit = props => {
               <ChipField source="label" />
             </StringToLabelObject>
           </SingleFieldList>
-        </ArrayField>
+        </ArrayField> */}
         <CreatePlanButton loading={loading} setLoading={setLoading} />
       </SimpleForm>
     </Edit>

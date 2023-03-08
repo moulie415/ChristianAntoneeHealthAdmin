@@ -58,16 +58,7 @@ export const PlansShow = props => {
   );
 };
 
-const isSent = async uid => {
-  if (uid) {
-    const docRef = doc(db, 'users', uid);
-    const docSnap = await getDoc(docRef);
-    if (docSnap.data().planStatus === 3) {
-      return true;
-    }
-  }
-  return false;
-};
+
 
 const send = async uid => {
   const functions = getFunctions();
@@ -97,18 +88,7 @@ const UserInput = ({setUser, ...props}) => {
 export const PlansCreate = props => {
   const [user, setUser] = React.useState();
   const [loading, setLoading] = React.useState(false);
-  const [sent, setSent] = React.useState(false);
-  React.useEffect(() => {
-    const checkIfSent = async () => {
-      setLoading(true);
-      if (user) {
-        const sent = await isSent(user);
-        setSent(sent);
-        setLoading(false);
-      }
-    };
-    checkIfSent();
-  }, [setSent, user]);
+
 
   return (
     <Create {...props}>
@@ -198,22 +178,6 @@ export const PlansCreate = props => {
             </ReferenceInput>
           </SimpleFormIterator>
         </ArrayInput>
-        <SendPlanButton
-          onClick={async () => {
-            try {
-              setLoading(true);
-              await send(user);
-              setSent(true);
-              toast.success('Plan sent');
-              setLoading(false);
-            } catch (e) {
-              setLoading(false);
-              toast.error('Error sending plan');
-            }
-          }}
-          sent={sent}
-          loading={loading}
-        />
       </SimpleForm>
     </Create>
   );
