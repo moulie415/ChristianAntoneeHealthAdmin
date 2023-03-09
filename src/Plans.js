@@ -58,8 +58,6 @@ export const PlansShow = props => {
   );
 };
 
-
-
 const send = async uid => {
   const functions = getFunctions();
   const sendPlan = httpsCallable(functions, 'sendPlan');
@@ -88,7 +86,6 @@ const UserInput = ({setUser, ...props}) => {
 export const PlansCreate = props => {
   const [user, setUser] = React.useState();
   const [loading, setLoading] = React.useState(false);
-
 
   return (
     <Create {...props}>
@@ -201,17 +198,17 @@ export const PlansEdit = props => {
   const [user, setUser] = React.useState();
   const [loading, setLoading] = React.useState(false);
   const [sent, setSent] = React.useState(false);
-  React.useEffect(() => {
-    const checkIfSent = async () => {
-      setLoading(true);
-      if (user) {
-        const sent = await isSent(user);
-        setSent(sent);
-        setLoading(false);
-      }
-    };
-    checkIfSent();
-  }, [setSent, user]);
+  // React.useEffect(() => {
+  //   const checkIfSent = async () => {
+  //     setLoading(true);
+  //     if (user) {
+  //       const sent = await isSent(user);
+  //       setSent(sent);
+  //       setLoading(false);
+  //     }
+  //   };
+  //   checkIfSent();
+  // }, [setSent, user]);
 
   return (
     <Edit {...props}>
@@ -304,7 +301,7 @@ export const PlansEdit = props => {
             </ReferenceInput>
           </SimpleFormIterator>
         </ArrayInput>
-        <SendPlanButton
+        {/* <SendPlanButton
           onClick={async () => {
             try {
               setLoading(true);
@@ -319,8 +316,8 @@ export const PlansEdit = props => {
           }}
           sent={sent}
           loading={loading}
-        />
-        <DuplicatePlanButton loading={loading} setLoading={setLoading} />
+        /> */}
+        <DuplicatePlanButton setLoading={setLoading} />
       </SimpleForm>
     </Edit>
   );
