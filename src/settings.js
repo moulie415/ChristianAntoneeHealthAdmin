@@ -35,12 +35,6 @@ export const SettingsList = props => (
           <ChipField source="name" />
         </SingleFieldList>
       </ReferenceArrayField>
-      <BooleanField source="emailPlanRequests" label="Email plan requests" />
-      <BooleanField
-        source="planRequestNotifications"
-        label="Plan request push notification"
-      />
-      <BooleanField source="plansEnabled" label="Plans enabled" />
       <ShowButton label="" />
       <EditButton label="" />
     </Datagrid>
@@ -64,12 +58,6 @@ export const SettingsShow = props => (
           <ChipField source="name" />
         </SingleFieldList>
       </ReferenceArrayField>
-      <BooleanField source="emailPlanRequests" label="Email plan requests" />
-      <BooleanField
-        source="planRequestNotifications"
-        label="Plan request push notification"
-      />
-      <BooleanField source="plansEnabled" label="Plans enabled" />
     </SimpleShowLayout>
   </Show>
 );
@@ -96,12 +84,6 @@ export const SettingsEdit = props => (
         filterToQuery={searchText => ({name: searchText})}>
         <AutocompleteArrayInput optionText="name" />
       </ReferenceArrayInput>
-      <BooleanInput source="emailPlanRequests" label="Email plan requests" />
-      <BooleanInput
-        source="planRequestNotifications"
-        label="Plan request push notification"
-      />
-      <BooleanInput source="plansEnabled" label="Plans enabled" />
     </SimpleForm>
   </Edit>
 );
