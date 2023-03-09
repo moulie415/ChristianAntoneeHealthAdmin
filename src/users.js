@@ -30,6 +30,7 @@ import {
   BooleanInput,
   SaveButton,
   Toolbar,
+  SortButton,
 } from 'react-admin';
 import {db} from './App';
 import {StringToLabelObject} from './helpers';
@@ -70,16 +71,12 @@ const getPlans = async uid => {
 
 const ListActions = () => (
   <TopToolbar>
-    {/* <FilterButton
-    filters={[
-      <NumberInput
-        label="Plan status pending"
-        source="planStatus"
-        defaultValue={2}
-      />,
-    ]}
-    /> */}
-    {/* <SortButton fields={['planStatus', 'name', 'email']} /> */}
+    <FilterButton
+      filters={[
+        <BooleanInput label="Is client" source="client" defaultValue />,
+      ]}
+    />
+    <SortButton fields={['name', 'email']} />
     <ExportButton />
   </TopToolbar>
 );
