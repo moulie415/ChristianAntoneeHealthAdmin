@@ -198,17 +198,17 @@ export const PlansEdit = props => {
   const [user, setUser] = React.useState();
   const [loading, setLoading] = React.useState(false);
   const [sent, setSent] = React.useState(false);
-  React.useEffect(() => {
-    const checkIfSent = async () => {
-      setLoading(true);
-      if (user) {
-        const sent = await isSent(user);
-        setSent(sent);
-        setLoading(false);
-      }
-    };
-    checkIfSent();
-  }, [setSent, user]);
+  // React.useEffect(() => {
+  //   const checkIfSent = async () => {
+  //     setLoading(true);
+  //     if (user) {
+  //       const sent = await isSent(user);
+  //       setSent(sent);
+  //       setLoading(false);
+  //     }
+  //   };
+  //   checkIfSent();
+  // }, [setSent, user]);
 
   return (
     <Edit {...props}>
@@ -317,7 +317,7 @@ export const PlansEdit = props => {
           sent={sent}
           loading={loading}
         /> */}
-        <DuplicatePlanButton loading={loading} setLoading={setLoading} />
+        <DuplicatePlanButton setLoading={setLoading} />
       </SimpleForm>
     </Edit>
   );
