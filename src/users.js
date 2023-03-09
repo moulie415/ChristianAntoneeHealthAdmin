@@ -67,15 +67,15 @@ const getPlans = async uid => {
 
 const ListActions = () => (
   <TopToolbar>
-    <FilterButton
-    // filters={[
-    //   <NumberInput
-    //     label="Plan status pending"
-    //     source="planStatus"
-    //     defaultValue={2}
-    //   />,
-    // ]}
-    />
+    {/* <FilterButton
+    filters={[
+      <NumberInput
+        label="Plan status pending"
+        source="planStatus"
+        defaultValue={2}
+      />,
+    ]}
+    /> */}
     {/* <SortButton fields={['planStatus', 'name', 'email']} /> */}
     <ExportButton />
   </TopToolbar>
