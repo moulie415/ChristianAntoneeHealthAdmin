@@ -301,7 +301,7 @@ export const PlansEdit = props => {
             </ReferenceInput>
           </SimpleFormIterator>
         </ArrayInput>
-        <SendPlanButton
+        {/* <SendPlanButton
           onClick={async () => {
             try {
               setLoading(true);
@@ -316,7 +316,7 @@ export const PlansEdit = props => {
           }}
           sent={sent}
           loading={loading}
-        />
+        /> */}
         <DuplicatePlanButton loading={loading} setLoading={setLoading} />
       </SimpleForm>
     </Edit>
