@@ -28,6 +28,8 @@ import {
   NumberInput,
   FilterButton,
   BooleanInput,
+  SaveButton,
+  Toolbar,
 } from 'react-admin';
 import {db} from './App';
 import {StringToLabelObject} from './helpers';
@@ -187,9 +189,15 @@ export const UsersEdit = props => {
     };
     checkPlans();
   }, [id]);
+
+  const MyToolbar = () => (
+    <Toolbar>
+      <SaveButton label="Save" />
+    </Toolbar>
+  );
   return (
     <Edit {...props}>
-      <SimpleForm toolbar={null}>
+      <SimpleForm toolbar={<MyToolbar />}>
         <ImageField source="avatar" title="avatar" />
         <TextField source="name" />
         <EmailField source="email" />
