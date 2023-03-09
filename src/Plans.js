@@ -58,8 +58,6 @@ export const PlansShow = props => {
   );
 };
 
-
-
 const send = async uid => {
   const functions = getFunctions();
   const sendPlan = httpsCallable(functions, 'sendPlan');
@@ -88,7 +86,6 @@ const UserInput = ({setUser, ...props}) => {
 export const PlansCreate = props => {
   const [user, setUser] = React.useState();
   const [loading, setLoading] = React.useState(false);
-
 
   return (
     <Create {...props}>
