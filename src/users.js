@@ -27,6 +27,7 @@ import {
   BooleanField,
   NumberInput,
   FilterButton,
+  BooleanInput,
 } from 'react-admin';
 import {db} from './App';
 import {StringToLabelObject} from './helpers';
