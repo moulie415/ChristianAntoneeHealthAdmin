@@ -47,6 +47,7 @@ import {
 import {toast} from 'react-toastify';
 import * as moment from 'moment';
 import {useNavigate, useParams} from 'react-router-dom';
+import PremiumField from './PremiumField';
 
 const UserFilter = props => (
   <Filter {...props}>
@@ -90,7 +91,7 @@ export const UsersList = props => {
         <EmailField source="email" />
         <CreatePlanButton loading={loading} setLoading={setLoading} />
         <BooleanField source="client" />
-        <BooleanField source="premium" />
+        <PremiumField source="premium" />
         <ShowButton label="" />
         <EditButton label="" />
         {/* <DeleteButton label="" redirect={false} /> */}
@@ -123,7 +124,7 @@ export const UsersShow = props => {
         <TextField source="name" />
         <EmailField source="email" />
         <BooleanField source="client" />
-        <BooleanField source="premium" />
+        <PremiumField source="premium" />
         <FormLabel style={{fontSize: 12}}>Plans</FormLabel>
         <div style={{display: 'flex', flexDirection: 'row'}}>
           {plans.map(p => {
