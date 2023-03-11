@@ -17,6 +17,7 @@ import {
   ReferenceArrayInput,
   AutocompleteArrayInput,
 } from 'react-admin';
+import MyAutoCompleteArrayInput from './MyAutoCompleteArrayInput';
 
 export const SettingsList = props => (
   <List {...props}>
@@ -76,13 +77,13 @@ export const SettingsEdit = props => (
         source="admins"
         reference="users"
         filterToQuery={searchText => ({name: searchText})}>
-        <AutocompleteArrayInput optionText="name" />
+        <MyAutoCompleteArrayInput optionText="name" />
       </ReferenceArrayInput>
       <ReferenceArrayInput
         source="premiumFriends"
         reference="users"
         filterToQuery={searchText => ({name: searchText})}>
-        <AutocompleteArrayInput optionText="name" />
+        <MyAutoCompleteArrayInput optionText="name" />
       </ReferenceArrayInput>
     </SimpleForm>
   </Edit>

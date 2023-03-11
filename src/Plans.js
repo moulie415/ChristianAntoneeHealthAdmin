@@ -31,6 +31,7 @@ import {toast} from 'react-toastify';
 import {getFunctions, httpsCallable} from 'firebase/functions';
 import DuplicatePlanButton from './DuplicatePlanButton';
 import SendPlanButton from './SendPlanButton';
+import MyAutoCompleteInput from './MyAutoCompleteInput';
 
 export const PlansList = props => (
   <List {...props} sort={{field: 'createdate', order: 'DESC'}}>
@@ -78,7 +79,7 @@ const UserInput = ({setUser, ...props}) => {
       reference="users"
       validate={[required()]}
       {...props}>
-      <AutocompleteInput optionText="name" />
+      <MyAutoCompleteInput optionText="name" />
     </ReferenceInput>
   );
 };
@@ -109,7 +110,7 @@ export const PlansCreate = props => {
                   label="Exercise"
                   perPage={200}
                   reference="exercises">
-                  <AutocompleteInput
+                  <MyAutoCompleteInput
                     validate={[required()]}
                     style={{width: 350}}
                     optionText="name"
@@ -131,7 +132,7 @@ export const PlansCreate = props => {
             </ArrayInput>
           </SimpleFormIterator>
         </ArrayInput>
-        <ArrayInput label="Instructions" source="steps">
+        <ArrayInput label="Instructions" source="steps" defaultValue={[]}>
           <SimpleFormIterator>
             <TextInput label="Instruction" multiline />
           </SimpleFormIterator>
@@ -139,7 +140,7 @@ export const PlansCreate = props => {
         <ArrayInput defaultValue={[]} source="tests" label="Tests">
           <SimpleFormIterator inline>
             <ReferenceInput source="test" label="Test" reference="tests">
-              <AutocompleteInput optionText="name" style={{width: 350}} />
+              <MyAutoCompleteInput optionText="name" style={{width: 350}} />
             </ReferenceInput>
             <ArrayInput source="dates" label="Dates">
               <SimpleFormIterator inline>
@@ -184,7 +185,7 @@ export const PlansCreate = props => {
           label="Educational resources">
           <SimpleFormIterator inline>
             <ReferenceInput label="Article" reference="education">
-              <AutocompleteInput optionText="title" style={{width: 350}} />
+              <MyAutoCompleteInput optionText="title" style={{width: 350}} />
             </ReferenceInput>
           </SimpleFormIterator>
         </ArrayInput>
@@ -244,7 +245,7 @@ export const PlansEdit = props => {
                   perPage={200}
                   label="Exercise"
                   reference="exercises">
-                  <AutocompleteInput
+                  <MyAutoCompleteInput
                     validate={[required()]}
                     style={{width: 350}}
                     optionText="name"
@@ -270,7 +271,7 @@ export const PlansEdit = props => {
             </ArrayInput>
           </SimpleFormIterator>
         </ArrayInput>
-        <ArrayInput label="Instructions" source="steps">
+        <ArrayInput label="Instructions" source="steps" defaultValue={[]}>
           <SimpleFormIterator>
             <TextInput label="Instruction" multiline />
           </SimpleFormIterator>
@@ -278,7 +279,7 @@ export const PlansEdit = props => {
         <ArrayInput defaultValue={[]} source="tests" label="Tests">
           <SimpleFormIterator inline>
             <ReferenceInput source="test" label="Test" reference="tests">
-              <AutocompleteInput optionText="name" style={{width: 350}} />
+              <MyAutoCompleteInput optionText="name" style={{width: 350}} />
             </ReferenceInput>
             <ArrayInput source="dates" label="Dates">
               <SimpleFormIterator>
@@ -323,7 +324,11 @@ export const PlansEdit = props => {
           label="Educational resources">
           <SimpleFormIterator inline>
             <ReferenceInput label="Article" reference="education">
-              <AutocompleteInput optionText="title" style={{width: 350}} />
+              <MyAutoCompleteInput
+                optionText="title"
+                label="Education"
+                style={{width: 350}}
+              />
             </ReferenceInput>
           </SimpleFormIterator>
         </ArrayInput>

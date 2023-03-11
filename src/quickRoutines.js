@@ -26,6 +26,7 @@ import {
   ReferenceInput,
   AutocompleteInput,
 } from 'react-admin';
+import MyAutoCompleteArrayInput from './MyAutoCompleteArrayInput';
 
 export const QuickRoutineList = props => (
   <List {...props} sort={{field: 'name', order: 'ASC'}}>
@@ -107,7 +108,7 @@ export const QuickRoutineCreate = props => (
         // filterToQuery={searchText => ({name: searchText})}
         perPage={200}
         source="exerciseIds">
-        <AutocompleteArrayInput optionText="name" />
+        <MyAutoCompleteArrayInput optionText="name" />
       </ReferenceArrayInput>
       <ArrayInput label="Instructions" source="steps">
         <SimpleFormIterator>
@@ -164,7 +165,7 @@ export const QuickRoutineEdit = props => (
         sort={{field: 'name', order: 'ASC'}}
         // filterToQuery={searchText => ({name: searchText})}
         perPage={200}>
-        <AutocompleteArrayInput optionText="name" />
+        <MyAutoCompleteArrayInput optionText="name" />
       </ReferenceArrayInput>
       <ArrayInput label="Instructions" source="steps">
         <SimpleFormIterator>

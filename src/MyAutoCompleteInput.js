@@ -1,18 +1,16 @@
 import React from 'react';
-import {AutocompleteInput, useGetList, useInput} from 'react-admin';
+import {AutocompleteInput} from 'react-admin';
 
-const MyAutoCompleteInput = ({source, optionText}) => {
-  const {field} = useInput({source});
-
-  const {data} = useGetList(source);
-
+const MyAutoCompleteInput = props => {
   return (
     <AutocompleteInput
-      {...field}
-      source={source}
-      choices={data}
-      optionText={optionText}
-      style={{width: 400}}
+      {...props}
+      filterToQuery={() => ''}
+      matchSuggestion={(filter, suggestion) => {
+        return (
+          suggestion[props.optionText].toLowerCase().indexOf(filter) !== -1
+        );
+      }}
     />
   );
 };
