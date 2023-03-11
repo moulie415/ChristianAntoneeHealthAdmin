@@ -47,7 +47,7 @@ export default function AlertDialog() {
   };
 
   return (
-    <div>
+    <div style={{textAlign: 'center'}}>
       <Button variant="contained" onClick={handleClickOpen}>
         Forgot Password?
       </Button>
