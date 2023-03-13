@@ -27,6 +27,7 @@ import {
   AutocompleteInput,
   FileInput,
   FileField,
+  required,
 } from 'react-admin';
 import MyAutoCompleteArrayInput from './MyAutoCompleteArrayInput';
 
@@ -70,9 +71,10 @@ export const QuickRoutineShow = props => (
 export const QuickRoutineCreate = props => (
   <Create {...props}>
     <SimpleForm>
-      <TextInput source="name" />
+      <TextInput source="name" validate={required()} />
       <SelectInput
         source="area"
+        validate={required()}
         choices={[
           {id: 'upper', name: 'Upper body'},
           {id: 'lower', name: 'Lower body'},
@@ -81,6 +83,7 @@ export const QuickRoutineCreate = props => (
       />
       <SelectInput
         source="equipment"
+        validate={required()}
         choices={[
           {id: 'full', name: 'Full equipment'},
           {id: 'minimal', name: 'Minimal equipment'},
@@ -88,6 +91,7 @@ export const QuickRoutineCreate = props => (
       />
       <SelectInput
         source="duration"
+        validate={required()}
         choices={[
           {id: 15, name: 'Under 15 mins'},
           {id: 30, name: 'Under 30 mins'},
@@ -97,6 +101,7 @@ export const QuickRoutineCreate = props => (
 
       <SelectInput
         source="level"
+        validate={required()}
         choices={[
           {id: 'beginner', name: 'Beginner'},
           {id: 'intermediate', name: 'Intermediate'},
@@ -106,18 +111,23 @@ export const QuickRoutineCreate = props => (
       <ReferenceArrayInput
         label="Exercises"
         reference="exercises"
+        validate={required()}
         sort={{field: 'name', order: 'ASC'}}
         // filterToQuery={searchText => ({name: searchText})}
         perPage={200}
         source="exerciseIds">
-        <MyAutoCompleteArrayInput optionText="name" />
+        <MyAutoCompleteArrayInput validate={required()} optionText="name" />
       </ReferenceArrayInput>
       <ArrayInput label="Instructions" source="steps">
         <SimpleFormIterator>
           <TextInput label="Instruction" />
         </SimpleFormIterator>
       </ArrayInput>
-      <ImageInput source="thumbnail" label="Thumbnail" accept="image/*">
+      <ImageInput
+        validate={required()}
+        source="thumbnail"
+        label="Thumbnail"
+        accept="image/*">
         <ImageField source="src" title="title" />
       </ImageInput>
       <FileInput source="preview" label="Preview video" accept="video/*">
@@ -131,9 +141,10 @@ export const QuickRoutineCreate = props => (
 export const QuickRoutineEdit = props => (
   <Edit {...props}>
     <SimpleForm>
-      <TextInput source="name" />
+      <TextInput validate={required()} source="name" />
       <SelectInput
         source="area"
+        validate={required()}
         choices={[
           {id: 'upper', name: 'Upper body'},
           {id: 'lower', name: 'Lower body'},
@@ -142,6 +153,7 @@ export const QuickRoutineEdit = props => (
       />
       <SelectInput
         source="equipment"
+        validate={required()}
         choices={[
           {id: 'full', name: 'Full equipment'},
           {id: 'minimal', name: 'Minimal equipment'},
@@ -149,6 +161,7 @@ export const QuickRoutineEdit = props => (
       />
       <SelectInput
         source="duration"
+        validate={required()}
         choices={[
           {id: 15, name: 'Under 15 mins'},
           {id: 30, name: 'Under 30 mins'},
@@ -157,6 +170,7 @@ export const QuickRoutineEdit = props => (
       />
       <SelectInput
         source="level"
+        validate={required()}
         choices={[
           {id: 'beginner', name: 'Beginner'},
           {id: 'intermediate', name: 'Intermediate'},
@@ -166,18 +180,23 @@ export const QuickRoutineEdit = props => (
       <ReferenceArrayInput
         label="Exercises"
         source="exerciseIds"
+        validate={required()}
         reference="exercises"
         sort={{field: 'name', order: 'ASC'}}
         // filterToQuery={searchText => ({name: searchText})}
         perPage={200}>
-        <MyAutoCompleteArrayInput optionText="name" />
+        <MyAutoCompleteArrayInput validate={required()} optionText="name" />
       </ReferenceArrayInput>
       <ArrayInput label="Instructions" source="steps">
         <SimpleFormIterator>
           <TextInput label="Instruction" multiline />
         </SimpleFormIterator>
       </ArrayInput>
-      <ImageInput source="thumbnail" label="Thumbnail" accept="image/*">
+      <ImageInput
+        validate={required()}
+        source="thumbnail"
+        label="Thumbnail"
+        accept="image/*">
         <ImageField source="src" title="title" />
       </ImageInput>
       <FileInput source="preview" label="Preview video" accept="video/*">
