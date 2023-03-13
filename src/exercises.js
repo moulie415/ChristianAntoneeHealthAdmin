@@ -141,6 +141,7 @@ export const ExerciseCreate = props => (
       <TextInput source="parameters" multiline defaultValue="" />
       <SelectInput
         source="type"
+        defaultValue=""
         choices={[
           {
             id: 'strength',
@@ -155,6 +156,7 @@ export const ExerciseCreate = props => (
       />
       <SelectInput
         source="area"
+        defaultValue=""
         choices={[
           {id: 'upper', name: 'upper'},
           {id: 'lower', name: 'lower'},
@@ -164,6 +166,7 @@ export const ExerciseCreate = props => (
       />
       <SelectInput
         source="level"
+        defaultValue=""
         choices={[
           {id: 'beginner', name: 'beginner'},
           {id: 'intermediate', name: 'intermediate'},
@@ -232,6 +235,7 @@ export const ExerciseEdit = props => (
       <TextInput source="parameters" multiline defaultValue="" />
       <SelectInput
         source="type"
+        defaultValue=""
         choices={[
           {
             id: 'strength',
@@ -246,6 +250,7 @@ export const ExerciseEdit = props => (
       />
       <SelectInput
         source="area"
+        defaultValue=""
         choices={[
           {id: 'upper', name: 'upper'},
           {id: 'lower', name: 'lower'},
@@ -255,6 +260,7 @@ export const ExerciseEdit = props => (
       />
       <SelectInput
         source="level"
+        defaultValue=""
         choices={[
           {id: 'beginner', name: 'beginner'},
           {id: 'intermediate', name: 'intermediate'},
