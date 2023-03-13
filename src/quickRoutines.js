@@ -25,6 +25,8 @@ import {
   SimpleFormIterator,
   ReferenceInput,
   AutocompleteInput,
+  FileInput,
+  FileField,
 } from 'react-admin';
 import MyAutoCompleteArrayInput from './MyAutoCompleteArrayInput';
 
@@ -118,6 +120,9 @@ export const QuickRoutineCreate = props => (
       <ImageInput source="thumbnail" label="Thumbnail" accept="image/*">
         <ImageField source="src" title="title" />
       </ImageInput>
+      <FileInput source="preview" label="Preview video" accept="video/*">
+        <FileField source="src" title="title" />
+      </FileInput>
       <BooleanInput source="premium" />
     </SimpleForm>
   </Create>
@@ -175,6 +180,9 @@ export const QuickRoutineEdit = props => (
       <ImageInput source="thumbnail" label="Thumbnail" accept="image/*">
         <ImageField source="src" title="title" />
       </ImageInput>
+      <FileInput source="preview" label="Preview video" accept="video/*">
+        <FileField source="src" title="title" />
+      </FileInput>
       <BooleanInput source="premium" />
     </SimpleForm>
   </Edit>
