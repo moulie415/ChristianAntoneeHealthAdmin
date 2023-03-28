@@ -139,14 +139,13 @@ export const PlansCreate = props => {
         </ArrayInput>
         <ArrayInput defaultValue={[]} source="tests" label="Tests">
           <SimpleFormIterator inline>
-            <ReferenceInput source="test" label="Test" reference="tests">
-              <MyAutoCompleteInput optionText="name" style={{width: 350}} />
+            <ReferenceInput label="Test" reference="tests">
+              <MyAutoCompleteInput
+                optionText="name"
+                label="Test"
+                style={{width: 350}}
+              />
             </ReferenceInput>
-            <ArrayInput source="dates" label="Dates">
-              <SimpleFormIterator inline>
-                <DateInput label="Date" />
-              </SimpleFormIterator>
-            </ArrayInput>
           </SimpleFormIterator>
         </ArrayInput>
         <Typography>Nutritional planning</Typography>
@@ -278,14 +277,13 @@ export const PlansEdit = props => {
         </ArrayInput>
         <ArrayInput defaultValue={[]} source="tests" label="Tests">
           <SimpleFormIterator inline>
-            <ReferenceInput source="test" label="Test" reference="tests">
-              <MyAutoCompleteInput optionText="name" style={{width: 350}} />
+            <ReferenceInput label="Test" reference="tests">
+              <MyAutoCompleteInput
+                optionText="name"
+                label="Test"
+                style={{width: 350}}
+              />
             </ReferenceInput>
-            <ArrayInput source="dates" label="Dates">
-              <SimpleFormIterator>
-                <DateInput label="Date" />
-              </SimpleFormIterator>
-            </ArrayInput>
           </SimpleFormIterator>
         </ArrayInput>
         <Typography>Nutritional planning</Typography>
