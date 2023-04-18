@@ -61,9 +61,10 @@ export const TestShow = props => (
 export const TestCreate = props => (
   <Create {...props}>
     <SimpleForm>
-      <TextInput source="name" />
+      <TextInput source="name" validate={required()} />
       <SelectInput
         source="type"
+        validate={required()}
         choices={[
           {id: 'countdown', name: 'countdown'},
           {id: 'countup', name: 'countup'},
@@ -88,16 +89,15 @@ export const TestCreate = props => (
         source="thumbnail"
         validate={required()}
         label="Thumbnail"
-        defaultValue={null}
         accept="image/*">
         <ImageField source="src" title="title" />
       </ImageInput>
       <BooleanInput source="premium" />
-      <TextInput source="metric" />
+      <TextInput source="metric" defaultValue="" />
       <Table gender="mens" />
       <Table gender="womens" />
       <PercentileTable />
-      <TextInput source="source" />
+      <TextInput source="source" defaultValue="" />
       <BooleanInput source="disabled" />
     </SimpleForm>
   </Create>
@@ -106,9 +106,10 @@ export const TestCreate = props => (
 export const TestEdit = props => (
   <Edit {...props}>
     <SimpleForm>
-      <TextInput source="name" />
+      <TextInput source="name" validate={required()} />
       <SelectInput
         source="type"
+        validate={required()}
         choices={[
           {id: 'countdown', name: 'countdown'},
           {id: 'countup', name: 'countup'},
@@ -133,16 +134,15 @@ export const TestEdit = props => (
         source="thumbnail"
         validate={required()}
         label="Thumbnail"
-        defaultValue={null}
         accept="image/*">
         <ImageField source="src" title="title" />
       </ImageInput>
       <BooleanInput source="premium" />
-      <TextInput source="metric" />
+      <TextInput source="metric" defaultValue="" />
       <Table gender="mens" />
       <Table gender="womens" />
       <PercentileTable />
-      <TextInput source="source" />
+      <TextInput source="source" defaultValue="" />
       <BooleanInput source="disabled" />
     </SimpleForm>
   </Edit>
