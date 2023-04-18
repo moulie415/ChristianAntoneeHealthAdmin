@@ -2,7 +2,10 @@ import React from 'react';
 import {useController} from 'react-hook-form';
 
 const MyInput = ({gender, name}) => {
-  const controller = useController({name: `${gender}${name}`});
+  const controller = useController({
+    name: `${gender}${name}`,
+    defaultValue: '',
+  });
   return (
     <input
       {...controller.field}

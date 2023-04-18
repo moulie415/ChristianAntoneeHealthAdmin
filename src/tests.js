@@ -17,6 +17,11 @@ import {
   ArrayInput,
   SimpleFormIterator,
   NumberInput,
+  FileInput,
+  ImageInput,
+  FileField,
+  ImageField,
+  required,
 } from 'react-admin';
 import PercentileTable from './PercentileTable';
 import Table from './Table';
@@ -72,6 +77,21 @@ export const TestCreate = props => (
           <TextInput label="step" />
         </SimpleFormIterator>
       </ArrayInput>
+      <FileInput
+        source="video"
+        label="Video"
+        accept="video/*"
+        defaultValue={null}>
+        <FileField source="src" title="title" />
+      </FileInput>
+      <ImageInput
+        source="thumbnail"
+        validate={required()}
+        label="Thumbnail"
+        defaultValue={null}
+        accept="image/*">
+        <ImageField source="src" title="title" />
+      </ImageInput>
       <BooleanInput source="premium" />
       <TextInput source="metric" />
       <Table gender="mens" />
@@ -102,6 +122,21 @@ export const TestEdit = props => (
           <TextInput label="step" />
         </SimpleFormIterator>
       </ArrayInput>
+      <FileInput
+        source="video"
+        label="Video"
+        accept="video/*"
+        defaultValue={null}>
+        <FileField source="src" title="title" />
+      </FileInput>
+      <ImageInput
+        source="thumbnail"
+        validate={required()}
+        label="Thumbnail"
+        defaultValue={null}
+        accept="image/*">
+        <ImageField source="src" title="title" />
+      </ImageInput>
       <BooleanInput source="premium" />
       <TextInput source="metric" />
       <Table gender="mens" />

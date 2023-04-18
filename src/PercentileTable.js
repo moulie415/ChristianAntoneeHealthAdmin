@@ -4,7 +4,10 @@ import {useController} from 'react-hook-form';
 const percentiles = [10, 20, 30, 40, 50, 60, 70, 80, 90];
 
 const MyInput = ({percentile, name}) => {
-  const controller = useController({name: `${name}${percentile}th`});
+  const controller = useController({
+    name: `${name}${percentile}th`,
+    defaultValue: '',
+  });
   return (
     <input
       {...controller.field}
