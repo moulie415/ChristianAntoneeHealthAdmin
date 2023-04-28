@@ -72,6 +72,7 @@ export const TestCreate = props => (
       />
       <NumberInput source="time" label="Time in seconds" />
       <TextInput source="summary" style={{width: 350}} multiline />
+      <SelectInput source="formula" choices={[{id: 'vo2', name: 'VO2'}]} />
       <FileInput
         source="video"
         label="Video"
@@ -112,6 +113,7 @@ export const TestEdit = props => (
       />
       <NumberInput source="time" label="Time in seconds" />
       <TextInput source="summary" style={{width: 350}} multiline />
+      <SelectInput source="formula" choices={[{id: 'vo2', name: 'VO2'}]} />
       <FileInput
         source="video"
         label="Video"
