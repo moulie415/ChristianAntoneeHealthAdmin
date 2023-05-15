@@ -125,6 +125,11 @@ export const PlansCreate = props => {
                 <TextInput source="notes" label="Additional notes" multiline />
               </SimpleFormIterator>
             </ArrayInput>
+            <ArrayInput label="Instructions" source="steps" defaultValue={[]}>
+              <SimpleFormIterator>
+                <TextInput label="Instruction" multiline />
+              </SimpleFormIterator>
+            </ArrayInput>
             <ArrayInput validate={[required()]} source="dates" label="Dates">
               <SimpleFormIterator inline>
                 <DateInput label="Date" />
@@ -132,11 +137,7 @@ export const PlansCreate = props => {
             </ArrayInput>
           </SimpleFormIterator>
         </ArrayInput>
-        <ArrayInput label="Instructions" source="steps" defaultValue={[]}>
-          <SimpleFormIterator>
-            <TextInput label="Instruction" multiline />
-          </SimpleFormIterator>
-        </ArrayInput>
+
         <ArrayInput defaultValue={[]} source="tests" label="Tests">
           <SimpleFormIterator inline>
             <ReferenceInput label="Test" reference="tests">
@@ -259,6 +260,11 @@ export const PlansEdit = props => {
                 <TextInput source="notes" multiline label="Additional notes" />
               </SimpleFormIterator>
             </ArrayInput>
+            <ArrayInput label="Instructions" source="steps" defaultValue={[]}>
+              <SimpleFormIterator>
+                <TextInput label="Instruction" multiline />
+              </SimpleFormIterator>
+            </ArrayInput>
             <ArrayInput
               {...props}
               validate={[required()]}
@@ -268,11 +274,6 @@ export const PlansEdit = props => {
                 <DateInput label="Date" />
               </SimpleFormIterator>
             </ArrayInput>
-          </SimpleFormIterator>
-        </ArrayInput>
-        <ArrayInput label="Instructions" source="steps" defaultValue={[]}>
-          <SimpleFormIterator>
-            <TextInput label="Instruction" multiline />
           </SimpleFormIterator>
         </ArrayInput>
         <ArrayInput defaultValue={[]} source="tests" label="Tests">
