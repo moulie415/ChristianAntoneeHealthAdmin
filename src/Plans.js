@@ -116,10 +116,10 @@ export const PlansCreate = props => {
                     optionText="name"
                   />
                 </ReferenceInput>
-                <TextInput source="sets" label="Sets" />
-                <TextInput source="reps" label="Reps" />
-
+                <TextInput source="sets" validate={[required()]} label="Sets" />
+                <TextInput source="reps" validate={[required()]} label="Reps" />
                 <TextInput source="resistanceScale" label="Resistance scale" />
+                <TextInput source="weight" label="Weight" />
                 <TextInput source="duration" label="Duration" />
                 <TextInput source="restTime" label="Rest time" />
                 <TextInput source="notes" label="Additional notes" multiline />
@@ -251,10 +251,10 @@ export const PlansEdit = props => {
                     optionText="name"
                   />
                 </ReferenceInput>
-                <TextInput source="sets" label="Sets" />
-                <TextInput source="reps" label="Reps" />
-
+                <TextInput source="sets" validate={[required()]} label="Sets" />
+                <TextInput source="reps" validate={[required()]} label="Reps" />
                 <TextInput source="resistanceScale" label="Resistance scale" />
+                <TextInput source="weight" label="Weight" />
                 <TextInput source="duration" label="Duration" />
                 <TextInput source="restTime" label="Rest time" />
                 <TextInput source="notes" multiline label="Additional notes" />
