@@ -202,10 +202,29 @@ export const UsersEdit = props => {
         <BooleanInput source="client" />
         <BooleanField source="premium" />
         <DateField source="dob" label="Date of birth" />
+        <FormLabel style={{fontSize: 12, marginTop: 10}}>Plans</FormLabel>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            marginTop: 10,
+            marginBottom: 10,
+          }}>
+          {plans.map(p => {
+            return (
+              <Chip
+                key={p}
+                style={{marginRight: 10}}
+                onClick={() => navigate(`/plans/${p.id}`)}
+                label={moment(p.createdate.toDate()).format('DD/MM/YYYY')}
+              />
+            );
+          })}
+        </div>
         {/* <TextField source="equipment" />
         <TextField source="experience" />
         <TextField source="gender" /> */}
-        <TextField source="goal" />
+        <TextField label="goal" source="goal" />
         {/* <TextField source="unit" />
         <NumberField source="height" />
         <NumberField source="weight" />

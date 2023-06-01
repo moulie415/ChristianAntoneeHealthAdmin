@@ -37,6 +37,7 @@ import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import PersonIcon from '@mui/icons-material/Person';
 import UserIcon from './UserIcon';
+import {ClientList, ClientListShow, ClientListEdit} from './ClientList';
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 
@@ -130,6 +131,13 @@ class App extends React.Component {
             edit={PlansEdit}
             create={PlansCreate}
             icon={EventAvailableIcon}
+          />
+          <Resource
+            name="clientList"
+            options={{label: 'Client List'}}
+            list={ClientList}
+            show={ClientListShow}
+            edit={ClientListEdit}
           />
         </Admin>
         <ToastContainer />
