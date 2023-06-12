@@ -201,6 +201,19 @@ export const UsersEdit = props => {
         <EmailField source="email" />
         <BooleanInput source="client" />
         <BooleanField source="premium" />
+        <FormLabel style={{fontSize: 12}}>Plans</FormLabel>
+        <div style={{display: 'flex', flexDirection: 'row'}}>
+          {plans.map(p => {
+            return (
+              <Chip
+                key={p}
+                style={{marginRight: 10}}
+                onClick={() => navigate(`/plans/${p.id}`)}
+                label={moment(p.createdate.toDate()).format('DD/MM/YYYY')}
+              />
+            );
+          })}
+        </div>
         <DateField source="dob" label="Date of birth" />
         <FormLabel style={{fontSize: 12, marginTop: 10}}>Plans</FormLabel>
         <div

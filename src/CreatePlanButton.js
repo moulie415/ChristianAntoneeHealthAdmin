@@ -13,19 +13,7 @@ const CreatePlanButton = ({loading, setLoading}) => {
   return (
     <Button
       onClick={async () => {
-        try {
-          setLoading(true);
-          const ref = await addDoc(collection(db, 'plans'), {
-            user: id,
-            lastupdate: new Date(),
-            createdate: new Date(),
-          });
-          navigate(`/plans/${ref.id}`);
-          setLoading(false);
-        } catch (e) {
-          setLoading(false);
-          toast.error('Error creating plan');
-        }
+        navigate(`/plans/create?source={"user":"${id}"}`);
       }}
       disabled={loading}
       variant="contained"

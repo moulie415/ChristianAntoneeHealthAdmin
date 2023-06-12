@@ -2,7 +2,19 @@ import {collection, getDocs, query, where} from 'firebase/firestore';
 import React, {useEffect, useState} from 'react';
 import {db} from './App';
 import {toast} from 'react-toastify';
-import {CircularProgress} from '@mui/material';
+import {
+  CircularProgress,
+  Paper,
+  Table,
+  TableContainer,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody,
+  Button,
+  Link,
+} from '@mui/material';
+import {useNavigate} from 'react-router-dom';
 
 function chunkArrayInGroups(arr, size) {
   var myArray = [];
@@ -41,6 +53,9 @@ const ClientSummary = () => {
         c.docs.map(doc => {
           const data = doc.data();
           const cPlans = plans.filter(plan => plan.user === data.uid);
+          const clientPlansSorted = cPlans.sort((a,b) => {
+            
+          })
           return {...data, plans: cPlans};
         }),
       );
@@ -53,7 +68,8 @@ const ClientSummary = () => {
     getClients();
   }, []);
 
-  console.log(clients);
+  const navigate = useNavigate();
+
 
   return (
     <div>
@@ -68,7 +84,55 @@ const ClientSummary = () => {
           <CircularProgress />
         </div>
       ) : (
-        <div></div>
+        <TableContainer style={{marginTop: 50}} component={Paper}>
+          <Table sx={{minWidth: 700}} aria-label="customized table">
+            <TableHead>
+              <TableRow>
+                <TableCell>User</TableCell>
+                <TableCell>Email</TableCell>
+                <TableCell>Premium</TableCell>
+                <TableCell>Up to date plan?</TableCell>
+                <TableCell></TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {clients?.map(client => (
+                <TableRow key={client.uid}>
+                  <TableCell>
+                    <Button
+                      variant="text"
+                      style={{textTransform: 'none'}}
+                      onClick={e => {
+                        e.stopPropagation();
+                        navigate(`/users/${client.uid}`);
+                      }}>
+                      {`${client.name} ${client.surname || ''}`}
+                    </Button>
+                  </TableCell>
+                  <TableCell>{client.email}</TableCell>
+                  <TableCell>
+                    {client?.premium ? Object.keys(client.premium)?.[0] : ''}
+                  </TableCell>
+                  <TableCell></TableCell>
+                  <TableCell>
+                    <Button
+                      onClick={async () => {
+                        navigate(
+                          `/plans/create?source={"user":"${client.uid}"}`,
+                        );
+                      }}
+                      disabled={loading}
+                      variant="contained"
+                      color="primary"
+                      style={{marginTop: 10}}>
+                      Create plan
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
       )}
     </div>
   );
