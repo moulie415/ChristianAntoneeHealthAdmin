@@ -5,7 +5,7 @@ import {
   ExerciseCreate,
   ExerciseEdit,
 } from './exercises';
-import {Admin, Resource} from 'react-admin';
+import {Admin, CustomRoutes, Resource} from 'react-admin';
 import {FirebaseDataProvider, FirebaseAuthProvider} from 'react-admin-firebase';
 import firebase from 'firebase/compat/app';
 import {firebaseConfig} from './FIREBASE_CONFIG';
@@ -38,6 +38,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import PersonIcon from '@mui/icons-material/Person';
 import UserIcon from './UserIcon';
 import {ClientList, ClientListShow, ClientListEdit} from './ClientList';
+import {Route} from 'react-router-dom';
+import MyLayout from './MyLayout';
+import ClientSummary from './ClientSummary';
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 
@@ -75,6 +78,7 @@ class App extends React.Component {
       <>
         <Admin
           loginPage={CustomLoginPage}
+          layout={MyLayout}
           dataProvider={dataProvider}
           authProvider={authProvider}>
           <Resource
@@ -139,7 +143,11 @@ class App extends React.Component {
             show={ClientListShow}
             edit={ClientListEdit}
           />
+          <CustomRoutes>
+            <Route path="client-summary" element={<ClientSummary />} />
+          </CustomRoutes>
         </Admin>
+
         <ToastContainer />
       </>
     );
