@@ -83,13 +83,12 @@ const ListActions = () => (
 );
 
 export const UsersList = props => {
-  const [loading, setLoading] = React.useState(false);
   return (
     <List {...props} perPage={50} actions={<ListActions />}>
       <Datagrid bulkActionButtons={false}>
         <TextField source="name" />
         <EmailField source="email" />
-        <CreatePlanButton loading={loading} setLoading={setLoading} />
+        <CreatePlanButton />
         <BooleanField source="client" />
         <PremiumField source="premium" />
         <ShowButton label="" />
@@ -101,7 +100,6 @@ export const UsersList = props => {
 };
 
 export const UsersShow = props => {
-  const [loading, setLoading] = React.useState(false);
   const [plans, setPlans] = React.useState([]);
   const {id} = useParams();
   const navigate = useNavigate();
@@ -157,7 +155,7 @@ export const UsersShow = props => {
             </StringToLabelObject>
           </SingleFieldList>
         </ArrayField> */}
-        <CreatePlanButton loading={loading} setLoading={setLoading} />
+        <CreatePlanButton />
       </SimpleShowLayout>
     </Show>
   );
@@ -172,7 +170,6 @@ export const UsersCreate = props => (
 );
 
 export const UsersEdit = props => {
-  const [loading, setLoading] = React.useState(false);
   const [plans, setPlans] = React.useState([]);
   const {id} = useParams();
 
@@ -252,7 +249,7 @@ export const UsersEdit = props => {
             </StringToLabelObject>
           </SingleFieldList>
         </ArrayField> */}
-        <CreatePlanButton loading={loading} setLoading={setLoading} />
+        <CreatePlanButton />
       </SimpleForm>
     </Edit>
   );

@@ -1,11 +1,8 @@
 import Button from '@mui/material/Button';
-import {collection, addDoc} from 'firebase/firestore';
-import {toast} from 'react-toastify';
-import {db} from './App';
 import {useRecordContext} from 'react-admin';
 import {useNavigate} from 'react-router-dom';
 
-const CreatePlanButton = ({loading, setLoading}) => {
+const CreatePlanButton = () => {
   const record = useRecordContext();
   const navigate = useNavigate();
   const {id, client} = record;
@@ -15,7 +12,6 @@ const CreatePlanButton = ({loading, setLoading}) => {
       onClick={async () => {
         navigate(`/plans/create?source={"user":"${id}"}`);
       }}
-      disabled={loading}
       variant="contained"
       color="primary"
       style={{marginTop: 10}}>

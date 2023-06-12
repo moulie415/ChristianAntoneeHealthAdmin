@@ -3,16 +3,15 @@ import {useNavigate} from 'react-router-dom';
 import {useRecordContext} from 'react-admin';
 import Button from '@mui/material/Button';
 
-const DuplicatePlanButton = ({loading, setLoading}) => {
+const DuplicatePlanButton = () => {
   const record = useRecordContext();
-  const {lastupdate, createdate, ...rest} = record;
+  const {id, lastupdate, createdate, ...rest} = record;
   const navigate = useNavigate();
   return (
     <Button
       onClick={async () => {
         navigate(`/plans/create?source=${JSON.stringify(rest)}`);
       }}
-      disabled={loading}
       variant="contained"
       color="primary"
       style={{marginTop: 20}}>

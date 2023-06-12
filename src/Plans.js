@@ -347,7 +347,7 @@ export const PlansEdit = props => {
           sent={sent}
           loading={loading}
         /> */}
-        <DuplicatePlanButton loading={loading} setLoading={setLoading} />
+        <DuplicatePlanButton />
       </SimpleForm>
     </Edit>
   );

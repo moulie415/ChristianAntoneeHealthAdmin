@@ -12,9 +12,11 @@ import {
   TableCell,
   TableBody,
   Button,
-  Link,
 } from '@mui/material';
 import {useNavigate} from 'react-router-dom';
+import moment from 'moment';
+import DoneIcon from '@mui/icons-material/Done';
+import CloseIcon from '@mui/icons-material/Close';
 
 function chunkArrayInGroups(arr, size) {
   var myArray = [];
@@ -53,10 +55,19 @@ const ClientSummary = () => {
         c.docs.map(doc => {
           const data = doc.data();
           const cPlans = plans.filter(plan => plan.user === data.uid);
-          const clientPlansSorted = cPlans.sort((a,b) => {
-            
-          })
-          return {...data, plans: cPlans};
+          const upToDatePlan = cPlans?.find(plan => {
+            return plan?.workouts?.some(workout => {
+              return (
+                workout.dates?.some(date =>
+                  moment(date).isSameOrAfter(moment(), 'day'),
+                ) &&
+                workout.dates?.some(date =>
+                  moment(date).isSameOrBefore(moment(), 'day'),
+                )
+              );
+            });
+          });
+          return {...data, plans: cPlans, upToDatePlan};
         }),
       );
     } catch (e) {
@@ -69,7 +80,6 @@ const ClientSummary = () => {
   }, []);
 
   const navigate = useNavigate();
-
 
   return (
     <div>
@@ -96,40 +106,64 @@ const ClientSummary = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {clients?.map(client => (
-                <TableRow key={client.uid}>
-                  <TableCell>
-                    <Button
-                      variant="text"
-                      style={{textTransform: 'none'}}
-                      onClick={e => {
-                        e.stopPropagation();
-                        navigate(`/users/${client.uid}`);
-                      }}>
-                      {`${client.name} ${client.surname || ''}`}
-                    </Button>
-                  </TableCell>
-                  <TableCell>{client.email}</TableCell>
-                  <TableCell>
-                    {client?.premium ? Object.keys(client.premium)?.[0] : ''}
-                  </TableCell>
-                  <TableCell></TableCell>
-                  <TableCell>
-                    <Button
-                      onClick={async () => {
-                        navigate(
-                          `/plans/create?source={"user":"${client.uid}"}`,
-                        );
-                      }}
-                      disabled={loading}
-                      variant="contained"
-                      color="primary"
-                      style={{marginTop: 10}}>
-                      Create plan
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              ))}
+              {clients
+                ?.sort((a, b) => {
+                  const CLIENT_PREMIUM = 'Client Premium';
+                  const aPremium = a.premium[CLIENT_PREMIUM];
+                  const bPremium = b.premium[CLIENT_PREMIUM];
+                  if (b.upToDatePlan && !a.upToDatePlan) {
+                    if (aPremium && !bPremium) {
+                      return -2;
+                    } else {
+                      return -1;
+                    }
+                  }
+                  if (aPremium && !bPremium) {
+                    return -1;
+                  }
+                  return 0;
+                })
+                .map(client => (
+                  <TableRow key={client.uid}>
+                    <TableCell>
+                      <Button
+                        variant="text"
+                        style={{textTransform: 'none'}}
+                        onClick={e => {
+                          e.stopPropagation();
+                          navigate(`/users/${client.uid}`);
+                        }}>
+                        {`${client.name} ${client.surname || ''}`}
+                      </Button>
+                    </TableCell>
+                    <TableCell>{client.email}</TableCell>
+                    <TableCell>
+                      {client?.premium ? Object.keys(client.premium)?.[0] : ''}
+                    </TableCell>
+                    <TableCell align="center">
+                      {client.upToDatePlan ? (
+                        <DoneIcon style={{color: 'green'}} />
+                      ) : (
+                        <CloseIcon style={{color: 'red'}} />
+                      )}
+                    </TableCell>
+                    <TableCell></TableCell>
+                    <TableCell>
+                      <Button
+                        onClick={async () => {
+                          navigate(
+                            `/plans/create?source={"user":"${client.uid}"}`,
+                          );
+                        }}
+                        disabled={loading}
+                        variant="contained"
+                        color="primary"
+                        style={{marginTop: 10}}>
+                        Create plan
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
             </TableBody>
           </Table>
         </TableContainer>
