@@ -87,6 +87,7 @@ export const UsersList = props => {
     <List {...props} perPage={50} actions={<ListActions />}>
       <Datagrid bulkActionButtons={false}>
         <TextField source="name" />
+        <TextField source="surname" />
         <EmailField source="email" />
         <CreatePlanButton />
         <BooleanField source="client" />
@@ -120,6 +121,7 @@ export const UsersShow = props => {
       <SimpleShowLayout>
         <ImageField source="avatar" title="avatar" />
         <TextField source="name" />
+        <TextField source="surname" />
         <EmailField source="email" />
         <BooleanField source="client" />
         <PremiumField source="premium" />
@@ -195,6 +197,7 @@ export const UsersEdit = props => {
       <SimpleForm toolbar={<MyToolbar />}>
         <ImageField source="avatar" title="avatar" />
         <TextField source="name" />
+        <TextField source="surname" />
         <EmailField source="email" />
         <BooleanInput source="client" />
         <BooleanField source="premium" />
