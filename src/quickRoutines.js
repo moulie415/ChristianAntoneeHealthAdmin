@@ -108,16 +108,18 @@ export const QuickRoutineCreate = props => (
           {id: 'advanced', name: 'Advanced'},
         ]}
       />
-      <ReferenceArrayInput
+
+      <MyAutoCompleteArrayInput
         label="Exercises"
         reference="exercises"
         validate={required()}
         sort={{field: 'name', order: 'ASC'}}
         // filterToQuery={searchText => ({name: searchText})}
         perPage={200}
-        source="exerciseIds">
-        <MyAutoCompleteArrayInput validate={required()} optionText="name" />
-      </ReferenceArrayInput>
+        source="exerciseIds"
+        optionText="name"
+      />
+
       <ArrayInput label="Instructions" source="steps">
         <SimpleFormIterator>
           <TextInput label="Instruction" />
@@ -177,16 +179,18 @@ export const QuickRoutineEdit = props => (
           {id: 'advanced', name: 'Advanced'},
         ]}
       />
-      <ReferenceArrayInput
+
+      <MyAutoCompleteArrayInput
         label="Exercises"
         source="exerciseIds"
         validate={required()}
         reference="exercises"
         sort={{field: 'name', order: 'ASC'}}
         // filterToQuery={searchText => ({name: searchText})}
-        perPage={200}>
-        <MyAutoCompleteArrayInput validate={required()} optionText="name" />
-      </ReferenceArrayInput>
+        perPage={200}
+        optionText="name"
+      />
+
       <ArrayInput label="Instructions" source="steps">
         <SimpleFormIterator>
           <TextInput label="Instruction" multiline />

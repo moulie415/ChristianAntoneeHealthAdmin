@@ -73,14 +73,13 @@ const UserInput = ({setUser, ...props}) => {
     }
   }, [user, setUser]);
   return (
-    <ReferenceInput
+    <MyAutoCompleteInput
       label="User"
       source="user"
       reference="users"
       validate={[required()]}
-      {...props}>
-      <MyAutoCompleteInput optionText="name" />
-    </ReferenceInput>
+      optionText="name"
+    />
   );
 };
 
@@ -105,17 +104,15 @@ export const PlansCreate = props => {
               source="exercises"
               label="Exercises">
               <SimpleFormIterator inline>
-                <ReferenceInput
+                <MyAutoCompleteInput
+                  validate={[required()]}
+                  style={{width: 350}}
+                  optionText="name"
                   source="exercise"
                   label="Exercise"
                   perPage={200}
-                  reference="exercises">
-                  <MyAutoCompleteInput
-                    validate={[required()]}
-                    style={{width: 350}}
-                    optionText="name"
-                  />
-                </ReferenceInput>
+                  reference="exercises"
+                />
                 <TextInput source="sets" validate={[required()]} label="Sets" />
                 <TextInput source="reps" validate={[required()]} label="Reps" />
                 <TextInput source="resistanceScale" label="Resistance scale" />
@@ -140,13 +137,12 @@ export const PlansCreate = props => {
 
         <ArrayInput defaultValue={[]} source="tests" label="Tests">
           <SimpleFormIterator inline>
-            <ReferenceInput label="Test" reference="tests">
-              <MyAutoCompleteInput
-                optionText="name"
-                label="Test"
-                style={{width: 350}}
-              />
-            </ReferenceInput>
+            <MyAutoCompleteInput
+              optionText="name"
+              label="Test"
+              reference="tests"
+              style={{width: 350}}
+            />
           </SimpleFormIterator>
         </ArrayInput>
         <Typography>Nutritional planning</Typography>
@@ -184,9 +180,12 @@ export const PlansCreate = props => {
           source="education"
           label="Educational resources">
           <SimpleFormIterator inline>
-            <ReferenceInput label="Article" reference="education">
-              <MyAutoCompleteInput optionText="title" style={{width: 350}} />
-            </ReferenceInput>
+            <MyAutoCompleteInput
+              label="Article"
+              reference="education"
+              optionText="title"
+              style={{width: 350}}
+            />
           </SimpleFormIterator>
         </ArrayInput>
       </SimpleForm>
@@ -240,17 +239,16 @@ export const PlansEdit = props => {
               source="exercises"
               label="Exercises">
               <SimpleFormIterator inline>
-                <ReferenceInput
+                <MyAutoCompleteInput
                   source="exercise"
                   perPage={200}
                   label="Exercise"
-                  reference="exercises">
-                  <MyAutoCompleteInput
-                    validate={[required()]}
-                    style={{width: 350}}
-                    optionText="name"
-                  />
-                </ReferenceInput>
+                  reference="exercises"
+                  validate={[required()]}
+                  style={{width: 350}}
+                  optionText="name"
+                />
+
                 <TextInput source="sets" validate={[required()]} label="Sets" />
                 <TextInput source="reps" validate={[required()]} label="Reps" />
                 <TextInput source="resistanceScale" label="Resistance scale" />
@@ -278,13 +276,12 @@ export const PlansEdit = props => {
         </ArrayInput>
         <ArrayInput defaultValue={[]} source="tests" label="Tests">
           <SimpleFormIterator inline>
-            <ReferenceInput label="Test" reference="tests">
-              <MyAutoCompleteInput
-                optionText="name"
-                label="Test"
-                style={{width: 350}}
-              />
-            </ReferenceInput>
+            <MyAutoCompleteInput
+              optionText="name"
+              label="Test"
+              reference="tests"
+              style={{width: 350}}
+            />
           </SimpleFormIterator>
         </ArrayInput>
         <Typography>Nutritional planning</Typography>
@@ -322,13 +319,12 @@ export const PlansEdit = props => {
           source="education"
           label="Educational resources">
           <SimpleFormIterator inline>
-            <ReferenceInput label="Article" reference="education">
-              <MyAutoCompleteInput
-                optionText="title"
-                label="Education"
-                style={{width: 350}}
-              />
-            </ReferenceInput>
+            <MyAutoCompleteInput
+              optionText="title"
+              label="Education"
+              reference="education"
+              style={{width: 350}}
+            />
           </SimpleFormIterator>
         </ArrayInput>
         {/* <SendPlanButton

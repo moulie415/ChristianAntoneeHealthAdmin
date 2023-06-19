@@ -73,18 +73,18 @@ export const SettingsEdit = props => (
   <Edit {...props}>
     <SimpleForm toolbar={<SettingsEditToolbar />}>
       <BooleanInput source="ads" />
-      <ReferenceArrayInput
+
+      <MyAutoCompleteArrayInput
         source="admins"
         reference="users"
-        filterToQuery={searchText => ({name: searchText})}>
-        <MyAutoCompleteArrayInput optionText="name" />
-      </ReferenceArrayInput>
-      <ReferenceArrayInput
+        optionText="name"
+      />
+
+      <MyAutoCompleteArrayInput
         source="premiumFriends"
         reference="users"
-        filterToQuery={searchText => ({name: searchText})}>
-        <MyAutoCompleteArrayInput optionText="name" />
-      </ReferenceArrayInput>
+        optionText="name"
+      />
     </SimpleForm>
   </Edit>
 );
