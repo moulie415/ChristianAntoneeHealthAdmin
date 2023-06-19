@@ -110,7 +110,6 @@ export const PlansCreate = props => {
                   optionText="name"
                   source="exercise"
                   label="Exercise"
-                  perPage={200}
                   reference="exercises"
                 />
                 <TextInput source="sets" validate={[required()]} label="Sets" />
@@ -241,7 +240,6 @@ export const PlansEdit = props => {
               <SimpleFormIterator inline>
                 <MyAutoCompleteInput
                   source="exercise"
-                  perPage={200}
                   label="Exercise"
                   reference="exercises"
                   validate={[required()]}

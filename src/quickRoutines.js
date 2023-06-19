@@ -115,7 +115,6 @@ export const QuickRoutineCreate = props => (
         validate={required()}
         sort={{field: 'name', order: 'ASC'}}
         // filterToQuery={searchText => ({name: searchText})}
-        perPage={200}
         source="exerciseIds"
         optionText="name"
       />
@@ -187,7 +186,6 @@ export const QuickRoutineEdit = props => (
         reference="exercises"
         sort={{field: 'name', order: 'ASC'}}
         // filterToQuery={searchText => ({name: searchText})}
-        perPage={200}
         optionText="name"
       />
 
