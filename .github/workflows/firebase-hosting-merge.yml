@@ -21,6 +21,8 @@ jobs:
           cd src
           touch FIREBASE_CONFIG.js
           echo "$FIREBASE_CONFIG" >> FIREBASE_CONFIG.js
+          cd ../.github/scripts
+          node getCommitHash.js
       - run: npm i -f && npm run build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:

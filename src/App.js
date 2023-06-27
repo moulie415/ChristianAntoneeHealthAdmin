@@ -74,6 +74,7 @@ const dataProvider = FirebaseDataProvider(firebaseConfig, {
 
 class App extends React.Component {
   render() {
+    console.log(__VERSION__, process.env.REACT_APP_VERSION);
     return (
       <>
         <Admin
