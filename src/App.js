@@ -74,83 +74,100 @@ const dataProvider = FirebaseDataProvider(firebaseConfig, {
 
 class App extends React.Component {
   render() {
-    console.log(__VERSION__, process.env.REACT_APP_VERSION);
-    return (
-      <>
-        <Admin
-          loginPage={CustomLoginPage}
-          layout={MyLayout}
-          dataProvider={dataProvider}
-          authProvider={authProvider}>
-          <Resource
-            name="exercises"
-            list={ExerciseList}
-            show={ExerciseShow}
-            create={ExerciseCreate}
-            edit={ExerciseEdit}
-            icon={FitnessCenterIcon}
-          />
-          <Resource
-            name="tests"
-            list={TestList}
-            show={TestShow}
-            create={TestCreate}
-            edit={TestEdit}
-            icon={TimerIcon}
-          />
-          <Resource
-            name="quickRoutines"
-            list={QuickRoutineList}
-            show={QuickRoutineShow}
-            create={QuickRoutineCreate}
-            edit={QuickRoutineEdit}
-            options={{label: 'Workouts'}}
-            icon={FitnessCenterIcon}
-          />
-          <Resource
-            name="education"
-            list={EducationList}
-            show={EducationShow}
-            create={EducationCreate}
-            edit={EducationEdit}
-            icon={BookIcon}
-          />
-          <Resource
-            name="settings"
-            list={SettingsList}
-            show={SettingsShow}
-            edit={SettingsEdit}
-            icon={SettingsIcon}
-          />
-          <Resource
-            name="users"
-            list={UsersList}
-            show={UsersShow}
-            icon={UserIcon}
-            edit={UsersEdit}
-          />
-          <Resource
-            name="plans"
-            list={PlansList}
-            show={PlansShow}
-            edit={PlansEdit}
-            create={PlansCreate}
-            icon={EventAvailableIcon}
-          />
-          <Resource
-            name="clientList"
-            options={{label: 'Client List'}}
-            list={ClientList}
-            show={ClientListShow}
-            edit={ClientListEdit}
-          />
-          <CustomRoutes>
-            <Route path="client-summary" element={<ClientSummary />} />
-          </CustomRoutes>
-        </Admin>
+    if (__VERSION__ === process.env.REACT_APP_VERSION || __DEV__) {
+      return (
+        <>
+          <Admin
+            loginPage={CustomLoginPage}
+            layout={MyLayout}
+            dataProvider={dataProvider}
+            authProvider={authProvider}>
+            <Resource
+              name="exercises"
+              list={ExerciseList}
+              show={ExerciseShow}
+              create={ExerciseCreate}
+              edit={ExerciseEdit}
+              icon={FitnessCenterIcon}
+            />
+            <Resource
+              name="tests"
+              list={TestList}
+              show={TestShow}
+              create={TestCreate}
+              edit={TestEdit}
+              icon={TimerIcon}
+            />
+            <Resource
+              name="quickRoutines"
+              list={QuickRoutineList}
+              show={QuickRoutineShow}
+              create={QuickRoutineCreate}
+              edit={QuickRoutineEdit}
+              options={{label: 'Workouts'}}
+              icon={FitnessCenterIcon}
+            />
+            <Resource
+              name="education"
+              list={EducationList}
+              show={EducationShow}
+              create={EducationCreate}
+              edit={EducationEdit}
+              icon={BookIcon}
+            />
+            <Resource
+              name="settings"
+              list={SettingsList}
+              show={SettingsShow}
+              edit={SettingsEdit}
+              icon={SettingsIcon}
+            />
+            <Resource
+              name="users"
+              list={UsersList}
+              show={UsersShow}
+              icon={UserIcon}
+              edit={UsersEdit}
+            />
+            <Resource
+              name="plans"
+              list={PlansList}
+              show={PlansShow}
+              edit={PlansEdit}
+              create={PlansCreate}
+              icon={EventAvailableIcon}
+            />
+            <Resource
+              name="clientList"
+              options={{label: 'Client List'}}
+              list={ClientList}
+              show={ClientListShow}
+              edit={ClientListEdit}
+            />
+            <CustomRoutes>
+              <Route path="client-summary" element={<ClientSummary />} />
+            </CustomRoutes>
+          </Admin>
 
-        <ToastContainer />
-      </>
+          <ToastContainer />
+        </>
+      );
+    }
+    return (
+      <div
+        style={{
+          width: 600,
+          maxWidth: '100%',
+          padding: 20,
+          paddingTop: 100,
+          margin: 'auto',
+          fontSize: 30,
+          fontFamily: 'Arial',
+        }}>
+        You're not running the latest version of the CA Health admin, if you're
+        on Windows please try Ctrl+F5, Shift+F5 or Ctrl+Shift+R, if you're on a
+        Mac please try Shift+Command+R.
+      </div>
     );
   }
 }
