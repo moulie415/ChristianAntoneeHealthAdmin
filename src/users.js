@@ -143,20 +143,7 @@ export const UsersShow = props => {
         <TextField source="experience" /> */}
         <TextField source="gender" />
         <TextField source="goal" />
-        {/* <TextField source="unit" />
-        <NumberField source="height" />
-        <NumberField source="weight" />
-        <TextField source="injuries" />
-        <TextField source="lifestyle" />
-        <TextField source="medications" />
-        <TextField source="stressLevel" />
-        <ArrayField source="nutrition">
-          <SingleFieldList linkType={false}>
-            <StringToLabelObject>
-              <ChipField source="label" />
-            </StringToLabelObject>
-          </SingleFieldList>
-        </ArrayField> */}
+
         <CreatePlanButton />
       </SimpleShowLayout>
     </Show>
@@ -174,6 +161,8 @@ export const UsersCreate = props => (
 export const UsersEdit = props => {
   const [plans, setPlans] = React.useState([]);
   const {id} = useParams();
+
+  const navigate = useNavigate();
 
   React.useEffect(() => {
     const checkPlans = async () => {
@@ -214,44 +203,14 @@ export const UsersEdit = props => {
             );
           })}
         </div>
+        <FormLabel style={{fontSize: 12}}>Date of birth</FormLabel>
         <DateField source="dob" label="Date of birth" />
-        <FormLabel style={{fontSize: 12, marginTop: 10}}>Plans</FormLabel>
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            marginTop: 10,
-            marginBottom: 10,
-          }}>
-          {plans.map(p => {
-            return (
-              <Chip
-                key={p}
-                style={{marginRight: 10}}
-                onClick={() => navigate(`/plans/${p.id}`)}
-                label={moment(p.createdate.toDate()).format('DD/MM/YYYY')}
-              />
-            );
-          })}
-        </div>
+
         {/* <TextField source="equipment" />
         <TextField source="experience" />
         <TextField source="gender" /> */}
         <TextField label="goal" source="goal" />
-        {/* <TextField source="unit" />
-        <NumberField source="height" />
-        <NumberField source="weight" />
-        <TextField source="injuries" />
-        <TextField source="lifestyle" />
-        <TextField source="medications" />
-        <TextField source="stressLevel" />
-        <ArrayField source="nutrition">
-          <SingleFieldList linkType={false}>
-            <StringToLabelObject>
-              <ChipField source="label" />
-            </StringToLabelObject>
-          </SingleFieldList>
-        </ArrayField> */}
+
         <CreatePlanButton />
       </SimpleForm>
     </Edit>
