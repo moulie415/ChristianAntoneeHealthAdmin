@@ -18,6 +18,8 @@ import moment from 'moment';
 import DoneIcon from '@mui/icons-material/Done';
 import CloseIcon from '@mui/icons-material/Close';
 
+const CLIENT_PREMIUM = 'Client Premium';
+
 function chunkArrayInGroups(arr, size) {
   var myArray = [];
   for (var i = 0; i < arr.length; i += size) {
@@ -25,6 +27,31 @@ function chunkArrayInGroups(arr, size) {
   }
   return myArray;
 }
+
+const ClientPremiumField = ({client}) => {
+  const clientPremium = client?.premium[CLIENT_PREMIUM];
+  const hasExpired =
+    !!clientPremium &&
+    moment(clientPremium.expirationDate).isBefore(
+      moment().subtract(10, 'days'),
+    );
+
+  return (
+    <div>
+      {clientPremium ? (
+        hasExpired ? (
+          <span style={{color: 'red'}}>{` Expired ${moment(
+            clientPremium.expirationDate,
+          ).format('DD/MM/YY')}`}</span>
+        ) : (
+          <span style={{color: 'green'}}> Active</span>
+        )
+      ) : (
+        ''
+      )}
+    </div>
+  );
+};
 
 const ClientSummary = () => {
   const [loading, setLoading] = useState(false);
@@ -100,7 +127,7 @@ const ClientSummary = () => {
               <TableRow>
                 <TableCell>User</TableCell>
                 <TableCell>Email</TableCell>
-                <TableCell>Premium</TableCell>
+                <TableCell>Client Premium</TableCell>
                 <TableCell>Up to date plan?</TableCell>
                 <TableCell></TableCell>
               </TableRow>
@@ -108,20 +135,86 @@ const ClientSummary = () => {
             <TableBody>
               {clients
                 ?.sort((a, b) => {
-                  const CLIENT_PREMIUM = 'Client Premium';
                   const aPremium = a.premium[CLIENT_PREMIUM];
                   const bPremium = b.premium[CLIENT_PREMIUM];
-                  if (b.upToDatePlan && !a.upToDatePlan) {
-                    if (aPremium && !bPremium) {
-                      return -2;
-                    } else {
-                      return -1;
+                  const aExpired =
+                    !!aPremium &&
+                    moment(aPremium.expirationDate).isBefore(
+                      moment().subtract(10, 'days'),
+                    );
+                  const bExpired =
+                    !!bPremium &&
+                    moment(bPremium.expirationDate).isBefore(
+                      moment().subtract(10, 'days'),
+                    );
+
+                  let score = 0;
+
+                  if (b.upToDatePlan) {
+                    score -= 2;
+                    if (b.premium) {
+                      score += 1;
+                    }
+
+                    if (a.premium) {
+                      score -= 1;
+                    }
+
+                    if (b.premium && !bExpired) {
+                      score += 1;
+                    }
+
+                    if (a.premium && !aExpired) {
+                      score -= 1;
                     }
                   }
-                  if (aPremium && !bPremium) {
-                    return -1;
+
+                  if (a.upToDatePlan) {
+                    score += 2;
+                    if (b.premium) {
+                      score += 1;
+                    }
+
+                    if (a.premium) {
+                      score -= 1;
+                    }
+
+                    if (b.premium && !bExpired) {
+                      score += 1;
+                    }
+
+                    if (a.premium && !aExpired) {
+                      score -= 1;
+                    }
                   }
-                  return 0;
+
+                  return score;
+
+                  // if (aPremium && !aExpired) {
+                  //   console.log(a);
+                  // }
+
+                  // if (b.upToDatePlan && !a.upToDatePlan) {
+                  //   if (aPremium && !bPremium) {
+                  //     if (!aExpired) {
+                  //       console.log(a.name, b.name);
+                  //       return -4;
+                  //     }
+                  //     return -2;
+                  //   } else if (bPremium && !bExpired) {
+
+                  //   } else {
+                  //     return -1;
+                  //   }
+                  // }
+                  // if (aPremium && !bPremium) {
+                  //   if (!aExpired) {
+                  //     console.log(a.name, b.name);
+                  //     return -3;
+                  //   }
+                  //   return -1;
+                  // }
+                  // return 0;
                 })
                 .map(client => (
                   <TableRow key={client.uid}>
@@ -138,7 +231,7 @@ const ClientSummary = () => {
                     </TableCell>
                     <TableCell>{client.email}</TableCell>
                     <TableCell>
-                      {client?.premium ? Object.keys(client.premium)?.[0] : ''}
+                      <ClientPremiumField client={client} />
                     </TableCell>
                     <TableCell align="center">
                       {client.upToDatePlan ? (

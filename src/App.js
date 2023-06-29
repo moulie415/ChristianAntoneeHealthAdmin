@@ -68,7 +68,7 @@ const dataProvider = FirebaseDataProvider(firebaseConfig, {
     enabled: true,
   },
   firestoreCostsLogger: {
-    enabled: true,
+    enabled: process.env.NODE_ENV === 'development',
   },
 });
 
