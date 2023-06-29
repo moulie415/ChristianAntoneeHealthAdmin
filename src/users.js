@@ -41,7 +41,6 @@ import {
   where,
   getDocs,
   orderBy,
-  limit,
   limitToLast,
 } from 'firebase/firestore';
 import {toast} from 'react-toastify';
@@ -64,6 +63,20 @@ const getPlans = async uid => {
   );
   const plans = await getDocs(q);
   return plans.docs
+    .map(d => {
+      return {...d.data(), id: d.id};
+    })
+    .reverse();
+};
+
+const getWorkouts = async uid => {
+  const q = query(
+    collection(db, 'users', uid, 'savedWorkouts'),
+    orderBy('createdate'),
+    limitToLast(50),
+  );
+  const workouts = await getDocs(q);
+  return workouts.docs
     .map(d => {
       return {...d.data(), id: d.id};
     })
@@ -102,6 +115,7 @@ export const UsersList = props => {
 
 export const UsersShow = props => {
   const [plans, setPlans] = React.useState([]);
+  const [workouts, setWorkouts] = React.useState([]);
   const {id} = useParams();
   const navigate = useNavigate();
 
@@ -114,7 +128,16 @@ export const UsersShow = props => {
         toast.error('Error fetching plans');
       }
     };
+    const checkWorkouts = async () => {
+      try {
+        const workouts = await getWorkouts(id);
+        setWorkouts(workouts);
+      } catch (e) {
+        toast.error('Error fetching workouts');
+      }
+    };
     checkPlans();
+    checkWorkouts();
   }, [id]);
   return (
     <Show {...props}>
@@ -160,6 +183,7 @@ export const UsersCreate = props => (
 
 export const UsersEdit = props => {
   const [plans, setPlans] = React.useState([]);
+  const [workouts, setWorkouts] = React.useState([]);
   const {id} = useParams();
 
   const navigate = useNavigate();
@@ -173,6 +197,15 @@ export const UsersEdit = props => {
         toast.error('Error fetching plans');
       }
     };
+    const checkWorkouts = async () => {
+      try {
+        const workouts = await getWorkouts(id);
+        setWorkouts(workouts);
+      } catch (e) {
+        toast.error('Error fetching workouts');
+      }
+    };
+    checkWorkouts();
     checkPlans();
   }, [id]);
 
