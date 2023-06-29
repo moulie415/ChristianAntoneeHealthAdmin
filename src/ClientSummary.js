@@ -31,10 +31,7 @@ function chunkArrayInGroups(arr, size) {
 const ClientPremiumField = ({client}) => {
   const clientPremium = client?.premium[CLIENT_PREMIUM];
   const hasExpired =
-    !!clientPremium &&
-    moment(clientPremium.expirationDate).isBefore(
-      moment().subtract(10, 'days'),
-    );
+    !!clientPremium && moment(clientPremium.expirationDate).isBefore(moment());
 
   return (
     <div>
@@ -139,82 +136,34 @@ const ClientSummary = () => {
                   const bPremium = b.premium[CLIENT_PREMIUM];
                   const aExpired =
                     !!aPremium &&
-                    moment(aPremium.expirationDate).isBefore(
-                      moment().subtract(10, 'days'),
-                    );
+                    moment(aPremium.expirationDate).isBefore(moment());
                   const bExpired =
                     !!bPremium &&
-                    moment(bPremium.expirationDate).isBefore(
-                      moment().subtract(10, 'days'),
-                    );
+                    moment(bPremium.expirationDate).isBefore(moment());
 
-                  let score = 0;
-
-                  if (b.upToDatePlan) {
-                    score -= 2;
-                    if (b.premium) {
-                      score += 1;
-                    }
-
-                    if (a.premium) {
-                      score -= 1;
-                    }
-
-                    if (b.premium && !bExpired) {
-                      score += 1;
-                    }
-
-                    if (a.premium && !aExpired) {
-                      score -= 1;
+                  if (b.upToDatePlan && !a.upToDatePlan) {
+                    if (aPremium && !bPremium) {
+                      if (!aExpired) {
+                        return -3;
+                      }
+                      return -2;
+                    } else {
+                      return -1;
                     }
                   }
-
-                  if (a.upToDatePlan) {
-                    score += 2;
-                    if (b.premium) {
-                      score += 1;
+                  if (aPremium && !bPremium) {
+                    if (!aExpired) {
+                      return -2;
                     }
-
-                    if (a.premium) {
-                      score -= 1;
-                    }
-
-                    if (b.premium && !bExpired) {
-                      score += 1;
-                    }
-
-                    if (a.premium && !aExpired) {
-                      score -= 1;
-                    }
+                    return -1;
                   }
 
-                  return score;
-
-                  // if (aPremium && !aExpired) {
-                  //   console.log(a);
-                  // }
-
-                  // if (b.upToDatePlan && !a.upToDatePlan) {
-                  //   if (aPremium && !bPremium) {
-                  //     if (!aExpired) {
-                  //       console.log(a.name, b.name);
-                  //       return -4;
-                  //     }
-                  //     return -2;
-                  //   } else if (bPremium && !bExpired) {
-
-                  //   } else {
-                  //     return -1;
-                  //   }
-                  // }
-                  // if (aPremium && !bPremium) {
-                  //   if (!aExpired) {
-                  //     console.log(a.name, b.name);
-                  //     return -3;
-                  //   }
-                  //   return -1;
-                  // }
-                  // return 0;
+                  if (aPremium && bPremium) {
+                    if (!aExpired && bExpired) {
+                      return -1;
+                    }
+                  }
+                  return 0;
                 })
                 .map(client => (
                   <TableRow key={client.uid}>
