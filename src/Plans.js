@@ -114,11 +114,24 @@ export const PlansCreate = props => {
                 />
                 <TextInput source="sets" validate={[required()]} label="Sets" />
                 <TextInput source="reps" validate={[required()]} label="Reps" />
-                <TextInput source="resistanceScale" label="Resistance scale" />
-                <TextInput source="weight" label="Weight" />
-                <TextInput source="duration" label="Duration" />
-                <TextInput source="restTime" label="Rest time" />
-                <TextInput source="notes" label="Additional notes" multiline />
+                <TextInput
+                  source="resistanceScale"
+                  label="Resistance scale"
+                  defaultValue=""
+                />
+                <TextInput source="weight" label="Weight" defaultValue="" />
+                <TextInput source="duration" label="Duration" defaultValue="" />
+                <TextInput
+                  source="restTime"
+                  label="Rest time"
+                  defaultValue=""
+                />
+                <TextInput
+                  source="notes"
+                  label="Additional notes"
+                  multiline
+                  defaultValue=""
+                />
               </SimpleFormIterator>
             </ArrayInput>
             <ArrayInput label="Instructions" source="steps" defaultValue={[]}>
@@ -249,11 +262,24 @@ export const PlansEdit = props => {
 
                 <TextInput source="sets" validate={[required()]} label="Sets" />
                 <TextInput source="reps" validate={[required()]} label="Reps" />
-                <TextInput source="resistanceScale" label="Resistance scale" />
-                <TextInput source="weight" label="Weight" />
-                <TextInput source="duration" label="Duration" />
-                <TextInput source="restTime" label="Rest time" />
-                <TextInput source="notes" multiline label="Additional notes" />
+                <TextInput
+                  source="resistanceScale"
+                  label="Resistance scale"
+                  defaultValue=""
+                />
+                <TextInput source="weight" label="Weight" defaultValue="" />
+                <TextInput source="duration" label="Duration" defaultValue="" />
+                <TextInput
+                  source="restTime"
+                  label="Rest time"
+                  defaultValue=""
+                />
+                <TextInput
+                  source="notes"
+                  multiline
+                  label="Additional notes"
+                  defaultValue=""
+                />
               </SimpleFormIterator>
             </ArrayInput>
             <ArrayInput label="Instructions" source="steps" defaultValue={[]}>
