@@ -47,6 +47,7 @@ import {toast} from 'react-toastify';
 import * as moment from 'moment';
 import {useNavigate, useParams} from 'react-router-dom';
 import PremiumField from './PremiumField';
+import WorkoutsTable from './WorkoutsTable';
 
 const UserFilter = props => (
   <Filter {...props}>
@@ -169,6 +170,7 @@ export const UsersShow = props => {
 
         <CreatePlanButton />
       </SimpleShowLayout>
+      {workouts.length && <WorkoutsTable workouts={workouts} />}
     </Show>
   );
 };
@@ -246,6 +248,7 @@ export const UsersEdit = props => {
 
         <CreatePlanButton />
       </SimpleForm>
+      {workouts.length && <WorkoutsTable workouts={workouts} />}
     </Edit>
   );
 };
