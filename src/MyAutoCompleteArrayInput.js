@@ -9,7 +9,7 @@ const MyAutoCompleteArrayInput = props => {
     <AutocompleteArrayInput
       {...props}
       choices={data?.map(item => {
-        return {id: item.id, name: item[props.optionText]};
+        return {id: item.id, [props.optionText]: item[props.optionText]};
       })}
       filterToQuery={() => ''}
       matchSuggestion={(filter, suggestion) => {
