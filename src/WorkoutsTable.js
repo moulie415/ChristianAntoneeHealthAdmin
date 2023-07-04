@@ -44,7 +44,13 @@ const WorkoutsTable = ({workouts}) => {
             {workouts?.map(workout => (
               <TableRow key={workout.id}>
                 <TableCell>
-                  {moment.unix(workout.createdate.seconds).format('DD/MM/YYYY')}
+                  {moment
+                    .unix(
+                      workout.startTime
+                        ? workout.startTime.seconds
+                        : workout.createdate.seconds,
+                    )
+                    .format('DD/MM/YYYY')}
                 </TableCell>
                 <TableCell>{workout?.planWorkout.name}</TableCell>
                 <TableCell>{hhmmss(workout.seconds)}</TableCell>
