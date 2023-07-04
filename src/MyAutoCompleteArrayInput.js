@@ -15,7 +15,7 @@ const MyAutoCompleteArrayInput = props => {
       matchSuggestion={(filter, suggestion) => {
         return (
           suggestion[props.optionText]
-            .toLowerCase()
+            ?.toLowerCase()
             .indexOf(filter?.toLowerCase()) !== -1
         );
       }}
