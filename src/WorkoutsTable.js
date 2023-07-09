@@ -56,7 +56,9 @@ const WorkoutsTable = ({workouts}) => {
                 <TableCell>{hhmmss(workout.seconds)}</TableCell>
                 <TableCell>{workout.calories}</TableCell>
                 <TableCell>{`${workout.difficulty}/10`}</TableCell>
-                <TableCell>{workout.averageHeartRate}</TableCell>
+                <TableCell>
+                  {!!workout.averageHeartRate ? workout.averageHeartRate : ''}
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
