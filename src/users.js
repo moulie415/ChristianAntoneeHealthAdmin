@@ -170,7 +170,7 @@ export const UsersShow = props => {
 
         <CreatePlanButton />
       </SimpleShowLayout>
-      {workouts.length && <WorkoutsTable workouts={workouts} />}
+      {!!workouts.length && <WorkoutsTable workouts={workouts} />}
     </Show>
   );
 };
@@ -248,7 +248,7 @@ export const UsersEdit = props => {
 
         <CreatePlanButton />
       </SimpleForm>
-      {workouts.length && <WorkoutsTable workouts={workouts} />}
+      {!!workouts.length && <WorkoutsTable workouts={workouts} />}
     </Edit>
   );
 };
