@@ -23,6 +23,7 @@ function hhmmss(secs) {
 }
 
 const WorkoutsTable = ({workouts}) => {
+  console.log(workouts);
   return (
     <>
       <Typography style={{marginLeft: 20, marginTop: 20}}>
@@ -41,26 +42,28 @@ const WorkoutsTable = ({workouts}) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {workouts?.map(workout => (
-              <TableRow key={workout.id}>
-                <TableCell>
-                  {moment
-                    .unix(
-                      workout.startTime
-                        ? workout.startTime.seconds
-                        : workout.createdate.seconds,
-                    )
-                    .format('DD/MM/YYYY')}
-                </TableCell>
-                <TableCell>{workout?.planWorkout.name}</TableCell>
-                <TableCell>{hhmmss(workout.seconds)}</TableCell>
-                <TableCell>{workout.calories}</TableCell>
-                <TableCell>{`${workout.difficulty}/10`}</TableCell>
-                <TableCell>
-                  {!!workout.averageHeartRate ? workout.averageHeartRate : ''}
-                </TableCell>
-              </TableRow>
-            ))}
+            {workouts?.map(workout => {
+              return (
+                <TableRow key={workout.id}>
+                  <TableCell>
+                    {moment
+                      .unix(
+                        workout.startTime
+                          ? workout.startTime.seconds
+                          : workout.createdate.seconds,
+                      )
+                      .format('DD/MM/YYYY')}
+                  </TableCell>
+                  <TableCell>{workout?.planWorkout?.name}</TableCell>
+                  <TableCell>{hhmmss(workout.seconds)}</TableCell>
+                  <TableCell>{workout.calories}</TableCell>
+                  <TableCell>{`${workout.difficulty}/10`}</TableCell>
+                  <TableCell>
+                    {!!workout.averageHeartRate ? workout.averageHeartRate : ''}
+                  </TableCell>
+                </TableRow>
+              );
+            })}
           </TableBody>
         </Table>
       </TableContainer>

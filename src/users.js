@@ -154,7 +154,7 @@ export const UsersShow = props => {
           {plans.map(p => {
             return (
               <Chip
-                key={p}
+                key={p.id}
                 style={{marginRight: 10}}
                 onClick={() => navigate(`/plans/${p.id}`)}
                 label={moment(p.createdate.toDate()).format('DD/MM/YYYY')}
@@ -230,7 +230,7 @@ export const UsersEdit = props => {
           {plans.map(p => {
             return (
               <Chip
-                key={p}
+                key={p.id}
                 style={{marginRight: 10}}
                 onClick={() => navigate(`/plans/${p.id}`)}
                 label={moment(p.createdate.toDate()).format('DD/MM/YYYY')}
