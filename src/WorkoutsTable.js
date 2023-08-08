@@ -87,11 +87,11 @@ const WorkoutsTable = () => {
                 );
 
                 if (summary) {
-                  console.log(summary);
                   newWorkouts.push({
                     ...workout,
                     calories: `${summary.activeKilocalories} (Garmin)`,
                     averageHeartRate: `${summary.averageHeartRateInBeatsPerMinute} (Garmin)`,
+                    maxHeartRate: `${summary.maxHeartRateInBeatsPerMinute}  (Garmin)`,
                   });
                   continue;
                 }
@@ -102,7 +102,6 @@ const WorkoutsTable = () => {
           }
         }
       } catch (e) {
-        console.log(e);
         toast.error('Error fetching workouts');
       }
     };
@@ -124,7 +123,8 @@ const WorkoutsTable = () => {
               <TableCell>Duration</TableCell>
               <TableCell>Calories</TableCell>
               <TableCell>RPE</TableCell>
-              <TableCell>Average heart rate</TableCell>
+              <TableCell>Average heart rate (bpm)</TableCell>
+              <TableCell>Max heart rate (bpm)</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -146,6 +146,9 @@ const WorkoutsTable = () => {
                   <TableCell>{`${workout.difficulty}/10`}</TableCell>
                   <TableCell>
                     {!!workout.averageHeartRate ? workout.averageHeartRate : ''}
+                  </TableCell>
+                  <TableCell>
+                    {!!workout.maxHeartRate ? workout.maxHeartRate : ''}
                   </TableCell>
                 </TableRow>
               );
