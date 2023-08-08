@@ -78,16 +78,12 @@ const ClientSummary = () => {
       setClients(
         c.docs.map(doc => {
           const data = doc.data();
+
           const cPlans = plans.filter(plan => plan.user === data.uid);
           const upToDatePlan = cPlans?.find(plan => {
             return plan?.workouts?.some(workout => {
-              return (
-                workout.dates?.some(date =>
-                  moment(date).isSameOrAfter(moment(), 'day'),
-                ) &&
-                workout.dates?.some(date =>
-                  moment(date).isSameOrBefore(moment(), 'day'),
-                )
+              return workout.dates?.some(date =>
+                moment(date).isSameOrAfter(moment(), 'day'),
               );
             });
           });
