@@ -47,10 +47,10 @@ const getWorkouts = async uid => {
     .reverse();
 };
 
-const getGarminSummary = async (token, startTime) => {
+const getGarminSummary = async (userId, startTime) => {
   const q = query(
     collection(db, 'garminActivities'),
-    where('userAccessToken', '==', token),
+    where('userId', '==', userId),
     where(
       'startTimeInSeconds',
       '<',
@@ -76,13 +76,13 @@ const WorkoutsTable = () => {
         if (record && record.uid) {
           const workouts = await getWorkouts(record.uid);
           setWorkouts(workouts);
-          if (record.garminAccessToken) {
+          if (record.garminUserId) {
             const newWorkouts = [];
             for (let i = 0; i < workouts.length; i++) {
               const workout = workouts[i];
               if (workout.startTime) {
                 const summary = await getGarminSummary(
-                  record.garminAccessToken,
+                  record.garminUserId,
                   workout.startTime.seconds,
                 );
 
