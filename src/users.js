@@ -31,6 +31,7 @@ import {
   SaveButton,
   Toolbar,
   SortButton,
+  useResourceContext,
 } from 'react-admin';
 import {db} from './App';
 import {StringToLabelObject} from './helpers';
@@ -70,20 +71,6 @@ const getPlans = async uid => {
     .reverse();
 };
 
-const getWorkouts = async uid => {
-  const q = query(
-    collection(db, 'users', uid, 'savedWorkouts'),
-    orderBy('createdate'),
-    limitToLast(50),
-  );
-  const workouts = await getDocs(q);
-  return workouts.docs
-    .map(d => {
-      return {...d.data(), id: d.id};
-    })
-    .reverse();
-};
-
 const ListActions = () => (
   <TopToolbar>
     <FilterButton
@@ -116,7 +103,6 @@ export const UsersList = props => {
 
 export const UsersShow = props => {
   const [plans, setPlans] = React.useState([]);
-  const [workouts, setWorkouts] = React.useState([]);
   const {id} = useParams();
   const navigate = useNavigate();
 
@@ -129,17 +115,10 @@ export const UsersShow = props => {
         toast.error('Error fetching plans');
       }
     };
-    const checkWorkouts = async () => {
-      try {
-        const workouts = await getWorkouts(id);
-        setWorkouts(workouts);
-      } catch (e) {
-        toast.error('Error fetching workouts');
-      }
-    };
+
     checkPlans();
-    checkWorkouts();
   }, [id]);
+
   return (
     <Show {...props}>
       <SimpleShowLayout>
@@ -170,7 +149,7 @@ export const UsersShow = props => {
 
         <CreatePlanButton />
       </SimpleShowLayout>
-      {!!workouts.length && <WorkoutsTable workouts={workouts} />}
+      <WorkoutsTable />
     </Show>
   );
 };
@@ -185,7 +164,6 @@ export const UsersCreate = props => (
 
 export const UsersEdit = props => {
   const [plans, setPlans] = React.useState([]);
-  const [workouts, setWorkouts] = React.useState([]);
   const {id} = useParams();
 
   const navigate = useNavigate();
@@ -199,15 +177,7 @@ export const UsersEdit = props => {
         toast.error('Error fetching plans');
       }
     };
-    const checkWorkouts = async () => {
-      try {
-        const workouts = await getWorkouts(id);
-        setWorkouts(workouts);
-      } catch (e) {
-        toast.error('Error fetching workouts');
-      }
-    };
-    checkWorkouts();
+
     checkPlans();
   }, [id]);
 
@@ -248,7 +218,7 @@ export const UsersEdit = props => {
 
         <CreatePlanButton />
       </SimpleForm>
-      {!!workouts.length && <WorkoutsTable workouts={workouts} />}
+      <WorkoutsTable />
     </Edit>
   );
 };

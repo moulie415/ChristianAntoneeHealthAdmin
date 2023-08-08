@@ -8,8 +8,19 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
+import {
+  collection,
+  query,
+  getDocs,
+  orderBy,
+  limitToLast,
+  where,
+} from 'firebase/firestore';
 import moment from 'moment';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
+import {useRecordContext} from 'react-admin';
+import {toast} from 'react-toastify';
+import {db} from './App';
 
 function pad(num) {
   return ('0' + num).slice(-2);
@@ -22,8 +33,83 @@ function hhmmss(secs) {
   return `${pad(hours)}:${pad(minutes)}:${pad(secs)}`;
 }
 
-const WorkoutsTable = ({workouts}) => {
-  console.log(workouts);
+const getWorkouts = async uid => {
+  const q = query(
+    collection(db, 'users', uid, 'savedWorkouts'),
+    orderBy('createdate'),
+    limitToLast(50),
+  );
+  const workouts = await getDocs(q);
+  return workouts.docs
+    .map(d => {
+      return {...d.data(), id: d.id};
+    })
+    .reverse();
+};
+
+const getGarminSummary = async (token, startTime) => {
+  const q = query(
+    collection(db, 'garminActivities'),
+    where('userAccessToken', '==', token),
+    where(
+      'startTimeInSeconds',
+      '<',
+      moment.unix(startTime).add(30, 'minutes').unix(),
+    ),
+    where(
+      'startTimeInSeconds',
+      '>',
+      moment.unix(startTime).subtract(30, 'minutes').unix(),
+    ),
+  );
+  const summaries = await getDocs(q);
+  return summaries.docs?.[0]?.data();
+};
+
+const WorkoutsTable = () => {
+  const record = useRecordContext();
+  const [workouts, setWorkouts] = useState([]);
+
+  useEffect(() => {
+    const checkWorkouts = async () => {
+      try {
+        if (record && record.uid) {
+          const workouts = await getWorkouts(record.uid);
+          setWorkouts(workouts);
+          if (record.garminAccessToken) {
+            const newWorkouts = [];
+            for (let i = 0; i < workouts.length; i++) {
+              const workout = workouts[i];
+              if (workout.startTime) {
+                const summary = await getGarminSummary(
+                  record.garminAccessToken,
+                  workout.startTime.seconds,
+                );
+
+                if (summary) {
+                  console.log(summary);
+                  newWorkouts.push({
+                    ...workout,
+                    calories: `${summary.activeKilocalories} (Garmin)`,
+                    averageHeartRate: `${summary.averageHeartRateInBeatsPerMinute} (Garmin)`,
+                  });
+                  continue;
+                }
+              }
+              newWorkouts.push(workout);
+            }
+            setWorkouts(newWorkouts);
+          }
+        }
+      } catch (e) {
+        console.log(e);
+        toast.error('Error fetching workouts');
+      }
+    };
+
+    checkWorkouts();
+  }, [record]);
+
   return (
     <>
       <Typography style={{marginLeft: 20, marginTop: 20}}>
