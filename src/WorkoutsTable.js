@@ -36,6 +36,7 @@ import {
   ResponsiveContainer,
   Label,
   Tooltip,
+  ReferenceLine,
 } from 'recharts';
 
 function pad(num) {
@@ -102,6 +103,7 @@ const WorkoutsTable = () => {
   const [loadingDetails, setLoadingDetails] = useState(false);
 
   const [selectedActivity, setSelectedActivity] = useState('');
+  const [selectedWorkout, setSelectedWorkout] = useState();
 
   const [activityDetailsObj, setActivityDetailsObj] = useState({});
 
@@ -161,9 +163,7 @@ const WorkoutsTable = () => {
   };
 
   const data = activityDetailsObj[selectedActivity];
-
-  console.log(data);
-
+  console.log(selectedWorkout?.exerciseEvents);
   return (
     <>
       <Typography style={{marginLeft: 20, marginTop: 20}}>
@@ -211,6 +211,7 @@ const WorkoutsTable = () => {
                         onClick={async () => {
                           handleOpen();
                           getActivityDetails(workout.activityId);
+                          setSelectedWorkout(workout);
                         }}
                         variant="contained"
                         color="primary"
@@ -272,6 +273,11 @@ const WorkoutsTable = () => {
                     stroke="red"
                     dot={false}
                   />
+                  {selectedWorkout?.exerciseEvents?.map(event => {
+                    return (
+                      <ReferenceLine x={event.time?.seconds} stroke="blue" />
+                    );
+                  })}
                   <Tooltip
                     formatter={value => [`${value} bpm`, 'Heart rate']}
                     labelFormatter={label => {
