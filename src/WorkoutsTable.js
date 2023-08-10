@@ -37,6 +37,8 @@ import {
   Label,
   Tooltip,
   ReferenceLine,
+  ReferenceArea,
+  ReferenceDot,
 } from 'recharts';
 
 function pad(num) {
@@ -156,14 +158,34 @@ const WorkoutsTable = () => {
       const details = await getGarminActivityDetails(activityId);
       setActivityDetailsObj({...activityDetailsObj, [activityId]: details});
     } catch (e) {
-      console.log(e);
       toast.error('Error fetching details');
     }
     setLoadingDetails(false);
   };
 
   const data = activityDetailsObj[selectedActivity];
-  console.log(selectedWorkout?.exerciseEvents);
+
+  const samples = data?.samples.reduce((acc, cur, index) => {
+    const next = data.samples[index + 1];
+    const event = selectedWorkout.exerciseEvents?.find(
+      event =>
+        next &&
+        event.time?.seconds > cur.startTimeInSeconds &&
+        event.time?.seconds < next?.startTimeInSeconds,
+    );
+    if (event) {
+      return [
+        ...acc,
+        cur,
+        {
+          heartRate: Math.round((cur.heartRate + next.heartRate) / 2),
+          startTimeInSeconds: event.time?.seconds,
+        },
+      ];
+    }
+    return [...acc, cur];
+  }, []);
+
   return (
     <>
       <Typography style={{marginLeft: 20, marginTop: 20}}>
@@ -255,7 +277,7 @@ const WorkoutsTable = () => {
               <CircularProgress />
             ) : (
               <ResponsiveContainer height={720}>
-                <LineChart margin={{bottom: 20}} data={data?.samples}>
+                <LineChart margin={{bottom: 20}} data={samples}>
                   <YAxis>
                     <Label value="Heart rate (bpm)" angle={270} dx={-20} />
                   </YAxis>
@@ -273,11 +295,7 @@ const WorkoutsTable = () => {
                     stroke="red"
                     dot={false}
                   />
-                  {selectedWorkout?.exerciseEvents?.map(event => {
-                    return (
-                      <ReferenceLine x={event.time?.seconds} stroke="blue" />
-                    );
-                  })}
+
                   <Tooltip
                     formatter={value => [`${value} bpm`, 'Heart rate']}
                     labelFormatter={label => {
@@ -285,6 +303,19 @@ const WorkoutsTable = () => {
                     }}
                   />
                   <CartesianGrid stroke="#ccc" />
+                  {selectedWorkout?.exerciseEvents.map((event, index) => {
+                    return (
+                      <ReferenceLine
+                        stroke="blue"
+                        key={`${event?.time.seconds} ${event.value}`}
+                        x={event?.time?.seconds}>
+                        <Label
+                          value={event.value}
+                          position="insideBottomRight"
+                        />
+                      </ReferenceLine>
+                    );
+                  })}
                 </LineChart>
               </ResponsiveContainer>
             )}
