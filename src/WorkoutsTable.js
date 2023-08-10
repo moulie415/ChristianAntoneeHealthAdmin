@@ -1,4 +1,10 @@
 import {
+  Backdrop,
+  Box,
+  Button,
+  CircularProgress,
+  Fade,
+  Modal,
   Paper,
   Table,
   TableBody,
@@ -21,6 +27,16 @@ import React, {useEffect, useState} from 'react';
 import {useRecordContext} from 'react-admin';
 import {toast} from 'react-toastify';
 import {db} from './App';
+import {
+  Line,
+  CartesianGrid,
+  LineChart,
+  YAxis,
+  XAxis,
+  ResponsiveContainer,
+  Label,
+  Tooltip,
+} from 'recharts';
 
 function pad(num) {
   return ('0' + num).slice(-2);
@@ -66,9 +82,28 @@ const getGarminSummary = async (userId, startTime) => {
   return summaries.docs?.[0]?.data();
 };
 
+const getGarminActivityDetails = async activityId => {
+  const q = query(
+    collection(db, 'garminActivityDetails'),
+    where('activityId', '==', activityId),
+  );
+
+  const details = await getDocs(q);
+  return details.docs?.[0]?.data();
+};
+
 const WorkoutsTable = () => {
   const record = useRecordContext();
   const [workouts, setWorkouts] = useState([]);
+
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const [loadingDetails, setLoadingDetails] = useState(false);
+
+  const [selectedActivity, setSelectedActivity] = useState('');
+
+  const [activityDetailsObj, setActivityDetailsObj] = useState({});
 
   useEffect(() => {
     const checkWorkouts = async () => {
@@ -92,6 +127,8 @@ const WorkoutsTable = () => {
                     calories: `${summary.activeKilocalories} (Garmin)`,
                     averageHeartRate: `${summary.averageHeartRateInBeatsPerMinute} (Garmin)`,
                     maxHeartRate: `${summary.maxHeartRateInBeatsPerMinute}  (Garmin)`,
+                    activityId: summary.activityId,
+                    garminSummary: true,
                   });
                   continue;
                 }
@@ -108,6 +145,24 @@ const WorkoutsTable = () => {
 
     checkWorkouts();
   }, [record]);
+
+  const getActivityDetails = async activityId => {
+    try {
+      setSelectedActivity(activityId);
+      if (activityDetailsObj[activityId]) return;
+      setLoadingDetails(true);
+      const details = await getGarminActivityDetails(activityId);
+      setActivityDetailsObj({...activityDetailsObj, [activityId]: details});
+    } catch (e) {
+      console.log(e);
+      toast.error('Error fetching details');
+    }
+    setLoadingDetails(false);
+  };
+
+  const data = activityDetailsObj[selectedActivity];
+
+  console.log(data);
 
   return (
     <>
@@ -150,12 +205,86 @@ const WorkoutsTable = () => {
                   <TableCell>
                     {!!workout.maxHeartRate ? workout.maxHeartRate : ''}
                   </TableCell>
+                  {workout.garminSummary && (
+                    <TableCell>
+                      <Button
+                        onClick={async () => {
+                          handleOpen();
+                          getActivityDetails(workout.activityId);
+                        }}
+                        variant="contained"
+                        color="primary"
+                        style={{}}>
+                        View breakdown
+                      </Button>
+                    </TableCell>
+                  )}
                 </TableRow>
               );
             })}
           </TableBody>
         </Table>
       </TableContainer>
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        open={open}
+        onClose={handleClose}
+        closeAfterTransition
+        slots={{backdrop: Backdrop}}
+        slotProps={{
+          backdrop: {
+            timeout: 500,
+          },
+        }}>
+        <Fade in={open}>
+          <Box
+            sx={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              width: 1280,
+              bgcolor: 'background.paper',
+              boxShadow: 24,
+              borderRadius: 5,
+              p: 4,
+            }}>
+            {loadingDetails && !data?.samples ? (
+              <CircularProgress />
+            ) : (
+              <ResponsiveContainer height={720}>
+                <LineChart margin={{bottom: 20}} data={data?.samples}>
+                  <YAxis>
+                    <Label value="Heart rate (bpm)" angle={270} dx={-20} />
+                  </YAxis>
+                  <XAxis
+                    minTickGap={120}
+                    tickFormatter={unixTime => {
+                      return moment.unix(unixTime).format('HH:mm');
+                    }}
+                    dataKey="startTimeInSeconds">
+                    <Label value="Time" dy={20} />
+                  </XAxis>
+                  <Line
+                    type="monotone"
+                    dataKey="heartRate"
+                    stroke="red"
+                    dot={false}
+                  />
+                  <Tooltip
+                    formatter={value => [`${value} bpm`, 'Heart rate']}
+                    labelFormatter={label => {
+                      return moment.unix(label).format('HH:mm');
+                    }}
+                  />
+                  <CartesianGrid stroke="#ccc" />
+                </LineChart>
+              </ResponsiveContainer>
+            )}
+          </Box>
+        </Fade>
+      </Modal>
     </>
   );
 };

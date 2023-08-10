@@ -19,6 +19,7 @@
     "react-hook-form": "^7.43.0",
     "react-scripts": "^5.0.1",
     "react-toastify": "^8.2.0",
+    "recharts": "^2.7.3",
     "source-map-loader": "^0.2.4"
   },
   "devDependencies": {

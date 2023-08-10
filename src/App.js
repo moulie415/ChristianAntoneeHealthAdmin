@@ -139,7 +139,7 @@ class App extends React.Component {
           />
           <Resource
             name="clientList"
-            options={{label: 'Client List'}}
+            options={{label: 'Client Email List'}}
             list={ClientList}
             show={ClientListShow}
             edit={ClientListEdit}
