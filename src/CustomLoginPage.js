@@ -1,7 +1,7 @@
 // LoginPage.js
 import React from 'react';
 import {Login, LoginForm} from 'react-admin';
-import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
+import StyledFirebaseAuth from 'react-firebaseui/dist/StyledFirebaseAuth';
 import firebase from 'firebase/compat/app';
 import ForgotPasswordButton from './CustomForgotPassword';
 
