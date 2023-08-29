@@ -8,7 +8,7 @@ import Modal from '@mui/material/Modal';
 const DuplicateExercisesButton = ({source}) => {
   const context = useFormContext();
 
-  const exercises = context?.getValues()[source];
+  const exercises = context?.getValues(source);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -16,6 +16,7 @@ const DuplicateExercisesButton = ({source}) => {
   return (
     <>
       <Button
+        disabled={!exercises?.length}
         style={{marginTop: -20, marginBottom: 20}}
         onClick={handleOpen}
         variant="contained"

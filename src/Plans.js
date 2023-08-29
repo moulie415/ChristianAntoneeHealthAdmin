@@ -32,6 +32,7 @@ import {getFunctions, httpsCallable} from 'firebase/functions';
 import DuplicatePlanButton from './DuplicatePlanButton';
 import SendPlanButton from './SendPlanButton';
 import MyAutoCompleteInput from './MyAutoCompleteInput';
+import DuplicateExercisesButton from './DuplicateExercisesButton';
 
 export const PlansList = props => (
   <List {...props} sort={{field: 'createdate', order: 'DESC'}}>
@@ -134,6 +135,7 @@ export const PlansCreate = props => {
                 />
               </SimpleFormIterator>
             </ArrayInput>
+            <DuplicateExercisesButton source="exercises" />
             <ArrayInput label="Instructions" source="steps" defaultValue={[]}>
               <SimpleFormIterator>
                 <TextInput label="Instruction" multiline />
@@ -282,6 +284,7 @@ export const PlansEdit = props => {
                 />
               </SimpleFormIterator>
             </ArrayInput>
+            <DuplicateExercisesButton source="exercises" />
             <ArrayInput label="Instructions" source="steps" defaultValue={[]}>
               <SimpleFormIterator>
                 <TextInput label="Instruction" multiline />
