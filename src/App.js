@@ -56,7 +56,7 @@ const appCheck = initializeAppCheck(firebaseApp, {
 
 const authProvider = FirebaseAuthProvider(firebaseConfig);
 const dataProvider = FirebaseDataProvider(firebaseConfig, {
-  logging: true,
+  logging: process.env.NODE_ENV === 'development',
   // rootRef: 'rootrefcollection/QQG2McwjR2Bohi9OwQzP',
   app: firebaseApp,
   // watch: ['posts'];
