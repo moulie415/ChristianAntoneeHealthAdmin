@@ -30,6 +30,7 @@ import {
   required,
 } from 'react-admin';
 import MyAutoCompleteArrayInput from './MyAutoCompleteArrayInput';
+import MyAutoCompleteInput from './MyAutoCompleteInput';
 
 export const QuickRoutineList = props => (
   <List {...props} sort={{field: 'name', order: 'ASC'}}>
@@ -109,15 +110,20 @@ export const QuickRoutineCreate = props => (
         ]}
       />
 
-      <MyAutoCompleteArrayInput
-        label="Exercises"
-        reference="exercises"
-        validate={required()}
-        sort={{field: 'name', order: 'ASC'}}
-        // filterToQuery={searchText => ({name: searchText})}
+      <ArrayInput
+        validate={[required()]}
         source="exerciseIds"
-        optionText="name"
-      />
+        label="Exercises">
+        <SimpleFormIterator inline>
+          <MyAutoCompleteInput
+            label="Exercise"
+            reference="exercises"
+            validate={[required()]}
+            style={{width: 350}}
+            optionText="name"
+          />
+        </SimpleFormIterator>
+      </ArrayInput>
 
       <ArrayInput label="Instructions" source="steps">
         <SimpleFormIterator>
@@ -179,15 +185,20 @@ export const QuickRoutineEdit = props => (
         ]}
       />
 
-      <MyAutoCompleteArrayInput
-        label="Exercises"
+      <ArrayInput
+        validate={[required()]}
         source="exerciseIds"
-        validate={required()}
-        reference="exercises"
-        sort={{field: 'name', order: 'ASC'}}
-        // filterToQuery={searchText => ({name: searchText})}
-        optionText="name"
-      />
+        label="Exercises">
+        <SimpleFormIterator inline>
+          <MyAutoCompleteInput
+            label="Exercise"
+            reference="exercises"
+            validate={[required()]}
+            style={{width: 350}}
+            optionText="name"
+          />
+        </SimpleFormIterator>
+      </ArrayInput>
 
       <ArrayInput label="Instructions" source="steps">
         <SimpleFormIterator>
