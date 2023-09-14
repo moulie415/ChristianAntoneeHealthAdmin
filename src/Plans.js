@@ -115,6 +115,11 @@ export const PlansCreate = props => {
                 />
                 <TextInput source="sets" validate={[required()]} label="Sets" />
                 <TextInput source="reps" validate={[required()]} label="Reps" />
+                <NumberInput
+                  source="time"
+                  validate={[required()]}
+                  label="Time to complete (seconds)"
+                />
                 <TextInput
                   source="resistanceScale"
                   label="Resistance scale"
@@ -264,6 +269,11 @@ export const PlansEdit = props => {
 
                 <TextInput source="sets" validate={[required()]} label="Sets" />
                 <TextInput source="reps" validate={[required()]} label="Reps" />
+                <NumberInput
+                  source="time"
+                  validate={[required()]}
+                  label="Time to complete (seconds)"
+                />
                 <TextInput
                   source="resistanceScale"
                   label="Resistance scale"
