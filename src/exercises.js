@@ -23,6 +23,7 @@ import {
   BooleanInput,
   BooleanField,
   required,
+  NumberInput,
 } from 'react-admin';
 
 // const ExercisesFilter = props => (
@@ -137,8 +138,14 @@ export const ExerciseCreate = props => (
   <Create {...props}>
     <SimpleForm>
       <TextInput source="name" validate={required()} />
-      <TextInput source="description" validate={required()} multiline />
-      <TextInput source="parameters" multiline defaultValue="" />
+      {/* <TextInput source="description" multiline /> */}
+      <NumberInput
+        source="time"
+        defaultValue={30}
+        validate={required()}
+        label="Time to complete (seconds)"
+      />
+      {/* <TextInput source="parameters" multiline defaultValue="" />
       <SelectInput
         source="type"
         defaultValue=""
@@ -153,7 +160,7 @@ export const ExerciseCreate = props => (
           },
           {id: '', name: 'None'},
         ]}
-      />
+      /> */}
       <SelectInput
         source="area"
         defaultValue=""
@@ -174,7 +181,7 @@ export const ExerciseCreate = props => (
           {id: '', name: 'None'},
         ]}
       />
-      <SelectInput
+      {/* <SelectInput
         source="warmUp"
         defaultValue=""
         choices={[
@@ -192,7 +199,7 @@ export const ExerciseCreate = props => (
           {id: 'staticStretching', name: 'static stretching'},
           {id: '', name: 'None'},
         ]}
-      />
+      /> */}
       <ArrayInput source="equipment" defaultValue={[]}>
         <SimpleFormIterator>
           <SelectInput choices={equipment} label="Equipment" />
@@ -231,8 +238,13 @@ export const ExerciseEdit = props => (
   <Edit {...props}>
     <SimpleForm>
       <TextInput source="name" validate={required()} />
-      <TextInput source="description" validate={required()} multiline />
-      <TextInput source="parameters" multiline defaultValue="" />
+      {/* <TextInput source="description" multiline /> */}
+      <NumberInput
+        source="time"
+        validate={required()}
+        label="Time to complete (seconds)"
+      />
+      {/* <TextInput source="parameters" multiline defaultValue="" />
       <SelectInput
         source="type"
         defaultValue=""
@@ -247,7 +259,7 @@ export const ExerciseEdit = props => (
           },
           {id: '', name: 'None'},
         ]}
-      />
+      /> */}
       <SelectInput
         source="area"
         defaultValue=""
@@ -268,7 +280,7 @@ export const ExerciseEdit = props => (
           {id: '', name: 'None'},
         ]}
       />
-      <SelectInput
+      {/* <SelectInput
         source="warmUp"
         defaultValue=""
         choices={[
@@ -286,7 +298,7 @@ export const ExerciseEdit = props => (
           {id: 'staticStretching', name: 'static stretching'},
           {id: '', name: 'None'},
         ]}
-      />
+      /> */}
       <ArrayInput source="equipment" defaultValue={[]}>
         <SimpleFormIterator>
           <SelectInput choices={equipment} label="Equipment" />

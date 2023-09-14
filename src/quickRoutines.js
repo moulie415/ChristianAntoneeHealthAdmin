@@ -129,11 +129,11 @@ export const QuickRoutineCreate = props => {
           </SimpleFormIterator>
         </ArrayInput>
         <DuplicateExercisesButton source="exerciseIds" />
-        <ArrayInput label="Instructions" source="steps">
+        {/* <ArrayInput label="Instructions" source="steps">
           <SimpleFormIterator>
             <TextInput label="Instruction" />
           </SimpleFormIterator>
-        </ArrayInput>
+        </ArrayInput> */}
         <ImageInput
           validate={required()}
           source="thumbnail"
@@ -207,11 +207,11 @@ export const QuickRoutineEdit = props => {
           </SimpleFormIterator>
         </ArrayInput>
         <DuplicateExercisesButton source="exerciseIds" />
-        <ArrayInput label="Instructions" source="steps">
+        {/* <ArrayInput label="Instructions" source="steps">
           <SimpleFormIterator>
             <TextInput label="Instruction" multiline />
           </SimpleFormIterator>
-        </ArrayInput>
+        </ArrayInput> */}
         <ImageInput
           validate={required()}
           source="thumbnail"
