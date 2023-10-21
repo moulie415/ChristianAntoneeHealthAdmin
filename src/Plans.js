@@ -113,8 +113,8 @@ export const PlansCreate = props => {
                   label="Exercise"
                   reference="exercises"
                 />
-                <TextInput source="sets" validate={[required()]} label="Sets" />
-                <TextInput source="reps" validate={[required()]} label="Reps" />
+                <TextInput source="sets" label="Sets" />
+                <TextInput source="reps" label="Reps" />
                 <NumberInput
                   source="time"
                   validate={[required()]}
@@ -267,8 +267,8 @@ export const PlansEdit = props => {
                   optionText="name"
                 />
 
-                <TextInput source="sets" validate={[required()]} label="Sets" />
-                <TextInput source="reps" validate={[required()]} label="Reps" />
+                <TextInput source="sets" label="Sets" />
+                <TextInput source="reps" label="Reps" />
                 <NumberInput
                   source="time"
                   validate={[required()]}
