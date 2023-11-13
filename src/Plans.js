@@ -23,6 +23,7 @@ import {
   DateTimeInput,
   required,
   DateField,
+  SelectInput,
 } from 'react-admin';
 import {doc, getDoc} from 'firebase/firestore';
 import {db} from './App';
@@ -151,6 +152,15 @@ export const PlansCreate = props => {
                 <DateInput label="Date" />
               </SimpleFormIterator>
             </ArrayInput>
+            <SelectInput
+              source="level"
+              validate={required()}
+              choices={[
+                {id: 'beginner', name: 'Beginner'},
+                {id: 'intermediate', name: 'Intermediate'},
+                {id: 'advanced', name: 'Advanced'},
+              ]}
+            />
           </SimpleFormIterator>
         </ArrayInput>
 
@@ -309,8 +319,19 @@ export const PlansEdit = props => {
                 <DateInput label="Date" />
               </SimpleFormIterator>
             </ArrayInput>
+            <SelectInput
+              source="level"
+              validate={required()}
+              defaultValue="beginner"
+              choices={[
+                {id: 'beginner', name: 'Beginner'},
+                {id: 'intermediate', name: 'Intermediate'},
+                {id: 'advanced', name: 'Advanced'},
+              ]}
+            />
           </SimpleFormIterator>
         </ArrayInput>
+
         <ArrayInput defaultValue={[]} source="tests" label="Tests">
           <SimpleFormIterator inline>
             <MyAutoCompleteInput
