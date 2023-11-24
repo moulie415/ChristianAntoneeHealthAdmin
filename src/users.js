@@ -74,9 +74,11 @@ const getPlans = async uid => {
 const ListActions = () => (
   <TopToolbar>
     <FilterButton
-      filters={[
-        <BooleanInput label="Is client" source="client" defaultValue />,
-      ]}
+      filters={
+        [
+          // <BooleanInput label="Is client" source="client" defaultValue />,
+        ]
+      }
     />
     <SortButton fields={['name', 'email']} />
     <ExportButton />
@@ -91,7 +93,6 @@ export const UsersList = props => {
         <TextField source="surname" />
         <EmailField source="email" />
         <CreatePlanButton />
-        <BooleanField source="client" />
         <PremiumField source="premium" />
         <ShowButton label="" />
         <EditButton label="" />
@@ -126,7 +127,6 @@ export const UsersShow = props => {
         <TextField source="name" />
         <TextField source="surname" />
         <EmailField source="email" />
-        <BooleanField source="client" />
         <PremiumField source="premium" />
         <FormLabel style={{fontSize: 12}}>Plans</FormLabel>
         <div style={{display: 'flex', flexDirection: 'row'}}>
@@ -193,7 +193,6 @@ export const UsersEdit = props => {
         <TextField source="name" />
         <TextField source="surname" />
         <EmailField source="email" />
-        <BooleanInput source="client" />
         <BooleanField source="premium" />
         <FormLabel style={{fontSize: 12}}>Plans</FormLabel>
         <div style={{display: 'flex', flexDirection: 'row'}}>

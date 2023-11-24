@@ -37,10 +37,9 @@ import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import PersonIcon from '@mui/icons-material/Person';
 import UserIcon from './UserIcon';
-import {ClientList, ClientListShow, ClientListEdit} from './ClientList';
 import {Route} from 'react-router-dom';
 import MyLayout from './MyLayout';
-import ClientSummary from './ClientSummary';
+import PremiumUsers from './PremiumUsers';
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 
@@ -137,15 +136,8 @@ class App extends React.Component {
             create={PlansCreate}
             icon={EventAvailableIcon}
           />
-          <Resource
-            name="clientList"
-            options={{label: 'Client Email List'}}
-            list={ClientList}
-            show={ClientListShow}
-            edit={ClientListEdit}
-          />
           <CustomRoutes>
-            <Route path="client-summary" element={<ClientSummary />} />
+            <Route path="premium-users" element={<PremiumUsers />} />
           </CustomRoutes>
         </Admin>
 

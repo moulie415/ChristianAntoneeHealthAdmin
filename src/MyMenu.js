@@ -13,10 +13,9 @@ const MyMenu = () => {
       <Menu.ResourceItem name="settings" />
       <Menu.ResourceItem name="users" />
       <Menu.ResourceItem name="plans" />
-      <Menu.ResourceItem name="clientList" />
       <Menu.Item
-        to="/client-summary"
-        primaryText="Client Summary"
+        to="/premium-users"
+        primaryText="Premium users"
         leftIcon={<InventoryOutlinedIcon />}
       />
     </Menu>

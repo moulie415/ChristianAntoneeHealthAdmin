@@ -1,4 +1,4 @@
-import {collection, getDocs, query, where} from 'firebase/firestore';
+import {collection, getDocs, query, where, orderBy} from 'firebase/firestore';
 import React, {useEffect, useState} from 'react';
 import {db} from './App';
 import {toast} from 'react-toastify';
@@ -18,8 +18,6 @@ import moment from 'moment';
 import DoneIcon from '@mui/icons-material/Done';
 import CloseIcon from '@mui/icons-material/Close';
 
-const CLIENT_PREMIUM = 'Client Premium';
-
 function chunkArrayInGroups(arr, size) {
   var myArray = [];
   for (var i = 0; i < arr.length; i += size) {
@@ -29,10 +27,10 @@ function chunkArrayInGroups(arr, size) {
 }
 
 const ClientPremiumField = ({client}) => {
-  const clientPremium = client?.premium[CLIENT_PREMIUM];
+  const clientPremium = client?.premium.Premium;
   const hasExpired =
     !!clientPremium && moment(clientPremium.expirationDate).isBefore(moment());
-
+  console.log(clientPremium);
   return (
     <div>
       {clientPremium ? (
@@ -59,10 +57,13 @@ const ClientSummary = () => {
       setLoading(true);
       const clientQuery = query(
         collection(db, 'users'),
-        where('client', '==', true),
+        orderBy('premium'),
+        // where('client', '==', true),
       );
       const c = await getDocs(clientQuery);
-      const clientUids = c.docs.map(doc => doc.data().uid);
+      const clientUids = c.docs
+        .filter(doc => doc.data().premium.Premium)
+        .map(doc => doc.data().uid);
       const uidArrays = chunkArrayInGroups(clientUids, 10);
       const plans = [];
       for (let i = 0; i < uidArrays.length; i++) {
@@ -76,19 +77,21 @@ const ClientSummary = () => {
       }
 
       setClients(
-        c.docs.map(doc => {
-          const data = doc.data();
+        c.docs
+          .filter(doc => doc.data().premium.Premium)
+          .map(doc => {
+            const data = doc.data();
 
-          const cPlans = plans.filter(plan => plan.user === data.uid);
-          const upToDatePlan = cPlans?.find(plan => {
-            return plan?.workouts?.some(workout => {
-              return workout.dates?.some(date =>
-                moment(date).isSameOrAfter(moment(), 'day'),
-              );
+            const cPlans = plans.filter(plan => plan.user === data.uid);
+            const upToDatePlan = cPlans?.find(plan => {
+              return plan?.workouts?.some(workout => {
+                return workout.dates?.some(date =>
+                  moment(date).isSameOrAfter(moment(), 'day'),
+                );
+              });
             });
-          });
-          return {...data, plans: cPlans, upToDatePlan};
-        }),
+            return {...data, plans: cPlans, upToDatePlan};
+          }),
       );
     } catch (e) {
       toast.error('Error fetching clients: ' + e.message);
@@ -120,7 +123,7 @@ const ClientSummary = () => {
               <TableRow>
                 <TableCell>User</TableCell>
                 <TableCell>Email</TableCell>
-                <TableCell>Client Premium</TableCell>
+                <TableCell>Premium</TableCell>
                 <TableCell>Up to date plan?</TableCell>
                 <TableCell></TableCell>
               </TableRow>
@@ -128,8 +131,8 @@ const ClientSummary = () => {
             <TableBody>
               {clients
                 ?.sort((a, b) => {
-                  const aPremium = a.premium[CLIENT_PREMIUM];
-                  const bPremium = b.premium[CLIENT_PREMIUM];
+                  const aPremium = a.premium.Premium;
+                  const bPremium = b.premium.Premium;
                   const aExpired =
                     !!aPremium &&
                     moment(aPremium.expirationDate).isBefore(moment());

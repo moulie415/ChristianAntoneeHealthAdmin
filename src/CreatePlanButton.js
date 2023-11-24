@@ -5,8 +5,8 @@ import {useNavigate} from 'react-router-dom';
 const CreatePlanButton = () => {
   const record = useRecordContext();
   const navigate = useNavigate();
-  const {id, client} = record;
-  if (!client) return false;
+  const {id} = record;
+
   return (
     <Button
       onClick={async () => {
