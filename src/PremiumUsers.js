@@ -57,10 +57,9 @@ const ClientSummary = () => {
       setLoading(true);
       const clientQuery = query(
         collection(db, 'users'),
-        where('premium', '!=', null),
+        where('premium', '!=', false),
       );
       const c = await getDocs(clientQuery);
-      console.log(c.docs.length)
       const clientUids = c.docs
         .filter(doc => doc.data().premium.Premium)
         .map(doc => doc.data().uid);
