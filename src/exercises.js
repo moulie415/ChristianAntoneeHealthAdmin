@@ -222,11 +222,7 @@ export const ExerciseCreate = props => (
         accept="video/*">
         <FileField source="src" title="title" />
       </FileInput>
-      <ImageInput
-        source="thumbnail"
-        validate={required()}
-        label="Thumbnail"
-        accept="image/*">
+      <ImageInput source="thumbnail" label="Thumbnail" accept="image/*">
         <ImageField source="src" title="title" />
       </ImageInput>
       <BooleanInput source="premium" />
@@ -321,11 +317,7 @@ export const ExerciseEdit = props => (
         accept="video/*">
         <FileField source="src" title="title" />
       </FileInput>
-      <ImageInput
-        validate={required()}
-        source="thumbnail"
-        label="Thumbnail"
-        accept="image/*">
+      <ImageInput source="thumbnail" label="Thumbnail" accept="image/*">
         <ImageField source="src" title="title" />
       </ImageInput>
       <BooleanInput source="premium" />
