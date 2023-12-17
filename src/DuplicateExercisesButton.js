@@ -57,8 +57,8 @@ const DuplicateExercisesButton = ({source}) => {
               color="primary"
               onClick={() => {
                 handleClose();
-                const arr = exercises;
-                for (let i = 0; i < value; i++) {
+                const arr = [];
+                for (let i = 0; i <= value; i++) {
                   arr.push(...exercises);
                 }
                 context.setValue(source, arr);
