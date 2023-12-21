@@ -61,7 +61,7 @@ const DuplicateExercisesButton = ({source}) => {
                 for (let i = 0; i <= value; i++) {
                   arr.push(...exercises);
                 }
-                context.setValue(source, arr);
+                context.setValue(source, arr, {shouldDirty: true});
               }}>
               Duplicate
             </Button>
