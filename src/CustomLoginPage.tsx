@@ -1,9 +1,9 @@
 // LoginPage.js
-import React from 'react';
 import {Login, LoginComponent, LoginForm} from 'react-admin';
 import StyledFirebaseAuth from 'react-firebaseui/dist/StyledFirebaseAuth';
 import firebase from 'firebase/compat/app';
 import ForgotPasswordButton from './CustomForgotPassword';
+import {FacebookAuthProvider, GoogleAuthProvider} from 'firebase/auth';
 
 // Configure FirebaseUI.
 const uiConfig = {
@@ -13,12 +13,13 @@ const uiConfig = {
   signInSuccessUrl: '#/',
   // We will display Google and Facebook as auth providers.
   signInOptions: [
-    firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-    firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+    GoogleAuthProvider.PROVIDER_ID,
+    FacebookAuthProvider.PROVIDER_ID,
   ],
 };
 
 const SignInScreen = () => (
+  // @ts-ignore
   <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
 );
 

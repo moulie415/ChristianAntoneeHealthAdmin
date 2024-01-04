@@ -1,5 +1,3 @@
-import {RichTextInput} from 'ra-input-rich-text';
-import React, {useMemo, useState} from 'react';
 import {
   Datagrid,
   List,
@@ -23,6 +21,7 @@ import {
   useInput,
   RichTextField,
   required,
+  ResourceProps,
 } from 'react-admin';
 import {useController} from 'react-hook-form';
 import {Editor} from '@tinymce/tinymce-react';
@@ -30,7 +29,7 @@ import {useRef} from 'react';
 import EducationArticlePreview from './EducationArticlePreview';
 import {useCallback} from 'react';
 
-export const EducationList = props => (
+export const EducationList = (props: ResourceProps) => (
   <List {...props}>
     <Datagrid>
       <TextField source="title" />
