@@ -1,52 +1,43 @@
 import Chip from '@mui/material/Chip';
 import FormLabel from '@mui/material/FormLabel';
-import * as React from 'react';
-import {
-  Datagrid,
-  List,
-  Show,
-  Create,
-  Edit,
-  Filter,
-  SimpleShowLayout,
-  SimpleForm,
-  TextField,
-  TextInput,
-  ShowButton,
-  EditButton,
-  DateField,
-  EmailField,
-  NumberField,
-  ArrayField,
-  SingleFieldList,
-  ChipField,
-  TopToolbar,
-  ExportButton,
-  FunctionField,
-  ImageField,
-  BooleanField,
-  NumberInput,
-  FilterButton,
-  BooleanInput,
-  SaveButton,
-  Toolbar,
-  SortButton,
-  useResourceContext,
-} from 'react-admin';
-import {db} from './App';
-import {StringToLabelObject} from './helpers';
-import CreatePlanButton from './CreatePlanButton';
 import {
   collection,
+  getDocs,
+  limitToLast,
+  orderBy,
   query,
   where,
-  getDocs,
-  orderBy,
-  limitToLast,
 } from 'firebase/firestore';
-import {toast} from 'react-toastify';
 import * as moment from 'moment';
+import * as React from 'react';
+import {
+  BooleanField,
+  Create,
+  Datagrid,
+  DateField,
+  Edit,
+  EditButton,
+  EmailField,
+  ExportButton,
+  Filter,
+  FilterButton,
+  ImageField,
+  List,
+  SaveButton,
+  Show,
+  ShowButton,
+  SimpleForm,
+  SimpleShowLayout,
+  SortButton,
+  TextField,
+  TextInput,
+  Toolbar,
+  TopToolbar,
+} from 'react-admin';
 import {useNavigate, useParams} from 'react-router-dom';
+import {toast} from 'react-toastify';
+import {db} from './App';
+import CreatePlanButton from './CreatePlanButton';
 import PremiumField from './PremiumField';
 import WorkoutsTable from './WorkoutsTable';
 
@@ -56,7 +47,7 @@ const UserFilter = props => (
   </Filter>
 );
 
-const getPlans = async uid => {
+const getPlans = async (uid: string) => {
   const q = query(
     collection(db, 'plans'),
     where('user', '==', uid),

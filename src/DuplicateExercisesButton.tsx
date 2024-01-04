@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 
-const DuplicateExercisesButton = ({source}) => {
+const DuplicateExercisesButton: React.FC<{source: string}> = ({source}) => {
   const context = useFormContext();
 
   const exercises = context?.getValues(source);
@@ -49,7 +49,7 @@ const DuplicateExercisesButton = ({source}) => {
               type="number"
               min={1}
               value={value}
-              onChange={e => setValue(e.target.value)}
+              onChange={(e: any) => setValue(e.target.value)}
             />
             <Button
               disabled={!value}

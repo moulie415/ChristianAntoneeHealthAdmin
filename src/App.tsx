@@ -1,45 +1,44 @@
-import * as React from 'react';
-import {
-  ExerciseList,
-  ExerciseShow,
-  ExerciseCreate,
-  ExerciseEdit,
-} from './exercises';
-import {Admin, CustomRoutes, Resource} from 'react-admin';
-import {FirebaseDataProvider, FirebaseAuthProvider} from 'react-admin-firebase';
-import firebase from 'firebase/compat/app';
-import {firebaseConfig} from './FIREBASE_CONFIG';
-import CustomLoginPage from './CustomLoginPage';
-import {TestCreate, TestEdit, TestList, TestShow} from './tests';
+import BookIcon from '@mui/icons-material/Book';
+import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
-import {
-  QuickRoutineCreate,
-  QuickRoutineEdit,
-  QuickRoutineList,
-  QuickRoutineShow,
-} from './quickRoutines';
+import SettingsIcon from '@mui/icons-material/Settings';
+import TimerIcon from '@mui/icons-material/Timer';
+import firebase from 'firebase/compat/app';
+import {ReCaptchaV3Provider, initializeAppCheck} from 'firebase/app-check';
+import {getFirestore} from 'firebase/firestore';
+import * as React from 'react';
+import {Admin, CustomRoutes, Resource} from 'react-admin';
+import {FirebaseAuthProvider, FirebaseDataProvider} from 'react-admin-firebase';
+import {Route} from 'react-router-dom';
+import {ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import CustomLoginPage from './CustomLoginPage';
+import {firebaseConfig} from './FIREBASE_CONFIG';
+import MyLayout from './MyLayout';
+import {PlansCreate, PlansEdit, PlansList, PlansShow} from './Plans';
+import PremiumUsers from './PremiumUsers';
+import UserIcon from './UserIcon';
 import {
   EducationCreate,
   EducationEdit,
   EducationList,
   EducationShow,
 } from './education';
+import {
+  ExerciseCreate,
+  ExerciseEdit,
+  ExerciseList,
+  ExerciseShow,
+} from './exercises';
+import {
+  QuickRoutineCreate,
+  QuickRoutineEdit,
+  QuickRoutineList,
+  QuickRoutineShow,
+} from './quickRoutines';
 import {SettingsEdit, SettingsList, SettingsShow} from './settings';
-import {initializeAppCheck, ReCaptchaV3Provider} from 'firebase/app-check';
-import {getFirestore} from 'firebase/firestore';
+import {TestCreate, TestEdit, TestList, TestShow} from './tests';
 import {UsersEdit, UsersList, UsersShow} from './users';
-import {PlansCreate, PlansEdit, PlansList, PlansShow} from './Plans';
-import TimerIcon from '@mui/icons-material/Timer';
-import BookIcon from '@mui/icons-material/Book';
-import SettingsIcon from '@mui/icons-material/Settings';
-import EventAvailableIcon from '@mui/icons-material/EventAvailable';
-import {ToastContainer} from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import PersonIcon from '@mui/icons-material/Person';
-import UserIcon from './UserIcon';
-import {Route} from 'react-router-dom';
-import MyLayout from './MyLayout';
-import PremiumUsers from './PremiumUsers';
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 
@@ -53,7 +52,7 @@ const appCheck = initializeAppCheck(firebaseApp, {
   isTokenAutoRefreshEnabled: true,
 });
 
-const authProvider = FirebaseAuthProvider(firebaseConfig);
+const authProvider = FirebaseAuthProvider(firebaseConfig, {});
 const dataProvider = FirebaseDataProvider(firebaseConfig, {
   logging: process.env.NODE_ENV === 'development',
   // rootRef: 'rootrefcollection/QQG2McwjR2Bohi9OwQzP',

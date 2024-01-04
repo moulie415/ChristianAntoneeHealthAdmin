@@ -1,54 +1,44 @@
 {
-  "name": "health-and-movement-admin",
-  "version": "0.1.0",
+  "name": "my-admin",
   "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview"
+  },
   "dependencies": {
     "@mui/icons-material": "^5.10.3",
     "@mui/material": "^5.10.3",
     "@tinymce/tinymce-react": "^4.3.0",
     "firebase": "^9.14.0",
-    "fs": "^0.0.1-security",
     "moment": "^2.29.3",
-    "patch-package": "^6.5.1",
-    "ra-input-rich-text": "^4.13.1",
     "react": "^18.2.0",
     "react-admin": "^4.13.1",
     "react-admin-firebase": "^4.0.5",
     "react-dom": "^18.2.0",
     "react-firebaseui": "https://github.com/gvillenave/firebaseui-web-react.git#e50d7d7d155485f886db6b0d2e822d378f36f679",
     "react-hook-form": "^7.43.0",
-    "react-scripts": "^5.0.1",
     "react-toastify": "^8.2.0",
-    "recharts": "^2.7.3",
-    "source-map-loader": "^0.2.4"
+    "recharts": "^2.10.3"
   },
   "devDependencies": {
-    "concurrently": "4.1.1",
-    "cpx": "1.5.0",
-    "eslint": "^7.32.0",
+    "@types/react": "^18.2.43",
+    "@types/react-dom": "^18.2.17",
+    "@typescript-eslint/eslint-plugin": "^6.14.0",
+    "@typescript-eslint/parser": "^6.14.0",
+    "@vitejs/plugin-react": "^4.2.1",
+    "eslint": "^8.56.0",
     "eslint-config-prettier": "^8.5.0",
-    "eslint-loader": "^4.0.2",
     "eslint-plugin-jest": "^24.3.6",
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-react": "^7.29.4",
-    "eslint-plugin-react-hooks": "^4.5.0",
-    "prettier": "^2.6.1"
-  },
-  "scripts": {
-    "start": "NODE_ENV=development BROWSER=none PORT=3333 react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject",
-    "predeploy": "npm run build",
-    "postinstall": "patch-package"
-  },
-  "engines": {
-    "node": "16.13.1"
-  },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ]
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.5",
+    "prettier": "^2.6.1",
+    "typescript": "^5.2.2",
+    "vite": "^5.0.8"
+  }
 }

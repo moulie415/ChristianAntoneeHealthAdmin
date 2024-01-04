@@ -32,11 +32,13 @@ export default function AlertDialog() {
       setToastMessage('Password reset email sent!');
     } catch (error) {
       setToastOpen(true);
-      setToastMessage(error.message);
+      if (error instanceof Error) {
+        setToastMessage(error.message);
+      }
     }
   };
 
-  const handleOnChange = event => {
+  const handleOnChange = (event: any) => {
     const email = event.target.value;
     setEmail(email);
   };

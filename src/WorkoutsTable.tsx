@@ -16,43 +16,41 @@ import {
 } from '@mui/material';
 import {
   collection,
-  query,
   getDocs,
-  orderBy,
   limitToLast,
+  orderBy,
+  query,
   where,
 } from 'firebase/firestore';
 import moment from 'moment';
-import React, {useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {useRecordContext} from 'react-admin';
 import {toast} from 'react-toastify';
-import {db} from './App';
 import {
-  Line,
   CartesianGrid,
-  LineChart,
-  YAxis,
-  XAxis,
-  ResponsiveContainer,
   Label,
-  Tooltip,
+  Line,
+  LineChart,
   ReferenceLine,
-  ReferenceArea,
-  ReferenceDot,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
 } from 'recharts';
+import {db} from './App';
 
-function pad(num) {
+function pad(num: number) {
   return ('0' + num).slice(-2);
 }
-function hhmmss(secs) {
-  var minutes = Math.floor(secs / 60);
+function hhmmss(secs: number) {
+  let minutes = Math.floor(secs / 60);
   secs = secs % 60;
-  var hours = Math.floor(minutes / 60);
+  const hours = Math.floor(minutes / 60);
   minutes = minutes % 60;
   return `${pad(hours)}:${pad(minutes)}:${pad(secs)}`;
 }
 
-const getWorkouts = async uid => {
+const getWorkouts = async (uid: string) => {
   const q = query(
     collection(db, 'users', uid, 'savedWorkouts'),
     orderBy('createdate'),
@@ -66,7 +64,7 @@ const getWorkouts = async uid => {
     .reverse();
 };
 
-const getGarminSummary = async (userId, startTime) => {
+const getGarminSummary = async (userId: string, startTime: number) => {
   const q = query(
     collection(db, 'garminActivities'),
     where('userId', '==', userId),
@@ -85,7 +83,7 @@ const getGarminSummary = async (userId, startTime) => {
   return summaries.docs?.[0]?.data();
 };
 
-const getGarminActivityDetails = async activityId => {
+const getGarminActivityDetails = async (activityId: string) => {
   const q = query(
     collection(db, 'garminActivityDetails'),
     where('activityId', '==', activityId),
@@ -222,10 +220,10 @@ const WorkoutsTable = () => {
                   <TableCell>{workout.calories}</TableCell>
                   <TableCell>{`${workout.difficulty}/10`}</TableCell>
                   <TableCell>
-                    {!!workout.averageHeartRate ? workout.averageHeartRate : ''}
+                    {workout.averageHeartRate ? workout.averageHeartRate : ''}
                   </TableCell>
                   <TableCell>
-                    {!!workout.maxHeartRate ? workout.maxHeartRate : ''}
+                    {workout.maxHeartRate ? workout.maxHeartRate : ''}
                   </TableCell>
                   {workout.garminSummary && (
                     <TableCell>
