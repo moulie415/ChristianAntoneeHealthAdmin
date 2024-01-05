@@ -1,5 +1,4 @@
 import {
-  Backdrop,
   Box,
   Button,
   CircularProgress,
@@ -50,7 +49,7 @@ function hhmmss(secs: number) {
   return `${pad(hours)}:${pad(minutes)}:${pad(secs)}`;
 }
 
-const getWorkouts = async (uid: string) => {
+const getWorkouts = async (uid: string): Promise<any[]> => {
   const q = query(
     collection(db, 'users', uid, 'savedWorkouts'),
     orderBy('createdate'),
@@ -95,7 +94,7 @@ const getGarminActivityDetails = async (activityId: string) => {
 
 const WorkoutsTable = () => {
   const record = useRecordContext();
-  const [workouts, setWorkouts] = useState([]);
+  const [workouts, setWorkouts] = useState<any[]>([]);
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -103,9 +102,11 @@ const WorkoutsTable = () => {
   const [loadingDetails, setLoadingDetails] = useState(false);
 
   const [selectedActivity, setSelectedActivity] = useState('');
-  const [selectedWorkout, setSelectedWorkout] = useState();
+  const [selectedWorkout, setSelectedWorkout] = useState<any>();
 
-  const [activityDetailsObj, setActivityDetailsObj] = useState({});
+  const [activityDetailsObj, setActivityDetailsObj] = useState<{
+    [key: string]: any;
+  }>({});
 
   useEffect(() => {
     const checkWorkouts = async () => {
@@ -114,7 +115,7 @@ const WorkoutsTable = () => {
           const workouts = await getWorkouts(record.uid);
           setWorkouts(workouts);
           if (record.garminUserId) {
-            const newWorkouts = [];
+            const newWorkouts: any[] = [];
             for (let i = 0; i < workouts.length; i++) {
               const workout = workouts[i];
               if (workout.startTime) {
@@ -148,7 +149,7 @@ const WorkoutsTable = () => {
     checkWorkouts();
   }, [record]);
 
-  const getActivityDetails = async activityId => {
+  const getActivityDetails = async (activityId: string) => {
     try {
       setSelectedActivity(activityId);
       if (activityDetailsObj[activityId]) return;
@@ -163,10 +164,10 @@ const WorkoutsTable = () => {
 
   const data = activityDetailsObj[selectedActivity];
 
-  const samples = data?.samples.reduce((acc, cur, index) => {
+  const samples = data?.samples.reduce((acc: any, cur: any, index: number) => {
     const next = data.samples[index + 1];
     const event = selectedWorkout.exerciseEvents?.find(
-      event =>
+      (event: any) =>
         next &&
         event.time?.seconds > cur.startTimeInSeconds &&
         event.time?.seconds < next?.startTimeInSeconds,
@@ -252,12 +253,13 @@ const WorkoutsTable = () => {
         open={open}
         onClose={handleClose}
         closeAfterTransition
-        slots={{backdrop: Backdrop}}
-        slotProps={{
-          backdrop: {
-            timeout: 500,
-          },
-        }}>
+        // slots={{backdrop: Backdrop}}
+        // slotProps={{
+        //   backdrop: {
+        //     timeout: 500,
+        //   },
+        // }}
+      >
         <Fade in={open}>
           <Box
             sx={{
@@ -301,7 +303,7 @@ const WorkoutsTable = () => {
                     }}
                   />
                   <CartesianGrid stroke="#ccc" />
-                  {selectedWorkout?.exerciseEvents.map((event, index) => {
+                  {selectedWorkout?.exerciseEvents.map((event: any) => {
                     return (
                       <ReferenceLine
                         stroke="blue"

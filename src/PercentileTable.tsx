@@ -1,9 +1,11 @@
-import React from 'react';
 import {useController} from 'react-hook-form';
 
 const percentiles = [10, 20, 30, 40, 50, 60, 70, 80, 90];
 
-const MyInput = ({percentile, name}) => {
+const MyInput: React.FC<{percentile: number; name: string}> = ({
+  percentile,
+  name,
+}) => {
   const controller = useController({
     name: `${name}${percentile}th`,
     defaultValue: '',
@@ -13,7 +15,6 @@ const MyInput = ({percentile, name}) => {
       {...controller.field}
       style={{width: 60}}
       name={`womens.${percentile}th`}
-      component="input"
       type="number"
     />
   );

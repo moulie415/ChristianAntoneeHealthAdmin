@@ -26,6 +26,7 @@ export default function AlertDialog() {
   const handleSubmit = async () => {
     console.log('sending email to: ', email);
     try {
+      // @ts-ignore
       await firebase.auth().sendPasswordResetEmail(email);
       setOpen(false);
       setToastOpen(true);

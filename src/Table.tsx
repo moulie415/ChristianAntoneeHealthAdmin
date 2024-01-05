@@ -1,7 +1,7 @@
 import React from 'react';
 import {useController} from 'react-hook-form';
 
-const MyInput = ({gender, name}) => {
+const MyInput: React.FC<{gender: string; name: string}> = ({gender, name}) => {
   const controller = useController({
     name: `${gender}${name}`,
     defaultValue: '',
@@ -10,13 +10,14 @@ const MyInput = ({gender, name}) => {
     <input
       {...controller.field}
       style={{width: 60}}
+      // @ts-ignore
       component="input"
       type="number"
     />
   );
 };
 
-const Table = ({gender}) => {
+const Table: React.FC<{gender: string}> = ({gender}) => {
   return (
     <table>
       <strong>{gender}</strong>

@@ -1,5 +1,4 @@
 import {BooleanField, BooleanInput} from 'ra-ui-materialui';
-import * as React from 'react';
 import {
   Datagrid,
   List,
@@ -14,14 +13,13 @@ import {
   ShowButton,
   EditButton,
   DeleteButton,
-  ArrayInput,
-  SimpleFormIterator,
   NumberInput,
   FileInput,
   ImageInput,
   FileField,
   ImageField,
   required,
+  ResourceProps,
 } from 'react-admin';
 import PercentileTable from './PercentileTable';
 import Table from './Table';
@@ -32,7 +30,7 @@ import Table from './Table';
 //   </Filter>
 // );
 
-export const TestList = props => (
+export const TestList = (props: ResourceProps) => (
   <List {...props} sort={{field: 'name', order: 'ASC'}}>
     <Datagrid>
       <TextField source="name" />
@@ -43,7 +41,7 @@ export const TestList = props => (
   </List>
 );
 
-export const TestShow = props => (
+export const TestShow = (props: ResourceProps) => (
   <Show {...props}>
     <SimpleShowLayout>
       <TextField source="id" />
@@ -57,7 +55,7 @@ export const TestShow = props => (
   </Show>
 );
 
-export const TestCreate = props => (
+export const TestCreate = (props: ResourceProps) => (
   <Create {...props}>
     <SimpleForm>
       <TextInput source="name" validate={required()} />
@@ -102,7 +100,7 @@ export const TestCreate = props => (
   </Create>
 );
 
-export const TestEdit = props => (
+export const TestEdit = (props: ResourceProps) => (
   <Edit {...props}>
     <SimpleForm>
       <TextInput source="name" validate={required()} />

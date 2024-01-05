@@ -1,5 +1,4 @@
 import {BooleanField, BooleanInput} from 'ra-ui-materialui';
-import * as React from 'react';
 import {
   Datagrid,
   List,
@@ -16,25 +15,20 @@ import {
   ImageInput,
   EditButton,
   DeleteButton,
-  ReferenceArrayInput,
-  AutocompleteArrayInput,
   ReferenceArrayField,
   SingleFieldList,
   ChipField,
   ArrayInput,
   SimpleFormIterator,
-  ReferenceInput,
-  AutocompleteInput,
   FileInput,
   FileField,
   required,
+  ResourceProps,
 } from 'react-admin';
-import MyAutoCompleteArrayInput from './MyAutoCompleteArrayInput';
 import MyAutoCompleteInput from './MyAutoCompleteInput';
 import DuplicateExercisesButton from './DuplicateExercisesButton';
-import {useForm} from 'react-hook-form';
 
-export const QuickRoutineList = props => (
+export const QuickRoutineList = (props: ResourceProps) => (
   <List {...props} sort={{field: 'name', order: 'ASC'}}>
     <Datagrid>
       <TextField source="name" />
@@ -53,7 +47,7 @@ export const QuickRoutineList = props => (
   </List>
 );
 
-export const QuickRoutineShow = props => (
+export const QuickRoutineShow = (props: ResourceProps) => (
   <Show {...props}>
     <SimpleShowLayout>
       <TextField source="id" />
@@ -71,7 +65,7 @@ export const QuickRoutineShow = props => (
   </Show>
 );
 
-export const QuickRoutineCreate = props => {
+export const QuickRoutineCreate = (props: ResourceProps) => {
   return (
     <Create {...props}>
       <SimpleForm>
@@ -150,7 +144,7 @@ export const QuickRoutineCreate = props => {
   );
 };
 
-export const QuickRoutineEdit = props => {
+export const QuickRoutineEdit = (props: ResourceProps) => {
   return (
     <Edit {...props}>
       <SimpleForm>

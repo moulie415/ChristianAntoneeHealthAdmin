@@ -1,5 +1,5 @@
-import {collection, getDocs, query, where, orderBy} from 'firebase/firestore';
-import React, {useEffect, useState} from 'react';
+import {collection, getDocs, query, where} from 'firebase/firestore';
+import {useEffect, useState} from 'react';
 import {db} from './App';
 import {toast} from 'react-toastify';
 import {
@@ -17,16 +17,17 @@ import {useNavigate} from 'react-router-dom';
 import moment from 'moment';
 import DoneIcon from '@mui/icons-material/Done';
 import CloseIcon from '@mui/icons-material/Close';
+import {Plan} from './types/Shared';
 
-function chunkArrayInGroups(arr, size) {
-  var myArray = [];
-  for (var i = 0; i < arr.length; i += size) {
+function chunkArrayInGroups(arr: string[], size: number) {
+  const myArray = [];
+  for (let i = 0; i < arr.length; i += size) {
     myArray.push(arr.slice(i, i + size));
   }
   return myArray;
 }
 
-const ClientPremiumField = ({client}) => {
+const ClientPremiumField: React.FC<{client: any}> = ({client}) => {
   const clientPremium = client?.premium.Premium;
   const hasExpired =
     !!clientPremium && moment(clientPremium.expirationDate).isBefore(moment());
@@ -50,7 +51,7 @@ const ClientPremiumField = ({client}) => {
 
 const ClientSummary = () => {
   const [loading, setLoading] = useState(false);
-  const [clients, setClients] = useState();
+  const [clients, setClients] = useState<any[]>();
 
   const getClients = async () => {
     try {
@@ -64,7 +65,7 @@ const ClientSummary = () => {
         .filter(doc => doc.data().premium.Premium)
         .map(doc => doc.data().uid);
       const uidArrays = chunkArrayInGroups(clientUids, 10);
-      const plans = [];
+      const plans: Plan[] = [];
       for (let i = 0; i < uidArrays.length; i++) {
         const arr = uidArrays[i];
         const planQuery = query(
@@ -72,7 +73,7 @@ const ClientSummary = () => {
           where('user', 'in', arr),
         );
         const snapshot = await getDocs(planQuery);
-        plans.push(...snapshot.docs.map(doc => doc.data()));
+        plans.push(...(snapshot.docs.map(doc => doc.data()) as Plan[]));
       }
 
       setClients(
@@ -93,7 +94,11 @@ const ClientSummary = () => {
           }),
       );
     } catch (e) {
-      toast.error('Error fetching clients: ' + e.message);
+      if (e instanceof Error) {
+        toast.error('Error fetching clients: ' + e.message);
+      } else {
+        toast.error('Error fetching clients');
+      }
     }
     setLoading(false);
   };

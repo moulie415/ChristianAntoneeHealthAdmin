@@ -19,10 +19,10 @@ import {
   EditButton,
   EmailField,
   ExportButton,
-  Filter,
   FilterButton,
   ImageField,
   List,
+  ResourceProps,
   SaveButton,
   Show,
   ShowButton,
@@ -40,14 +40,15 @@ import {db} from './App';
 import CreatePlanButton from './CreatePlanButton';
 import PremiumField from './PremiumField';
 import WorkoutsTable from './WorkoutsTable';
+import {Plan} from './types/Shared';
 
-const UserFilter = props => (
-  <Filter {...props}>
-    <TextInput label="Search" source="title" alwaysOn />
-  </Filter>
-);
+// const UserFilter = props => (
+//   <Filter {...props}>
+//     <TextInput label="Search" source="title" alwaysOn />
+//   </Filter>
+// );
 
-const getPlans = async (uid: string) => {
+const getPlans = async (uid: string): Promise<Plan[]> => {
   const q = query(
     collection(db, 'plans'),
     where('user', '==', uid),
@@ -57,7 +58,7 @@ const getPlans = async (uid: string) => {
   const plans = await getDocs(q);
   return plans.docs
     .map(d => {
-      return {...d.data(), id: d.id};
+      return {...d.data(), id: d.id} as Plan;
     })
     .reverse();
 };
@@ -76,7 +77,7 @@ const ListActions = () => (
   </TopToolbar>
 );
 
-export const UsersList = props => {
+export const UsersList = (props: ResourceProps) => {
   return (
     <List {...props} perPage={50} actions={<ListActions />}>
       <Datagrid bulkActionButtons={false}>
@@ -93,15 +94,15 @@ export const UsersList = props => {
   );
 };
 
-export const UsersShow = props => {
-  const [plans, setPlans] = React.useState([]);
+export const UsersShow = (props: ResourceProps) => {
+  const [plans, setPlans] = React.useState<Plan[]>([]);
   const {id} = useParams();
   const navigate = useNavigate();
 
   React.useEffect(() => {
     const checkPlans = async () => {
       try {
-        const plans = await getPlans(id);
+        const plans = await getPlans(id || '');
         setPlans(plans);
       } catch (e) {
         toast.error('Error fetching plans');
@@ -145,7 +146,7 @@ export const UsersShow = props => {
   );
 };
 
-export const UsersCreate = props => (
+export const UsersCreate = (props: ResourceProps) => (
   <Create {...props}>
     <SimpleForm>
       <TextInput source="name" />
@@ -153,8 +154,8 @@ export const UsersCreate = props => (
   </Create>
 );
 
-export const UsersEdit = props => {
-  const [plans, setPlans] = React.useState([]);
+export const UsersEdit = (props: ResourceProps) => {
+  const [plans, setPlans] = React.useState<Plan[]>([]);
   const {id} = useParams();
 
   const navigate = useNavigate();
@@ -162,7 +163,7 @@ export const UsersEdit = props => {
   React.useEffect(() => {
     const checkPlans = async () => {
       try {
-        const plans = await getPlans(id);
+        const plans = await getPlans(id || '');
         setPlans(plans);
       } catch (e) {
         toast.error('Error fetching plans');

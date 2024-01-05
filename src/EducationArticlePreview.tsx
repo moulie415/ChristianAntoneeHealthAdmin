@@ -1,8 +1,7 @@
-import {useRecordContext} from 'ra-core';
-import React from 'react';
+import {MutableRefObject} from 'react';
 import moment from 'moment';
 
-export const getEducationCategoryString = category => {
+export const getEducationCategoryString = (category: string) => {
   switch (category) {
     case 'exercise':
       return 'Exercise Articles';
@@ -20,6 +19,13 @@ function EducationArticlePreview({
   createdate,
   category,
   body,
+}: {
+  image: string;
+  title: string;
+  createdate: string;
+  category: string;
+  body: string;
+  editorRef?: MutableRefObject<any>;
 }) {
   return (
     <div>

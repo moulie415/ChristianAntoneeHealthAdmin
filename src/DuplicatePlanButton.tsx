@@ -1,4 +1,3 @@
-import React from 'react';
 import {useNavigate} from 'react-router-dom';
 import {useRecordContext} from 'react-admin';
 import Button from '@mui/material/Button';

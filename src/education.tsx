@@ -18,8 +18,6 @@ import {
   DeleteButton,
   SelectInput,
   useRecordContext,
-  useInput,
-  RichTextField,
   required,
   ResourceProps,
 } from 'react-admin';
@@ -59,7 +57,7 @@ const CustomBodyField = () => {
 const CustomBodyInput = () => {
   const record = useRecordContext();
 
-  const editorRef = useRef(null);
+  const editorRef = useRef<any>(null);
 
   const {field} = useController({name: 'body'});
 
@@ -74,7 +72,7 @@ const CustomBodyInput = () => {
       <Editor
         key="editor"
         apiKey={process.env.REACT_APP_TINY_API_KEY}
-        onInit={(evt, editor) => (editorRef.current = editor)}
+        onInit={(_, editor) => (editorRef.current = editor)}
         initialValue={record?.body}
         onEditorChange={onEditorChange}
         init={{
@@ -129,7 +127,7 @@ const CustomBodyInput = () => {
   );
 };
 
-export const EducationShow = props => {
+export const EducationShow = (props: ResourceProps) => {
   return (
     <Show {...props}>
       <SimpleShowLayout>
@@ -143,7 +141,7 @@ export const EducationShow = props => {
   );
 };
 
-export const EducationCreate = props => {
+export const EducationCreate = (props: ResourceProps) => {
   return (
     <Create {...props}>
       <SimpleForm>
@@ -177,7 +175,7 @@ export const EducationCreate = props => {
   );
 };
 
-export const EducationEdit = props => (
+export const EducationEdit = (props: ResourceProps) => (
   <Edit {...props}>
     <SimpleForm>
       <TextInput source="title" />

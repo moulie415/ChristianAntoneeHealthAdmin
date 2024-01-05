@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {
   Datagrid,
   List,
@@ -24,6 +23,7 @@ import {
   BooleanField,
   required,
   NumberInput,
+  ResourceProps,
 } from 'react-admin';
 
 // const ExercisesFilter = props => (
@@ -87,7 +87,7 @@ const equipment = [
 //   </Filter>
 // );
 
-export const ExerciseList = props => (
+export const ExerciseList = (props: ResourceProps) => (
   <List
     {...props}
     sort={{field: 'name', order: 'ASC'}}
@@ -114,7 +114,7 @@ export const ExerciseList = props => (
   </List>
 );
 
-export const ExerciseShow = props => (
+export const ExerciseShow = (props: ResourceProps) => (
   <Show {...props}>
     <SimpleShowLayout>
       <TextField source="id" />
@@ -134,7 +134,7 @@ export const ExerciseShow = props => (
   </Show>
 );
 
-export const ExerciseCreate = props => (
+export const ExerciseCreate = (props: ResourceProps) => (
   <Create {...props}>
     <SimpleForm>
       <TextInput source="name" validate={required()} />
@@ -230,7 +230,7 @@ export const ExerciseCreate = props => (
   </Create>
 );
 
-export const ExerciseEdit = props => (
+export const ExerciseEdit = (props: ResourceProps) => (
   <Edit {...props}>
     <SimpleForm>
       <TextInput source="name" validate={required()} />

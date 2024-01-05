@@ -1,5 +1,4 @@
 import {BooleanField, BooleanInput} from 'ra-ui-materialui';
-import * as React from 'react';
 import {
   Datagrid,
   List,
@@ -14,12 +13,12 @@ import {
   ReferenceArrayField,
   ChipField,
   SingleFieldList,
-  ReferenceArrayInput,
-  AutocompleteArrayInput,
+  ResourceProps,
+  ToolbarProps,
 } from 'react-admin';
 import MyAutoCompleteArrayInput from './MyAutoCompleteArrayInput';
 
-export const SettingsList = props => (
+export const SettingsList = (props: ResourceProps) => (
   <List {...props}>
     <Datagrid bulkActionButtons={false}>
       <BooleanField source="ads" />
@@ -42,7 +41,7 @@ export const SettingsList = props => (
   </List>
 );
 
-export const SettingsShow = props => (
+export const SettingsShow = (props: ResourceProps) => (
   <Show {...props}>
     <SimpleShowLayout>
       <BooleanField source="ads" />
@@ -63,13 +62,13 @@ export const SettingsShow = props => (
   </Show>
 );
 
-const SettingsEditToolbar = props => (
+const SettingsEditToolbar = (props: ToolbarProps) => (
   <Toolbar {...props}>
     <SaveButton />
   </Toolbar>
 );
 
-export const SettingsEdit = props => (
+export const SettingsEdit = (props: ResourceProps) => (
   <Edit {...props}>
     <SimpleForm toolbar={<SettingsEditToolbar />}>
       <BooleanInput source="ads" />

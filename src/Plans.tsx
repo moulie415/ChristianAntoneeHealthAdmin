@@ -1,5 +1,4 @@
 import Typography from '@mui/material/Typography';
-import * as React from 'react';
 import {
   Datagrid,
   List,
@@ -11,31 +10,23 @@ import {
   TextField,
   ShowButton,
   ReferenceField,
-  ReferenceInput,
   TextInput,
   EditButton,
   DeleteButton,
-  AutocompleteInput,
   ArrayInput,
   SimpleFormIterator,
   DateInput,
   NumberInput,
-  DateTimeInput,
   required,
   DateField,
   SelectInput,
+  ResourceProps,
 } from 'react-admin';
-import {doc, getDoc} from 'firebase/firestore';
-import {db} from './App';
-import {useWatch} from 'react-hook-form';
-import {toast} from 'react-toastify';
-import {getFunctions, httpsCallable} from 'firebase/functions';
 import DuplicatePlanButton from './DuplicatePlanButton';
-import SendPlanButton from './SendPlanButton';
 import MyAutoCompleteInput from './MyAutoCompleteInput';
 import DuplicateExercisesButton from './DuplicateExercisesButton';
 
-export const PlansList = props => (
+export const PlansList = (props: ResourceProps) => (
   <List {...props} sort={{field: 'createdate', order: 'DESC'}}>
     <Datagrid bulkActionButtons={false}>
       <ReferenceField label="User" source="user" reference="users">
@@ -49,7 +40,7 @@ export const PlansList = props => (
   </List>
 );
 
-export const PlansShow = props => {
+export const PlansShow = (props: ResourceProps) => {
   return (
     <Show {...props}>
       <SimpleShowLayout>
@@ -61,38 +52,23 @@ export const PlansShow = props => {
   );
 };
 
-const send = async uid => {
-  const functions = getFunctions();
-  const sendPlan = httpsCallable(functions, 'sendPlan');
-  await sendPlan({value: uid});
-};
+// const send = async uid => {
+//   const functions = getFunctions();
+//   const sendPlan = httpsCallable(functions, 'sendPlan');
+//   await sendPlan({value: uid});
+// };
 
-const UserInput = ({setUser, ...props}) => {
-  const user = useWatch({name: 'user'});
-  React.useEffect(() => {
-    if (user) {
-      setUser(user);
-    }
-  }, [user, setUser]);
-  return (
-    <MyAutoCompleteInput
-      label="User"
-      source="user"
-      reference="users"
-      validate={[required()]}
-      optionText="name"
-    />
-  );
-};
-
-export const PlansCreate = props => {
-  const [user, setUser] = React.useState();
-  const [loading, setLoading] = React.useState(false);
-
+export const PlansCreate = (props: ResourceProps) => {
   return (
     <Create {...props}>
       <SimpleForm>
-        <UserInput validate={[required()]} setUser={setUser} />
+        <MyAutoCompleteInput
+          label="User"
+          source="user"
+          reference="users"
+          validate={[required()]}
+          optionText="name"
+        />
 
         <ArrayInput defaultValue={[]} validate={[required()]} source="workouts">
           <SimpleFormIterator>
@@ -222,24 +198,9 @@ export const PlansCreate = props => {
   );
 };
 
-const UserField = ({setUser, ...props}) => {
-  const user = useWatch({name: 'user'});
-  React.useEffect(() => {
-    if (user) {
-      setUser(user);
-    }
-  }, [setUser, user]);
-  return (
-    <ReferenceField label="User" source="user" reference="users" {...props}>
-      <TextField source="name" />
-    </ReferenceField>
-  );
-};
 
-export const PlansEdit = props => {
-  const [user, setUser] = React.useState();
-  const [loading, setLoading] = React.useState(false);
-  const [sent, setSent] = React.useState(false);
+
+export const PlansEdit = (props: ResourceProps) => {
   // React.useEffect(() => {
   //   const checkIfSent = async () => {
   //     setLoading(true);
@@ -255,7 +216,9 @@ export const PlansEdit = props => {
   return (
     <Edit {...props}>
       <SimpleForm>
-        <UserField setUser={setUser} />
+        <ReferenceField label="User" source="user" reference="users" {...props}>
+          <TextField source="name" />
+        </ReferenceField>
         <ArrayInput {...props} validate={[required()]} source="workouts">
           <SimpleFormIterator>
             <TextInput

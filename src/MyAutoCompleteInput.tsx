@@ -1,7 +1,16 @@
-import React from 'react';
-import {AutocompleteInput, useGetList} from 'react-admin';
+import {
+  AutocompleteInput,
+  useGetList,
+  AutocompleteInputProps,
+} from 'react-admin';
 
-const MyAutoCompleteInput = props => {
+interface Props extends AutocompleteInputProps {
+  reference: string;
+  perPage?: number;
+  page?: number;
+  optionText: string;
+}
+const MyAutoCompleteInput: React.FC<Props> = props => {
   const {data} = useGetList(props.reference, {
     pagination: {perPage: props.perPage || 200, page: props.page || 1},
   });

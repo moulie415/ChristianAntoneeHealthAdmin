@@ -44,7 +44,7 @@ const firebaseApp = firebase.initializeApp(firebaseConfig);
 
 export const db = getFirestore(firebaseApp);
 
-const appCheck = initializeAppCheck(firebaseApp, {
+initializeAppCheck(firebaseApp, {
   provider: new ReCaptchaV3Provider('6Lft57sdAAAAAEQYT85mxqG4BsdFV4L6Gn3Ir9BY'),
 
   // Optional argument. If true, the SDK automatically refreshes App Check

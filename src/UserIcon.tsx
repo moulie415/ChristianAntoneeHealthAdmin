@@ -1,9 +1,7 @@
-import React, {useEffect, useState} from 'react';
 import PersonIcon from '@mui/icons-material/Person';
-import {collection, query, where, onSnapshot} from 'firebase/firestore';
-import {db} from './App';
+import {ResourceProps} from 'react-admin';
 
-const UserIcon = props => {
+const UserIcon = (props: ResourceProps) => {
   return <PersonIcon {...props} />;
 };
 
