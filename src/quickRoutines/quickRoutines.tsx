@@ -25,8 +25,8 @@ import {
   required,
   ResourceProps,
 } from 'react-admin';
-import MyAutoCompleteInput from './MyAutoCompleteInput';
-import DuplicateExercisesButton from './DuplicateExercisesButton';
+import MyAutoCompleteInput from '../common/MyAutoCompleteInput';
+import DuplicateExercisesButton from '../exercises/DuplicateExercisesButton';
 
 export const QuickRoutineList = (props: ResourceProps) => (
   <List {...props} sort={{field: 'name', order: 'ASC'}}>

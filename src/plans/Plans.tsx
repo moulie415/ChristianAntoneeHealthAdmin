@@ -23,8 +23,8 @@ import {
   ResourceProps,
 } from 'react-admin';
 import DuplicatePlanButton from './DuplicatePlanButton';
-import MyAutoCompleteInput from './MyAutoCompleteInput';
-import DuplicateExercisesButton from './DuplicateExercisesButton';
+import MyAutoCompleteInput from '../common/MyAutoCompleteInput';
+import DuplicateExercisesButton from '../exercises/DuplicateExercisesButton';
 
 export const PlansList = (props: ResourceProps) => (
   <List {...props} sort={{field: 'createdate', order: 'DESC'}}>
@@ -120,12 +120,12 @@ export const PlansCreate = (props: ResourceProps) => {
             <DuplicateExercisesButton source="exercises" />
             <ArrayInput label="Instructions" source="steps" defaultValue={[]}>
               <SimpleFormIterator>
-                <TextInput label="Instruction" multiline />
+                <TextInput label="Instruction" multiline source="" />
               </SimpleFormIterator>
             </ArrayInput>
             <ArrayInput validate={[required()]} source="dates" label="Dates">
               <SimpleFormIterator inline>
-                <DateInput label="Date" />
+                <DateInput label="Date" source="" />
               </SimpleFormIterator>
             </ArrayInput>
             <SelectInput
@@ -198,8 +198,6 @@ export const PlansCreate = (props: ResourceProps) => {
   );
 };
 
-
-
 export const PlansEdit = (props: ResourceProps) => {
   // React.useEffect(() => {
   //   const checkIfSent = async () => {
@@ -270,7 +268,7 @@ export const PlansEdit = (props: ResourceProps) => {
             <DuplicateExercisesButton source="exercises" />
             <ArrayInput label="Instructions" source="steps" defaultValue={[]}>
               <SimpleFormIterator>
-                <TextInput label="Instruction" multiline />
+                <TextInput label="Instruction" multiline source="" />
               </SimpleFormIterator>
             </ArrayInput>
             <ArrayInput
@@ -279,7 +277,7 @@ export const PlansEdit = (props: ResourceProps) => {
               source="dates"
               label="Dates">
               <SimpleFormIterator inline>
-                <DateInput label="Date" />
+                <DateInput label="Date" source="" />
               </SimpleFormIterator>
             </ArrayInput>
             <SelectInput

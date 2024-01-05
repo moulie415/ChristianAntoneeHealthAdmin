@@ -12,33 +12,33 @@ import {FirebaseAuthProvider, FirebaseDataProvider} from 'react-admin-firebase';
 import {Route} from 'react-router-dom';
 import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import CustomLoginPage from './CustomLoginPage';
+import CustomLoginPage from './auth/CustomLoginPage';
 import {firebaseConfig} from './FIREBASE_CONFIG';
-import MyLayout from './MyLayout';
-import {PlansCreate, PlansEdit, PlansList, PlansShow} from './Plans';
-import PremiumUsers from './PremiumUsers';
-import UserIcon from './UserIcon';
+import MyLayout from './common/MyLayout';
+import {PlansCreate, PlansEdit, PlansList, PlansShow} from './plans/Plans';
+import PremiumUsers from './premiumUsers/PremiumUsers';
+import UserIcon from './common/UserIcon';
 import {
   EducationCreate,
   EducationEdit,
   EducationList,
   EducationShow,
-} from './education';
+} from './education/education';
 import {
   ExerciseCreate,
   ExerciseEdit,
   ExerciseList,
   ExerciseShow,
-} from './exercises';
+} from './exercises/exercises';
 import {
   QuickRoutineCreate,
   QuickRoutineEdit,
   QuickRoutineList,
   QuickRoutineShow,
-} from './quickRoutines';
-import {SettingsEdit, SettingsList, SettingsShow} from './settings';
-import {TestCreate, TestEdit, TestList, TestShow} from './tests';
-import {UsersEdit, UsersList, UsersShow} from './users';
+} from './quickRoutines/quickRoutines';
+import {SettingsEdit, SettingsList, SettingsShow} from './settings/settings';
+import {TestCreate, TestEdit, TestList, TestShow} from './tests/tests';
+import {UsersEdit, UsersList, UsersShow} from './users/users';
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 
@@ -70,14 +70,27 @@ const dataProvider = FirebaseDataProvider(firebaseConfig, {
   },
 });
 
+// const theme: RaThemeOptions = {
+//   ...defaultTheme,
+//   palette: {
+//     ...defaultTheme.palette,
+//     primary: {
+//       main: colors.appBlue,
+//     },
+//     secondary: {
+//       main: colors.appGrey,
+//     },
+//   },
+// };
+
 class App extends React.Component {
   render() {
-    // if (__VERSION__ === process.env.REACT_APP_VERSION || __DEV__) {
     return (
       <>
         <Admin
           loginPage={CustomLoginPage}
           layout={MyLayout}
+          // theme={theme}
           dataProvider={dataProvider}
           authProvider={authProvider}>
           <Resource
@@ -144,23 +157,6 @@ class App extends React.Component {
       </>
     );
   }
-  //   return (
-  //     <div
-  //       style={{
-  //         width: 600,
-  //         maxWidth: '100%',
-  //         padding: 20,
-  //         paddingTop: 100,
-  //         margin: 'auto',
-  //         fontSize: 30,
-  //         fontFamily: 'Arial',
-  //       }}>
-  //       You're not running the latest version of the CA Health admin, if you're
-  //       on Windows please try Ctrl+F5, Shift+F5 or Ctrl+Shift+R, if you're on a
-  //       Mac please try Shift+Command+R.
-  //     </div>
-  //   );
-  // }
 }
 
 export default App;

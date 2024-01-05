@@ -36,7 +36,7 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-import {db} from './App';
+import {db} from '../App';
 
 function pad(num: number) {
   return ('0' + num).slice(-2);

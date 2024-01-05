@@ -36,11 +36,11 @@ import {
 } from 'react-admin';
 import {useNavigate, useParams} from 'react-router-dom';
 import {toast} from 'react-toastify';
-import {db} from './App';
-import CreatePlanButton from './CreatePlanButton';
-import PremiumField from './PremiumField';
+import {db} from '../App';
+import CreatePlanButton from '../plans/CreatePlanButton';
+import PremiumField from '../common/PremiumField';
 import WorkoutsTable from './WorkoutsTable';
-import {Plan} from './types/Shared';
+import {Plan} from '../types/Shared';
 
 // const UserFilter = props => (
 //   <Filter {...props}>

@@ -1,6 +1,6 @@
 import {collection, getDocs, query, where} from 'firebase/firestore';
 import {useEffect, useState} from 'react';
-import {db} from './App';
+import {db} from '../App';
 import {toast} from 'react-toastify';
 import {
   CircularProgress,
@@ -17,7 +17,7 @@ import {useNavigate} from 'react-router-dom';
 import moment from 'moment';
 import DoneIcon from '@mui/icons-material/Done';
 import CloseIcon from '@mui/icons-material/Close';
-import {Plan} from './types/Shared';
+import {Plan} from '../types/Shared';
 
 function chunkArrayInGroups(arr: string[], size: number) {
   const myArray = [];

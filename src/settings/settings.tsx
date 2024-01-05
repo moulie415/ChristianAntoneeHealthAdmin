@@ -16,7 +16,7 @@ import {
   ResourceProps,
   ToolbarProps,
 } from 'react-admin';
-import MyAutoCompleteArrayInput from './MyAutoCompleteArrayInput';
+import MyAutoCompleteArrayInput from '../common/MyAutoCompleteArrayInput';
 
 export const SettingsList = (props: ResourceProps) => (
   <List {...props}>
