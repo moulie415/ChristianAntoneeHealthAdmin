@@ -1,30 +1,31 @@
 import {
-  Datagrid,
-  List,
-  Show,
+  ArrayInput,
+  BooleanField,
+  BooleanInput,
+  ChipField,
   Create,
+  Datagrid,
+  DeleteButton,
   Edit,
+  EditButton,
+  FileField,
+  FileInput,
   ImageField,
   ImageInput,
-  SimpleShowLayout,
-  SimpleForm,
-  TextField,
-  TextInput,
-  ShowButton,
-  EditButton,
-  DeleteButton,
-  SelectInput,
-  FileInput,
-  FileField,
-  ArrayInput,
-  SimpleFormIterator,
-  ChipField,
-  BooleanInput,
-  BooleanField,
-  required,
+  List,
   NumberInput,
   ResourceProps,
+  SelectInput,
+  Show,
+  ShowButton,
+  SimpleForm,
+  SimpleFormIterator,
+  SimpleShowLayout,
+  TextField,
+  TextInput,
+  required,
 } from 'react-admin';
+import {Muscle} from '../types/Shared';
 
 // const ExercisesFilter = props => (
 //   <Filter {...props}>
@@ -32,7 +33,7 @@ import {
 //   </Filter>
 // );
 
-const muscles = [
+const muscles: {id: Muscle; name: string}[] = [
   {id: 'chest', name: 'Chest'},
   {id: 'upperBack', name: 'Upper back'},
   {id: 'midBack', name: 'Mid back'},

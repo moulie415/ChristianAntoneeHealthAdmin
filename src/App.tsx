@@ -1,10 +1,11 @@
 import BookIcon from '@mui/icons-material/Book';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
+import RestaurantIcon from '@mui/icons-material/Restaurant';
 import SettingsIcon from '@mui/icons-material/Settings';
 import TimerIcon from '@mui/icons-material/Timer';
-import firebase from 'firebase/compat/app';
 import {ReCaptchaV3Provider, initializeAppCheck} from 'firebase/app-check';
+import firebase from 'firebase/compat/app';
 import {getFirestore} from 'firebase/firestore';
 import * as React from 'react';
 import {Admin, CustomRoutes, Resource} from 'react-admin';
@@ -12,11 +13,9 @@ import {FirebaseAuthProvider, FirebaseDataProvider} from 'react-admin-firebase';
 import {Route} from 'react-router-dom';
 import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import CustomLoginPage from './auth/CustomLoginPage';
 import {firebaseConfig} from './FIREBASE_CONFIG';
+import CustomLoginPage from './auth/CustomLoginPage';
 import MyLayout from './common/MyLayout';
-import {PlansCreate, PlansEdit, PlansList, PlansShow} from './plans/Plans';
-import PremiumUsers from './premiumUsers/PremiumUsers';
 import UserIcon from './common/UserIcon';
 import {
   EducationCreate,
@@ -30,12 +29,20 @@ import {
   ExerciseList,
   ExerciseShow,
 } from './exercises/exercises';
+import {PlansCreate, PlansEdit, PlansList, PlansShow} from './plans/Plans';
+import PremiumUsers from './premiumUsers/PremiumUsers';
 import {
   QuickRoutineCreate,
   QuickRoutineEdit,
   QuickRoutineList,
   QuickRoutineShow,
 } from './quickRoutines/quickRoutines';
+import {
+  RecipesCreate,
+  RecipesEdit,
+  RecipesList,
+  RecipesShow,
+} from './recipes/Recipes';
 import {SettingsEdit, SettingsList, SettingsShow} from './settings/settings';
 import {TestCreate, TestEdit, TestList, TestShow} from './tests/tests';
 import {UsersEdit, UsersList, UsersShow} from './users/users';
@@ -140,6 +147,9 @@ class App extends React.Component {
             icon={UserIcon}
             edit={UsersEdit}
           />
+          <CustomRoutes>
+            <Route path="premium-users" element={<PremiumUsers />} />
+          </CustomRoutes>
           <Resource
             name="plans"
             list={PlansList}
@@ -148,9 +158,17 @@ class App extends React.Component {
             create={PlansCreate}
             icon={EventAvailableIcon}
           />
-          <CustomRoutes>
-            <Route path="premium-users" element={<PremiumUsers />} />
-          </CustomRoutes>
+          <Resource
+            name="recipes"
+            list={RecipesList}
+            show={RecipesShow}
+            edit={RecipesEdit}
+            create={RecipesCreate}
+            icon={RestaurantIcon}
+          />
+          {/* <CustomRoutes>
+            <Route path="messaging" element={<Messaging />} />
+          </CustomRoutes> */}
         </Admin>
 
         <ToastContainer />

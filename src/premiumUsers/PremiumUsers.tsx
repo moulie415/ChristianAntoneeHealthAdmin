@@ -18,14 +18,9 @@ import moment from 'moment';
 import DoneIcon from '@mui/icons-material/Done';
 import CloseIcon from '@mui/icons-material/Close';
 import {Plan} from '../types/Shared';
+import { chunkArrayInGroups } from '../helpers/chunkArrayInGroups';
 
-function chunkArrayInGroups(arr: string[], size: number) {
-  const myArray = [];
-  for (let i = 0; i < arr.length; i += size) {
-    myArray.push(arr.slice(i, i + size));
-  }
-  return myArray;
-}
+
 
 const ClientPremiumField: React.FC<{client: any}> = ({client}) => {
   const clientPremium = client?.premium.Premium;

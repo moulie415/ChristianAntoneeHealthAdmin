@@ -422,3 +422,20 @@ export interface Chat {
   users: string[];
   createdate: Date;
 }
+
+export interface Recipe {
+  name: string;
+  category: RecipeCategory;
+  image: {title: string; src: string};
+  recipe: {title: string; src: string};
+  premium: boolean;
+}
+
+export enum RecipeCategory {
+  HIGH_PROTEIN = 'highProtein',
+  VEGETARIAN = 'vegetarian',
+  VEGAN = 'vegan',
+  LOW_CARB = 'lowCarb',
+  SMOOTHIE = 'smoothie',
+  FIVE_INGREDIENT = 'fiveIngredient',
+}

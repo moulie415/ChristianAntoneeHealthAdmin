@@ -1,7 +1,7 @@
 import {MutableRefObject} from 'react';
 import moment from 'moment';
 
-export const getEducationCategoryString = (category: string) => {
+const getEducationCategoryString = (category: string) => {
   switch (category) {
     case 'exercise':
       return 'Exercise Articles';

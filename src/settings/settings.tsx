@@ -1,19 +1,18 @@
-import {BooleanField, BooleanInput} from 'ra-ui-materialui';
 import {
-  Datagrid,
-  List,
-  Show,
-  Edit,
-  SimpleShowLayout,
-  SimpleForm,
-  ShowButton,
-  EditButton,
-  Toolbar,
-  SaveButton,
-  ReferenceArrayField,
   ChipField,
-  SingleFieldList,
+  Datagrid,
+  Edit,
+  EditButton,
+  List,
+  ReferenceArrayField,
   ResourceProps,
+  SaveButton,
+  Show,
+  ShowButton,
+  SimpleForm,
+  SimpleShowLayout,
+  SingleFieldList,
+  Toolbar,
   ToolbarProps,
 } from 'react-admin';
 import MyAutoCompleteArrayInput from '../common/MyAutoCompleteArrayInput';
@@ -21,7 +20,6 @@ import MyAutoCompleteArrayInput from '../common/MyAutoCompleteArrayInput';
 export const SettingsList = (props: ResourceProps) => (
   <List {...props}>
     <Datagrid bulkActionButtons={false}>
-      <BooleanField source="ads" />
       <ReferenceArrayField label="Admins" reference="users" source="admins">
         <SingleFieldList>
           <ChipField source="name" />
@@ -44,7 +42,6 @@ export const SettingsList = (props: ResourceProps) => (
 export const SettingsShow = (props: ResourceProps) => (
   <Show {...props}>
     <SimpleShowLayout>
-      <BooleanField source="ads" />
       <ReferenceArrayField label="Admins" reference="users" source="admins">
         <SingleFieldList>
           <ChipField source="name" />
@@ -71,8 +68,6 @@ const SettingsEditToolbar = (props: ToolbarProps) => (
 export const SettingsEdit = (props: ResourceProps) => (
   <Edit {...props}>
     <SimpleForm toolbar={<SettingsEditToolbar />}>
-      <BooleanInput source="ads" />
-
       <MyAutoCompleteArrayInput
         source="admins"
         reference="users"

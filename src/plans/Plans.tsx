@@ -1,30 +1,30 @@
 import Typography from '@mui/material/Typography';
 import {
-  Datagrid,
-  List,
-  Show,
-  Create,
-  Edit,
-  SimpleShowLayout,
-  SimpleForm,
-  TextField,
-  ShowButton,
-  ReferenceField,
-  TextInput,
-  EditButton,
-  DeleteButton,
   ArrayInput,
-  SimpleFormIterator,
-  DateInput,
-  NumberInput,
-  required,
+  Create,
+  Datagrid,
   DateField,
-  SelectInput,
+  DateInput,
+  DeleteButton,
+  Edit,
+  EditButton,
+  List,
+  NumberInput,
+  ReferenceField,
   ResourceProps,
+  SelectInput,
+  Show,
+  ShowButton,
+  SimpleForm,
+  SimpleFormIterator,
+  SimpleShowLayout,
+  TextField,
+  TextInput,
+  required,
 } from 'react-admin';
-import DuplicatePlanButton from './DuplicatePlanButton';
 import MyAutoCompleteInput from '../common/MyAutoCompleteInput';
 import DuplicateExercisesButton from '../exercises/DuplicateExercisesButton';
+import DuplicatePlanButton from './DuplicatePlanButton';
 
 export const PlansList = (props: ResourceProps) => (
   <List {...props} sort={{field: 'createdate', order: 'DESC'}}>
