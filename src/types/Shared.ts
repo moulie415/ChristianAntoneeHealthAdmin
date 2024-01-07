@@ -438,4 +438,5 @@ export enum RecipeCategory {
   LOW_CARB = 'lowCarb',
   SMOOTHIE = 'smoothie',
   FIVE_INGREDIENT = 'fiveIngredient',
+  GLUTEN_FREE = 'glutenFree',
 }

@@ -55,6 +55,7 @@ export const recipeCategories: {id: RecipeCategory; name: string}[] = [
   {id: RecipeCategory.LOW_CARB, name: 'Low carb'},
   {id: RecipeCategory.SMOOTHIE, name: 'Smoothie'},
   {id: RecipeCategory.FIVE_INGREDIENT, name: '5-ingredient'},
+  {id: RecipeCategory.GLUTEN_FREE, name: 'Gluten free'},
 ];
 
 export const RecipesCreate = (props: ResourceProps) => (
