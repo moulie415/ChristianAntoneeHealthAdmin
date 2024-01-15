@@ -151,27 +151,70 @@ export const PlansCreate = (props: ResourceProps) => {
           </SimpleFormIterator>
         </ArrayInput>
         <Typography>Nutritional planning</Typography>
+        <Typography variant="subtitle2">Pre-workout</Typography>
         <TextInput
           source="nutrition.preWorkout"
+          multiline
           label="Pre-workout"
           defaultValue=""
-          multiline
           style={{width: 400}}
         />
+        <ArrayInput
+          defaultValue={[]}
+          source="nutrition.preWorkoutRecipes"
+          label="Pre-workout recipes">
+          <SimpleFormIterator inline>
+            <MyAutoCompleteInput
+              optionText="name"
+              label="Recipe"
+              reference="recipes"
+              style={{width: 350}}
+            />
+          </SimpleFormIterator>
+        </ArrayInput>
+        <Typography variant="subtitle2">Post-workout</Typography>
+
         <TextInput
           source="nutrition.postWorkout"
+          multiline
           label="Post-workout"
           defaultValue=""
-          multiline
           style={{width: 400}}
         />
+        <ArrayInput
+          defaultValue={[]}
+          source="nutrition.postWorkoutRecipes"
+          label="Post-workout recipes">
+          <SimpleFormIterator inline>
+            <MyAutoCompleteInput
+              optionText="name"
+              label="Recipe"
+              reference="recipes"
+              style={{width: 350}}
+            />
+          </SimpleFormIterator>
+        </ArrayInput>
+        <Typography variant="subtitle2">General recommendations</Typography>
         <TextInput
-          multiline
-          style={{width: 400}}
           source="nutrition.general"
+          multiline
           label="General recommendations"
           defaultValue=""
+          style={{width: 400}}
         />
+        <ArrayInput
+          defaultValue={[]}
+          source="nutrition.generalRecipes"
+          label="General recommendation recipes">
+          <SimpleFormIterator inline>
+            <MyAutoCompleteInput
+              optionText="name"
+              label="Recipe"
+              reference="recipes"
+              style={{width: 350}}
+            />
+          </SimpleFormIterator>
+        </ArrayInput>
         <Typography>Sleep hygiene</Typography>
         <TextInput
           source="sleep.general"
@@ -304,6 +347,7 @@ export const PlansEdit = (props: ResourceProps) => {
           </SimpleFormIterator>
         </ArrayInput>
         <Typography>Nutritional planning</Typography>
+        <Typography variant="subtitle2">Pre-workout</Typography>
         <TextInput
           source="nutrition.preWorkout"
           multiline
@@ -311,6 +355,21 @@ export const PlansEdit = (props: ResourceProps) => {
           defaultValue=""
           style={{width: 400}}
         />
+        <ArrayInput
+          defaultValue={[]}
+          source="nutrition.preWorkoutRecipes"
+          label="Pre-workout recipes">
+          <SimpleFormIterator inline>
+            <MyAutoCompleteInput
+              optionText="name"
+              label="Recipe"
+              reference="recipes"
+              style={{width: 350}}
+            />
+          </SimpleFormIterator>
+        </ArrayInput>
+        <Typography variant="subtitle2">Post-workout</Typography>
+
         <TextInput
           source="nutrition.postWorkout"
           multiline
@@ -318,6 +377,20 @@ export const PlansEdit = (props: ResourceProps) => {
           defaultValue=""
           style={{width: 400}}
         />
+        <ArrayInput
+          defaultValue={[]}
+          source="nutrition.postWorkoutRecipes"
+          label="Post-workout recipes">
+          <SimpleFormIterator inline>
+            <MyAutoCompleteInput
+              optionText="name"
+              label="Recipe"
+              reference="recipes"
+              style={{width: 350}}
+            />
+          </SimpleFormIterator>
+        </ArrayInput>
+        <Typography variant="subtitle2">General recommendations</Typography>
         <TextInput
           source="nutrition.general"
           multiline
@@ -325,6 +398,19 @@ export const PlansEdit = (props: ResourceProps) => {
           defaultValue=""
           style={{width: 400}}
         />
+        <ArrayInput
+          defaultValue={[]}
+          source="nutrition.generalRecipes"
+          label="General recommendation recipes">
+          <SimpleFormIterator inline>
+            <MyAutoCompleteInput
+              optionText="name"
+              label="Recipe"
+              reference="recipes"
+              style={{width: 350}}
+            />
+          </SimpleFormIterator>
+        </ArrayInput>
         <Typography>Sleep hygiene</Typography>
         <TextInput
           source="sleep.general"
