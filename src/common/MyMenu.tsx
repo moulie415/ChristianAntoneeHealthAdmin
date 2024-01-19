@@ -1,3 +1,4 @@
+import ForumIcon from '@mui/icons-material/Forum';
 import InventoryOutlinedIcon from '@mui/icons-material/InventoryOutlined';
 import {Menu} from 'react-admin';
 
@@ -18,12 +19,12 @@ const MyMenu = () => {
       />
       <Menu.ResourceItem name="plans" />
       <Menu.ResourceItem name="recipes" />
-      {/* <Menu.Item
+      <Menu.Item
         to="/messaging"
         primaryText="Messaging"
         leftIcon={<ForumIcon />}
         placeholder=""
-      /> */}
+      />
     </Menu>
   );
 };

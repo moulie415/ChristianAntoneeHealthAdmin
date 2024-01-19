@@ -194,6 +194,7 @@ export interface SavedQuickRoutine {
   fitbitData: ActivitiesHeart[];
 }
 
+export type MessageType = 'text' | 'image' | 'video' | 'audio' | 'document';
 export interface Message {
   _id: string;
   text: string;
@@ -210,7 +211,10 @@ export interface Message {
   sent?: boolean;
   received?: boolean;
   pending?: boolean;
-  type: 'text' | 'workout';
+  type: MessageType;
+  document?: string;
+  mimeType?: string;
+  filename?: string;
 }
 
 export interface Profile {

@@ -7,9 +7,11 @@ import TimerIcon from '@mui/icons-material/Timer';
 import {ReCaptchaV3Provider, initializeAppCheck} from 'firebase/app-check';
 import firebase from 'firebase/compat/app';
 import {getFirestore} from 'firebase/firestore';
+import {getFunctions} from 'firebase/functions';
 import * as React from 'react';
 import {Admin, CustomRoutes, Resource} from 'react-admin';
 import {FirebaseAuthProvider, FirebaseDataProvider} from 'react-admin-firebase';
+import 'react-chat-elements/dist/main.css';
 import {Route} from 'react-router-dom';
 import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -17,6 +19,7 @@ import {firebaseConfig} from './FIREBASE_CONFIG';
 import CustomLoginPage from './auth/CustomLoginPage';
 import MyLayout from './common/MyLayout';
 import UserIcon from './common/UserIcon';
+import ChatContextProvider from './context/ChatContextProvider';
 import {
   EducationCreate,
   EducationEdit,
@@ -29,6 +32,8 @@ import {
   ExerciseList,
   ExerciseShow,
 } from './exercises/exercises';
+import Chat from './messaging/Chat';
+import Messaging from './messaging/Messaging';
 import {PlansCreate, PlansEdit, PlansList, PlansShow} from './plans/Plans';
 import PremiumUsers from './premiumUsers/PremiumUsers';
 import {
@@ -50,6 +55,8 @@ import {UsersEdit, UsersList, UsersShow} from './users/users';
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 
 export const db = getFirestore(firebaseApp);
+
+export const functions = getFunctions(firebaseApp);
 
 initializeAppCheck(firebaseApp, {
   provider: new ReCaptchaV3Provider('6Lft57sdAAAAAEQYT85mxqG4BsdFV4L6Gn3Ir9BY'),
@@ -147,9 +154,7 @@ class App extends React.Component {
             icon={UserIcon}
             edit={UsersEdit}
           />
-          <CustomRoutes>
-            <Route path="premium-users" element={<PremiumUsers />} />
-          </CustomRoutes>
+
           <Resource
             name="plans"
             list={PlansList}
@@ -166,9 +171,25 @@ class App extends React.Component {
             create={RecipesCreate}
             icon={RestaurantIcon}
           />
-          {/* <CustomRoutes>
-            <Route path="messaging" element={<Messaging />} />
-          </CustomRoutes> */}
+          <CustomRoutes>
+            <Route path="premium-users" element={<PremiumUsers />} />
+            <Route
+              path="messaging"
+              element={
+                <ChatContextProvider>
+                  <Messaging />
+                </ChatContextProvider>
+              }
+            />
+            <Route
+              path="messaging/:id"
+              element={
+                <ChatContextProvider>
+                  <Chat />
+                </ChatContextProvider>
+              }
+            />
+          </CustomRoutes>
         </Admin>
 
         <ToastContainer />

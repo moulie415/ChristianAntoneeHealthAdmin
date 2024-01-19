@@ -1,6 +1,6 @@
-import {useNavigate} from 'react-router-dom';
-import {useRecordContext} from 'react-admin';
 import Button from '@mui/material/Button';
+import {useRecordContext} from 'react-admin';
+import {useNavigate} from 'react-router-dom';
 
 const DuplicatePlanButton = () => {
   const record = useRecordContext();
