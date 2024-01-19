@@ -18,6 +18,8 @@ const Chat = () => {
 
   const friend = friends[id || ''];
 
+  console.log(friend);
+
   const messagesObj = messages[id || ''];
 
   const sorted: MessageType[] = useMemo(() => {
