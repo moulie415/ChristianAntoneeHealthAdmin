@@ -2,20 +2,19 @@ import {MessageType} from 'react-chat-elements';
 import colors from '../colors';
 import {Message} from '../types/Shared';
 
-export const mapMessageType = (message: Message): MessageType => {
+export const mapMessageType = (message: Message, uid: string): MessageType => {
   const base = {
     id: message._id,
     text: message.text,
     title: '',
     focus: false,
     date: message.createdAt,
-    avatar: message.user?.avatar,
     forwarded: false,
     replyButton: false,
     removeButton: false,
     notch: true,
     retracted: false,
-    position: '',
+    position: uid === message.user?._id ? 'left' : 'right',
     titleColor: colors.appWhite,
   };
   if (message.system) {
@@ -47,9 +46,10 @@ export const mapMessageType = (message: Message): MessageType => {
           : message.pending
           ? 'waiting'
           : 'received',
+
         data: {
           uri: message.document,
-          name: message.filename,
+          status: {},
         },
         type: 'file',
       };
@@ -64,7 +64,11 @@ export const mapMessageType = (message: Message): MessageType => {
         type: 'photo',
         data: {
           uri: message.image || '',
-          status: {},
+          width: 400,
+          height: 225,
+          status: {
+            download: true,
+          },
         },
       };
     case 'video':
@@ -73,12 +77,21 @@ export const mapMessageType = (message: Message): MessageType => {
         controlsList: '',
         data: {
           videoURL: message.video,
+          width: 400,
+          height: 225,
+          status: {
+            click: true,
+            // loading: 0.5,
+            download: true, //item === "video",
+            error: false,
+          },
         },
         status: message.sent
           ? 'sent'
           : message.pending
           ? 'waiting'
           : 'received',
+
         type: 'video',
       };
     default:
@@ -89,7 +102,6 @@ export const mapMessageType = (message: Message): MessageType => {
           : message.pending
           ? 'waiting'
           : 'received',
-
         type: 'text',
       };
   }

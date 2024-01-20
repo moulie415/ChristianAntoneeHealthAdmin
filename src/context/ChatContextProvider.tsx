@@ -15,8 +15,10 @@ import {
   useState,
 } from 'react';
 import {useGetIdentity} from 'react-admin';
+import {toast} from 'react-toastify';
 import {db} from '../App';
 import * as api from '../helpers/api';
+import useThrottle from '../hooks/UseThottle';
 import {Chat, Message, Profile} from '../types/Shared';
 
 export type ChatContextType = {
@@ -28,6 +30,12 @@ export type ChatContextType = {
     [key: string]: {[key: string]: Message};
   };
   uid?: string;
+  sendMessage: (
+    message: Message,
+    chatId: string,
+    userId: string,
+    data?: Blob | Uint8Array | ArrayBuffer,
+  ) => void;
 };
 
 export const ChatContext = createContext<ChatContextType>({
@@ -36,6 +44,7 @@ export const ChatContext = createContext<ChatContextType>({
   loading: false,
   chats: {},
   messages: {},
+  sendMessage: () => {},
 });
 
 const ChatContextProvider = ({children}: {children: ReactNode}) => {
@@ -151,9 +160,36 @@ const ChatContextProvider = ({children}: {children: ReactNode}) => {
     };
   }, [chats, messages]);
 
+  const sendMessage = useThrottle(
+    async (
+      message: Message,
+      chatId: string,
+      userId: string,
+      data?: Blob | Uint8Array | ArrayBuffer,
+    ) => {
+      try {
+        setMessages({
+          ...messages,
+          [userId]: {...messages[userId], [message._id]: message},
+        });
+        await api.sendMessage(message, chatId, userId, uid, data);
+      } catch (e) {
+        toast.error('Error sending message');
+        const messagesForUser = messages[uid];
+        delete messagesForUser[message._id];
+        const newObj = {
+          ...messages,
+          [uid]: messagesForUser,
+        };
+        setMessages(newObj);
+      }
+    },
+    3000,
+  );
+
   return (
     <ChatContext.Provider
-      value={{friends, unread, loading, chats, messages, uid}}>
+      value={{friends, unread, loading, chats, messages, uid, sendMessage}}>
       {children}
     </ChatContext.Provider>
   );

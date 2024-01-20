@@ -8,8 +8,15 @@ import {ReCaptchaV3Provider, initializeAppCheck} from 'firebase/app-check';
 import firebase from 'firebase/compat/app';
 import {getFirestore} from 'firebase/firestore';
 import {getFunctions} from 'firebase/functions';
+import {getStorage} from 'firebase/storage';
 import * as React from 'react';
-import {Admin, CustomRoutes, Resource} from 'react-admin';
+import {
+  Admin,
+  CustomRoutes,
+  RaThemeOptions,
+  Resource,
+  defaultTheme,
+} from 'react-admin';
 import {FirebaseAuthProvider, FirebaseDataProvider} from 'react-admin-firebase';
 import 'react-chat-elements/dist/main.css';
 import {Route} from 'react-router-dom';
@@ -17,6 +24,7 @@ import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {firebaseConfig} from './FIREBASE_CONFIG';
 import CustomLoginPage from './auth/CustomLoginPage';
+import colors from './colors';
 import MyLayout from './common/MyLayout';
 import UserIcon from './common/UserIcon';
 import ChatContextProvider from './context/ChatContextProvider';
@@ -58,6 +66,8 @@ export const db = getFirestore(firebaseApp);
 
 export const functions = getFunctions(firebaseApp);
 
+export const storage = getStorage(firebaseApp);
+
 initializeAppCheck(firebaseApp, {
   provider: new ReCaptchaV3Provider('6Lft57sdAAAAAEQYT85mxqG4BsdFV4L6Gn3Ir9BY'),
 
@@ -84,18 +94,18 @@ const dataProvider = FirebaseDataProvider(firebaseConfig, {
   },
 });
 
-// const theme: RaThemeOptions = {
-//   ...defaultTheme,
-//   palette: {
-//     ...defaultTheme.palette,
-//     primary: {
-//       main: colors.appBlue,
-//     },
-//     secondary: {
-//       main: colors.appGrey,
-//     },
-//   },
-// };
+const theme: RaThemeOptions = {
+  ...defaultTheme,
+  palette: {
+    ...defaultTheme.palette,
+    // primary: {
+    //   main: colors.appBlue,
+    // },
+    secondary: {
+      main: colors.appBlue,
+    },
+  },
+};
 
 class App extends React.Component {
   render() {
@@ -104,7 +114,7 @@ class App extends React.Component {
         <Admin
           loginPage={CustomLoginPage}
           layout={MyLayout}
-          // theme={theme}
+          theme={theme}
           dataProvider={dataProvider}
           authProvider={authProvider}>
           <Resource

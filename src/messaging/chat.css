@@ -1,0 +1,19 @@
+.message-list {
+  height: 73vh;
+  background-color: #E5E5E5;
+  border-bottom-right-radius: 15px;
+  border-bottom-left-radius: 15px;
+  padding: 10px;
+  padding-bottom: 20px;
+}
+
+.rce-mbox.rce-mbox-right {
+  background-color: #1c7ad9;
+  .rce-mbox-right-notch {
+    fill: #1c7ad9
+  }
+}
+
+.rce-mbox-text.right {
+  color: white;
+}

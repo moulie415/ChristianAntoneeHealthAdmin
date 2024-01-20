@@ -1,24 +1,37 @@
-import {useContext, useMemo, useRef} from 'react';
-import {Button, Input, MessageList, MessageType} from 'react-chat-elements';
-import {useParams} from 'react-router-dom';
+import {Button, Typography} from '@mui/material';
+import moment from 'moment';
+import {
+  TextareaHTMLAttributes,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+} from 'react';
+import {
+  Avatar,
+  IFileMessage,
+  Input,
+  MessageList,
+  MessageType,
+} from 'react-chat-elements';
+import {useNavigate, useParams} from 'react-router-dom';
+import {v4 as uuidv4} from 'uuid';
 import {ChatContext} from '../context/ChatContextProvider';
 import {mapMessageType} from '../helpers/mapMessageType';
+import {Message} from '../types/Shared';
+import './chat.css';
 
 let clearRef = () => {};
 
 const Chat = () => {
   const messageListReferance = useRef();
-  const inputReferance = useRef();
+  const inputReferance = useRef<TextareaHTMLAttributes<any>>();
 
   const {id} = useParams();
 
-  console.log(id);
-
-  const {friends, messages} = useContext(ChatContext);
+  const {friends, messages, sendMessage, chats, uid} = useContext(ChatContext);
 
   const friend = friends[id || ''];
-
-  console.log(friend);
 
   const messagesObj = messages[id || ''];
 
@@ -27,65 +40,153 @@ const Chat = () => {
     return messages
       .sort((a, b) => (a.createdAt as number) - (b.createdAt as number))
       .map(message => {
-        return mapMessageType(message);
+        return mapMessageType(message, uid || '');
       });
-  }, [messagesObj]);
+  }, [messagesObj, uid]);
 
-  console.log(sorted);
+  const scrollToBottom = () => {
+    const mlistElement = document.getElementsByClassName('rce-mlist')[0];
+    if (typeof mlistElement !== 'undefined') {
+      mlistElement.scrollTop = mlistElement.scrollHeight;
+    }
+  };
+
+  // Listener for when the state changes:
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
+  useEffect(() => {
+    document.body.style.overflowY = 'hidden';
+    return () => {
+      document.body.style.overflowY = 'auto';
+    };
+  }, []);
+
+  const send = (text: string) => {
+    const message: Message = {
+      _id: uuidv4(),
+      user: {
+        _id: friend?.uid,
+        avatar: friend?.avatar,
+        name: friend?.name,
+      },
+      text,
+      type: 'text',
+      pending: true,
+      createdAt: moment().valueOf(),
+    };
+    sendMessage(message, chats[id || ''].id, id || '');
+  };
+
+  const navigate = useNavigate();
 
   return (
-    <div className="right-panel rce-example-messageList">
-      <MessageList
-        className="message-list"
-        referance={messageListReferance}
-        dataSource={sorted}
-        lockable={true}
-        downButton={true}
-        downButtonBadge={10}
-        sendMessagePreview={true}
-        messageBoxStyles={{backgroundColor: 'red'}}
-        notchStyle={{fill: 'red'}}
-      />
-
+    <>
       <div
         style={{
-          position: 'fixed',
-          bottom: 0,
-          right: 0,
-          left: 0,
-          margin: '0 auto 1rem auto',
-          width: '60%',
+          position: 'sticky',
+          display: 'flex',
+          alignItems: 'center',
+          height: 80,
+          boxShadow: `0 4px 2px -2px gray`,
         }}>
-        <Input
-          className="rce-example-input"
-          placeholder="Type a message..."
-          defaultValue=""
-          multiline={true}
-          maxlength={300}
-          onMaxLengthExceed={() => console.log('onMaxLengthExceed')}
-          referance={inputReferance}
-          clear={(clear: any) => (clearRef = clear)}
-          maxHeight={50}
-          onKeyPress={(e: any) => {
-            if (e.shiftKey && e.charCode === 13) {
-              return true;
-            }
-            if (e.charCode === 13) {
-              clearRef();
-              //   addMessage(3);
-            }
-          }}
-          rightButtons={
-            <Button
-              text="Submit"
-              onClick={() => {
-                // addMessage(3)
-              }}
+        <div
+          style={{
+            marginLeft: 20,
+          }}>
+          <button
+            onClick={() => navigate(`/users/${id}`)}
+            style={{
+              all: 'unset',
+              cursor: 'pointer',
+              alignItems: 'center',
+              display: 'flex',
+            }}>
+            <Avatar
+              src={friend?.avatar || ''}
+              size="xlarge"
+              type="circle"
+              alt={friend?.name || ''}
+              letterItem={
+                friend?.avatar
+                  ? undefined
+                  : {id: friend?.uid || '', letter: friend?.name?.[0] || ''}
+              }
             />
-          }
-        />
+            <Typography style={{marginLeft: 10}} variant="h6">
+              {`${friend?.name || ''} ${friend?.surname || ''}`}
+            </Typography>
+          </button>
+        </div>
       </div>
-    </div>
+      <div className="right-panel rce-example-messageList">
+        <MessageList
+          className="message-list"
+          referance={messageListReferance}
+          dataSource={sorted}
+          lockable
+          downButton
+          toBottomHeight="100%"
+          downButtonBadge={10}
+          onDownload={async m => {
+            const message = m as IFileMessage;
+            open(message.data.uri);
+          }}
+          sendMessagePreview
+        />
+
+        <div
+          style={{
+            position: 'fixed',
+            bottom: 0,
+            right: 0,
+            left: 0,
+            margin: '0 auto 1rem auto',
+            width: '60%',
+          }}>
+          <Input
+            className="rce-example-input"
+            placeholder="Type a message..."
+            defaultValue=""
+            multiline={true}
+            maxlength={300}
+            onMaxLengthExceed={() => console.log('onMaxLengthExceed')}
+            referance={inputReferance}
+            clear={(clear: any) => (clearRef = clear)}
+            maxHeight={50}
+            onKeyDown={e => {
+              if (e.shiftKey && e.code === 'Enter') {
+                return true;
+              }
+              if (e.code === 'Enter') {
+                e.preventDefault();
+                const value = inputReferance.current?.value as string;
+                const trimmed = value?.trim();
+                if (trimmed) {
+                  send(trimmed);
+                  clearRef();
+                }
+              }
+            }}
+            rightButtons={
+              <Button
+                variant="contained"
+                onClick={() => {
+                  const value = inputReferance.current?.value as string;
+                  const trimmed = value?.trim();
+                  if (trimmed) {
+                    send(trimmed);
+                    clearRef();
+                  }
+                }}>
+                Submit
+              </Button>
+            }
+          />
+        </div>
+      </div>
+    </>
   );
 };
 

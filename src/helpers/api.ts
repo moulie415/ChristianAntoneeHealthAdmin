@@ -11,7 +11,8 @@ import {
   where,
 } from 'firebase/firestore';
 import {httpsCallable} from 'firebase/functions';
-import {db, functions} from '../App';
+import {getDownloadURL, ref, uploadBytes} from 'firebase/storage';
+import {db, functions, storage} from '../App';
 import {Chat, Message, Profile} from '../types/Shared';
 import {chunkArrayInGroups} from './chunkArrayInGroups';
 
@@ -78,11 +79,38 @@ export const getMessages = async (chatId: string, startAfter: number) => {
   }, {});
 };
 
-export const sendMessage = (
+export const sendMessage = async (
   message: Message,
   chatId: string,
   userId: string,
+  yourUid: string,
+  data?: Blob | Uint8Array | ArrayBuffer,
 ) => {
+  const fileSizeExceededMessage = 'File size limit exceeded';
+
+  if (
+    data &&
+    (message.type === 'audio' ||
+      message.type === 'image' ||
+      message.type === 'video' ||
+      message.type === 'document')
+  ) {
+    const size = 1;
+    const maxFileSize = 10;
+
+    if (size && size / 1000000 < maxFileSize) {
+      const imageRef = ref(storage, `chats/${yourUid}/${message._id}`);
+      await uploadBytes(imageRef, data);
+      const url = getDownloadURL(imageRef);
+
+      message = {
+        ...message,
+        [message.type]: url,
+      };
+    } else {
+      throw new Error(fileSizeExceededMessage);
+    }
+  }
   return httpsCallable(functions, 'sendMessage')({message, chatId, userId});
 };
 

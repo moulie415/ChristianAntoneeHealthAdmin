@@ -35,6 +35,10 @@ const Messaging = () => {
           return {
             avatar: friend.avatar || '',
             title: friend.name || '',
+            letterItem: friend?.avatar
+              ? undefined
+              : {id: friend?.uid || '', letter: friend?.name?.[0] || ''},
+
             id: friend.uid,
             subtitle: last?.preview,
             date: moment(last?.createdAt).toDate(),

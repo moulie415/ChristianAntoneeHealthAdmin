@@ -1,26 +1,24 @@
-import {collection, getDocs, query, where} from 'firebase/firestore';
-import {useEffect, useState} from 'react';
-import {db} from '../App';
-import {toast} from 'react-toastify';
+import CloseIcon from '@mui/icons-material/Close';
+import DoneIcon from '@mui/icons-material/Done';
 import {
+  Button,
   CircularProgress,
   Paper,
   Table,
+  TableBody,
+  TableCell,
   TableContainer,
   TableHead,
   TableRow,
-  TableCell,
-  TableBody,
-  Button,
 } from '@mui/material';
-import {useNavigate} from 'react-router-dom';
+import {collection, getDocs, query, where} from 'firebase/firestore';
 import moment from 'moment';
-import DoneIcon from '@mui/icons-material/Done';
-import CloseIcon from '@mui/icons-material/Close';
+import {useEffect, useState} from 'react';
+import {useNavigate} from 'react-router-dom';
+import {toast} from 'react-toastify';
+import {db} from '../App';
+import {chunkArrayInGroups} from '../helpers/chunkArrayInGroups';
 import {Plan} from '../types/Shared';
-import { chunkArrayInGroups } from '../helpers/chunkArrayInGroups';
-
-
 
 const ClientPremiumField: React.FC<{client: any}> = ({client}) => {
   const clientPremium = client?.premium.Premium;

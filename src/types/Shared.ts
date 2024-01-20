@@ -221,6 +221,7 @@ export interface Profile {
   email: string;
   uid: string;
   name?: string;
+  surname?: string;
   avatar?: string;
   gender?: Gender;
   weight?: number;
