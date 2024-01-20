@@ -59,6 +59,8 @@ import {
 import {SettingsEdit, SettingsList, SettingsShow} from './settings/settings';
 import {TestCreate, TestEdit, TestList, TestShow} from './tests/tests';
 import {UsersEdit, UsersList, UsersShow} from './users/users';
+//
+import './messaging_init_in_sw';
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 

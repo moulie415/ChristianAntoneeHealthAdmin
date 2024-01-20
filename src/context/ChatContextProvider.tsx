@@ -6,7 +6,6 @@ import {
   orderBy,
   query,
 } from 'firebase/firestore';
-import {getToken} from 'firebase/messaging';
 import * as _ from 'lodash';
 import {
   ReactNode,
@@ -17,7 +16,7 @@ import {
 } from 'react';
 import {useGetIdentity} from 'react-admin';
 import {toast} from 'react-toastify';
-import {db, messaging} from '../App';
+import {db} from '../App';
 import * as api from '../helpers/api';
 import useThrottle from '../hooks/UseThottle';
 import {Chat, Message, Profile} from '../types/Shared';
@@ -187,21 +186,6 @@ const ChatContextProvider = ({children}: {children: ReactNode}) => {
     },
     3000,
   );
-
-  useEffect(() => {
-    const requestPermission = async () => {
-      const permission = await Notification.requestPermission();
-      if (permission === 'granted') {
-        const token = await getToken(messaging, {
-          vapidKey:
-            'BF6_oX68s8_FwAxKWaE7_eHO8MbDVE1cL01F-SbYW-J9eX52XGVcZLuct-nN6dAu4A6LgilsKvo2OwTA5_Dc06I',
-        });
-
-        console.log(token);
-      }
-    };
-    requestPermission();
-  }, []);
 
   return (
     <ChatContext.Provider
