@@ -6,7 +6,7 @@ import {
   orderBy,
   query,
 } from 'firebase/firestore';
-import {getToken} from 'firebase/messaging';
+import {getToken, onMessage} from 'firebase/messaging';
 import * as _ from 'lodash';
 import {
   ReactNode,
@@ -216,6 +216,13 @@ const ChatContextProvider = ({children}: {children: ReactNode}) => {
       requestPermission();
     }
   }, [uid]);
+
+  useEffect(() => {
+    onMessage(messaging, payload => {
+      console.log('Message received. ', payload);
+      // ...
+    });
+  }, []);
 
   return (
     <ChatContext.Provider

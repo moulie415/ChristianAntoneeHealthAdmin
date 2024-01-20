@@ -4,7 +4,6 @@ import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 import RestaurantIcon from '@mui/icons-material/Restaurant';
 import SettingsIcon from '@mui/icons-material/Settings';
 import TimerIcon from '@mui/icons-material/Timer';
-import {ReCaptchaV3Provider, initializeAppCheck} from 'firebase/app-check';
 import firebase from 'firebase/compat/app';
 import {getFirestore} from 'firebase/firestore';
 import {getFunctions} from 'firebase/functions';
@@ -60,8 +59,6 @@ import {SettingsEdit, SettingsList, SettingsShow} from './settings/settings';
 import {TestCreate, TestEdit, TestList, TestShow} from './tests/tests';
 import {UsersEdit, UsersList, UsersShow} from './users/users';
 
-
-
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 
 export const db = getFirestore(firebaseApp);
@@ -69,13 +66,15 @@ export const functions = getFunctions(firebaseApp);
 export const storage = getStorage(firebaseApp);
 export const messaging = getMessaging(firebaseApp);
 
-initializeAppCheck(firebaseApp, {
-  provider: new ReCaptchaV3Provider('6Lft57sdAAAAAEQYT85mxqG4BsdFV4L6Gn3Ir9BY'),
+console.log(firebaseConfig);
 
-  // Optional argument. If true, the SDK automatically refreshes App Check
-  // tokens as needed.
-  isTokenAutoRefreshEnabled: true,
-});
+// initializeAppCheck(firebaseApp, {
+//   provider: new ReCaptchaV3Provider('6Lft57sdAAAAAEQYT85mxqG4BsdFV4L6Gn3Ir9BY'),
+
+//   // Optional argument. If true, the SDK automatically refreshes App Check
+//   // tokens as needed.
+//   isTokenAutoRefreshEnabled: true,
+// });
 
 const authProvider = FirebaseAuthProvider(firebaseConfig, {});
 const dataProvider = FirebaseDataProvider(firebaseConfig, {
