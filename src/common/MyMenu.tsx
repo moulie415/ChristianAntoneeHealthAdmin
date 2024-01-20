@@ -1,6 +1,5 @@
 import InventoryOutlinedIcon from '@mui/icons-material/InventoryOutlined';
 import {Menu} from 'react-admin';
-import ChatContextProvider from '../context/ChatContextProvider';
 import MessagingIcon from './MessagingIcon';
 
 const MyMenu = () => {
@@ -23,11 +22,7 @@ const MyMenu = () => {
       <Menu.Item
         to="/messaging"
         primaryText="Messaging"
-        leftIcon={
-          <ChatContextProvider>
-            <MessagingIcon />
-          </ChatContextProvider>
-        }
+        leftIcon={<MessagingIcon />}
         placeholder=""
       />
     </Menu>

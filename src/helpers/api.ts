@@ -130,5 +130,9 @@ export const deleteMessage = (
 };
 
 export const setUnread = (uid: string, unread: {[key: string]: number}) => {
-  return updateDoc(doc(collection(db, 'users', uid)), {unread});
+  return updateDoc(doc(db, 'users', uid), {unread});
+};
+
+export const setWebPushToken = (uid: string, webPushToken: string) => {
+  return updateDoc(doc(db, 'users', uid), {webPushToken});
 };
