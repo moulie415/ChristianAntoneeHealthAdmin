@@ -8,6 +8,7 @@ import {ReCaptchaV3Provider, initializeAppCheck} from 'firebase/app-check';
 import firebase from 'firebase/compat/app';
 import {getFirestore} from 'firebase/firestore';
 import {getFunctions} from 'firebase/functions';
+import {getMessaging} from 'firebase/messaging/sw';
 import {getStorage} from 'firebase/storage';
 import * as React from 'react';
 import {
@@ -27,7 +28,6 @@ import CustomLoginPage from './auth/CustomLoginPage';
 import colors from './colors';
 import MyLayout from './common/MyLayout';
 import UserIcon from './common/UserIcon';
-import ChatContextProvider from './context/ChatContextProvider';
 import {
   EducationCreate,
   EducationEdit,
@@ -63,10 +63,9 @@ import {UsersEdit, UsersList, UsersShow} from './users/users';
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 
 export const db = getFirestore(firebaseApp);
-
 export const functions = getFunctions(firebaseApp);
-
 export const storage = getStorage(firebaseApp);
+export const messaging = getMessaging(firebaseApp);
 
 initializeAppCheck(firebaseApp, {
   provider: new ReCaptchaV3Provider('6Lft57sdAAAAAEQYT85mxqG4BsdFV4L6Gn3Ir9BY'),
@@ -183,22 +182,8 @@ class App extends React.Component {
           />
           <CustomRoutes>
             <Route path="premium-users" element={<PremiumUsers />} />
-            <Route
-              path="messaging"
-              element={
-                <ChatContextProvider>
-                  <Messaging />
-                </ChatContextProvider>
-              }
-            />
-            <Route
-              path="messaging/:id"
-              element={
-                <ChatContextProvider>
-                  <Chat />
-                </ChatContextProvider>
-              }
-            />
+            <Route path="messaging" element={<Messaging />} />
+            <Route path="messaging/:id" element={<Chat />} />
           </CustomRoutes>
         </Admin>
 
