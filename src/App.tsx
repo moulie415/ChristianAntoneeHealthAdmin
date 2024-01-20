@@ -66,8 +66,6 @@ export const functions = getFunctions(firebaseApp);
 export const storage = getStorage(firebaseApp);
 export const messaging = getMessaging(firebaseApp);
 
-console.log(firebaseConfig);
-
 // initializeAppCheck(firebaseApp, {
 //   provider: new ReCaptchaV3Provider('6Lft57sdAAAAAEQYT85mxqG4BsdFV4L6Gn3Ir9BY'),
 

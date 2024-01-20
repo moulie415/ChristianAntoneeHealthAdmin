@@ -195,7 +195,7 @@ const ChatContextProvider = ({children}: {children: ReactNode}) => {
       if (permission === 'granted') {
         const currentToken = await getToken(messaging, {
           vapidKey:
-            'BF6_oX68s8_FwAxKWaE7_eHO8MbDVE1cL01F-SbYW-J9eX52XGVcZLuct-nN6dAu4A6LgilsKvo2OwTA5_Dc06I',
+            'BADL544oBJTYq5Yvd1HveVk5knrNI0-586EQIzG189l4wDn7immDCbwxvu6LYGZYQANE09fP7_JTNbFDoZ7SrEs',
         });
 
         if (currentToken) {
