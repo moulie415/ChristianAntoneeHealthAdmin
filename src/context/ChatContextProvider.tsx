@@ -172,6 +172,7 @@ const ChatContextProvider = ({children}: {children: ReactNode}) => {
           ...messages,
           [userId]: {...messages[userId], [message._id]: message},
         });
+        debugger;
         await api.sendMessage(message, chatId, userId, uid, data);
       } catch (e) {
         toast.error('Error sending message');

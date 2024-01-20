@@ -14,7 +14,7 @@ export const mapMessageType = (message: Message, uid: string): MessageType => {
     removeButton: false,
     notch: true,
     retracted: false,
-    position: uid === message.user?._id ? 'left' : 'right',
+    position: uid === message.user?._id ? 'right' : 'left',
     titleColor: colors.appWhite,
   };
   if (message.system) {

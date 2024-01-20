@@ -67,7 +67,7 @@ const Chat = () => {
     const message: Message = {
       _id: uuidv4(),
       user: {
-        _id: friend?.uid,
+        _id: uid || '',
         avatar: friend?.avatar,
         name: friend?.name,
       },
