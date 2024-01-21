@@ -74,7 +74,9 @@ const Chat = () => {
 
   // Listener for when the state changes:
   useEffect(() => {
-    scrollToBottom();
+    if (cursor.current === 0) {
+      scrollToBottom();
+    }
   }, [messages]);
 
   useEffect(() => {
@@ -168,8 +170,7 @@ const Chat = () => {
           dataSource={sorted}
           lockable
           downButton
-          toBottomHeight="100%"
-          downButtonBadge={10}
+          // toBottomHeight="100%"
           onDownload={async m => {
             const message = m as IFileMessage;
             open(message.data.uri);
