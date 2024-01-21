@@ -5,6 +5,7 @@ import {useNavigate} from 'react-router-dom';
 import {ChatContext} from '../context/ChatContextProvider';
 import {getLastMessage} from '../helpers/getLastMessage';
 import {sortFriends} from '../helpers/sortFriends';
+import './messaging.css';
 
 //const getChats = () => {};
 

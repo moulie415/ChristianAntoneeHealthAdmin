@@ -6,7 +6,7 @@ import {
   orderBy,
   query,
 } from 'firebase/firestore';
-import {getToken, onMessage} from 'firebase/messaging';
+import {getMessaging, getToken, onMessage} from 'firebase/messaging';
 import * as _ from 'lodash';
 import {
   ReactNode,
@@ -17,7 +17,7 @@ import {
 } from 'react';
 import {useGetIdentity} from 'react-admin';
 import {toast} from 'react-toastify';
-import {db, messaging} from '../App';
+import {db} from '../App';
 import * as api from '../helpers/api';
 import useThrottle from '../hooks/UseThottle';
 import {Chat, Message, Profile} from '../types/Shared';
@@ -37,6 +37,13 @@ export type ChatContextType = {
     userId: string,
     data?: Blob | Uint8Array | ArrayBuffer,
   ) => void;
+  loadEarlier: (
+    chatId: string,
+    uid: string,
+    startAfter: number,
+  ) => Promise<{
+    [key: string]: {[key: string]: Message};
+  }>;
 };
 
 export const ChatContext = createContext<ChatContextType>({
@@ -46,6 +53,7 @@ export const ChatContext = createContext<ChatContextType>({
   chats: {},
   messages: {},
   sendMessage: () => {},
+  loadEarlier: () => new Promise(() => {}),
 });
 
 const ChatContextProvider = ({children}: {children: ReactNode}) => {
@@ -161,6 +169,27 @@ const ChatContextProvider = ({children}: {children: ReactNode}) => {
     };
   }, [chats, messages]);
 
+  const loadEarlier = useCallback(
+    async (chatId: string, uid: string, startAfter: number) => {
+      try {
+        const earlier = await api.getMessages(chatId, startAfter);
+        const newMessages = {
+          ...messages,
+          [uid]: {
+            ...messages[uid],
+            ...earlier,
+          },
+        };
+        setMessages(newMessages);
+        return newMessages;
+      } catch (e) {
+        toast.error('Error loading messaging');
+        return {};
+      }
+    },
+    [messages],
+  );
+
   const sendMessage = useThrottle(
     async (
       message: Message,
@@ -190,16 +219,15 @@ const ChatContextProvider = ({children}: {children: ReactNode}) => {
 
   useEffect(() => {
     const requestPermission = async () => {
-      console.log('Requesting permission...');
       const permission = await Notification.requestPermission();
       if (permission === 'granted') {
+        const messaging = getMessaging();
         const currentToken = await getToken(messaging, {
           vapidKey:
             'BADL544oBJTYq5Yvd1HveVk5knrNI0-586EQIzG189l4wDn7immDCbwxvu6LYGZYQANE09fP7_JTNbFDoZ7SrEs',
         });
 
         if (currentToken) {
-          console.log(currentToken);
           await api.setWebPushToken(uid, currentToken);
           // Send the token to your server and update the UI if necessary
           // ...
@@ -218,15 +246,26 @@ const ChatContextProvider = ({children}: {children: ReactNode}) => {
   }, [uid]);
 
   useEffect(() => {
-    onMessage(messaging, payload => {
+    const messaging = getMessaging();
+    const unsubscribe = onMessage(messaging, payload => {
       console.log('Message received. ', payload);
       // ...
     });
+    return () => unsubscribe();
   }, []);
 
   return (
     <ChatContext.Provider
-      value={{friends, unread, loading, chats, messages, uid, sendMessage}}>
+      value={{
+        friends,
+        unread,
+        loading,
+        chats,
+        messages,
+        uid,
+        sendMessage,
+        loadEarlier,
+      }}>
       {children}
     </ChatContext.Provider>
   );

@@ -18,6 +18,7 @@ import {useNavigate, useParams} from 'react-router-dom';
 import {v4 as uuidv4} from 'uuid';
 import {ChatContext} from '../context/ChatContextProvider';
 import {mapMessageType} from '../helpers/mapMessageType';
+import useThrottle from '../hooks/UseThottle';
 import {Message} from '../types/Shared';
 import './chat.css';
 
@@ -25,11 +26,13 @@ let clearRef = () => {};
 
 const Chat = () => {
   const messageListReferance = useRef();
+
   const inputReferance = useRef<TextareaHTMLAttributes<any>>();
 
   const {id} = useParams();
 
-  const {friends, messages, sendMessage, chats, uid} = useContext(ChatContext);
+  const {friends, messages, sendMessage, chats, uid, loadEarlier} =
+    useContext(ChatContext);
 
   const friend = friends[id || ''];
 
@@ -81,6 +84,23 @@ const Chat = () => {
 
   const navigate = useNavigate();
 
+  const hasMore = useRef(true);
+
+  const loadMore = useThrottle(async () => {
+    const startAfter = sorted[0]?.date;
+    const newMessages = await loadEarlier(
+      chats[id || ''].id,
+      id || '',
+      startAfter as number,
+    );
+    const arr = Object.values(newMessages);
+    if (arr.length > sorted.length && arr.length % 20 === 0) {
+      hasMore.current = true;
+    } else {
+      hasMore.current = false;
+    }
+  }, 3000);
+
   return (
     <>
       <div
@@ -123,6 +143,16 @@ const Chat = () => {
       <div className="right-panel rce-example-messageList">
         <MessageList
           className="message-list"
+          onScroll={e => {
+            if (
+              // @ts-ignore
+              e.target.scrollTop === 0 &&
+              hasMore.current
+            ) {
+              loadMore();
+              // load more
+            }
+          }}
           referance={messageListReferance}
           dataSource={sorted}
           lockable
