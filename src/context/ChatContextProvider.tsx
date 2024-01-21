@@ -16,6 +16,7 @@ import {
   useState,
 } from 'react';
 import {useGetIdentity} from 'react-admin';
+import {useParams} from 'react-router-dom';
 import {toast} from 'react-toastify';
 import {db} from '../App';
 import * as api from '../helpers/api';
@@ -44,6 +45,7 @@ export type ChatContextType = {
   ) => Promise<{
     [key: string]: {[key: string]: Message};
   }>;
+  setRead: (uid: string) => void;
 };
 
 export const ChatContext = createContext<ChatContextType>({
@@ -54,6 +56,7 @@ export const ChatContext = createContext<ChatContextType>({
   messages: {},
   sendMessage: () => {},
   loadEarlier: () => new Promise(() => {}),
+  setRead: () => {},
 });
 
 const ChatContextProvider = ({children}: {children: ReactNode}) => {
@@ -245,14 +248,35 @@ const ChatContextProvider = ({children}: {children: ReactNode}) => {
     }
   }, [uid]);
 
+  const setRead = useThrottle(async (id: string) => {
+    const current = unread;
+    try {
+      const newUnread = {...current, [id || '']: 0};
+      if (!_.isEqual(newUnread, current)) {
+        setUnread(newUnread);
+        await api.setUnread(uid, newUnread);
+      }
+    } catch (e) {
+      setUnread(current);
+    }
+  }, 1000);
+
+  const {id} = useParams();
+
   useEffect(() => {
     const messaging = getMessaging();
     const unsubscribe = onMessage(messaging, payload => {
       console.log('Message received. ', payload);
-      // ...
+      const uid = payload.data?.uid as string;
+      const newUnread = unread && unread[uid] ? unread[uid] + 1 : 1;
+      if (!_.isEqual(newUnread, unread) && id !== uid) {
+        setUnread({...unread, [uid]: newUnread});
+      } else if (id === uid && unread[id]) {
+        setRead(id);
+      }
     });
     return () => unsubscribe();
-  }, []);
+  }, [unread, id, setRead]);
 
   return (
     <ChatContext.Provider
@@ -265,6 +289,7 @@ const ChatContextProvider = ({children}: {children: ReactNode}) => {
         uid,
         sendMessage,
         loadEarlier,
+        setRead,
       }}>
       {children}
     </ChatContext.Provider>

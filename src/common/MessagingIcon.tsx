@@ -4,7 +4,7 @@ import colors from '../colors';
 import {ChatContext} from '../context/ChatContextProvider';
 
 const MessagingIcon = () => {
-  const {unread, uid} = useContext(ChatContext);
+  const {unread} = useContext(ChatContext);
 
   const count = Object.keys(unread || {}).reduce((acc, cur) => {
     if (cur !== 'plan') {
@@ -15,10 +15,6 @@ const MessagingIcon = () => {
     }
     return acc;
   }, 0);
-
-  if (uid !== 'mxUzqRP9zaZ85axC2GB8cAntQRj2') {
-    return null;
-  }
 
   return (
     <>

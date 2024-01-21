@@ -18,11 +18,14 @@ firebase.initializeApp(defaultConfig);
 // Retrieve firebase messaging
 const messaging = firebase.messaging();
 
+console.log('registering firebase service worker');
+
 messaging.onBackgroundMessage(payload => {
+  console.log(payload);
   const notificationTitle = payload.notification.title;
   const notificationOptions = {
     body: payload.notification.body,
-    icon: payload.notification.image,
+    icon: payload.notification.icon || payload.data.icon,
   };
 
   self.registration.showNotification(notificationTitle, notificationOptions);

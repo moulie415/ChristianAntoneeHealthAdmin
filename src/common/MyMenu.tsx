@@ -20,6 +20,9 @@ const MyMenu = () => {
       <Menu.ResourceItem name="plans" />
       <Menu.ResourceItem name="recipes" />
       <Menu.Item
+        onClick={() => {
+          
+        }}
         to="/messaging"
         primaryText="Messaging"
         leftIcon={<MessagingIcon />}

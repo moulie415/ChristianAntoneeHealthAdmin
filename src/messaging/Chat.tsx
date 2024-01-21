@@ -31,8 +31,16 @@ const Chat = () => {
 
   const {id} = useParams();
 
-  const {friends, messages, sendMessage, chats, uid, loadEarlier} =
-    useContext(ChatContext);
+  const {
+    friends,
+    messages,
+    sendMessage,
+    chats,
+    uid,
+    loadEarlier,
+    setRead,
+    unread,
+  } = useContext(ChatContext);
 
   const friend = friends[id || ''];
 
@@ -53,6 +61,16 @@ const Chat = () => {
       mlistElement.scrollTop = mlistElement.scrollHeight;
     }
   };
+  useEffect(() => {
+    if (id && unread[id]) {
+      setRead(id || '');
+    }
+    return () => {
+      if (id && unread[id]) {
+        setRead(id || '');
+      }
+    };
+  }, [id, setRead, unread]);
 
   // Listener for when the state changes:
   useEffect(() => {
