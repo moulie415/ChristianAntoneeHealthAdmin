@@ -2,6 +2,7 @@ import {Button, Typography} from '@mui/material';
 import moment from 'moment';
 import {
   TextareaHTMLAttributes,
+  useCallback,
   useContext,
   useEffect,
   useMemo,
@@ -18,7 +19,6 @@ import {useNavigate, useParams} from 'react-router-dom';
 import {v4 as uuidv4} from 'uuid';
 import {ChatContext} from '../context/ChatContextProvider';
 import {mapMessageType} from '../helpers/mapMessageType';
-import useThrottle from '../hooks/UseThottle';
 import {Message} from '../types/Shared';
 import './chat.css';
 
@@ -104,14 +104,14 @@ const Chat = () => {
 
   const cursor = useRef(0);
 
-  const loadMore = useThrottle(async () => {
+  const loadMore = useCallback(async () => {
     const startAfter = sorted[0]?.date;
     if (cursor.current === startAfter) {
       return;
     }
     cursor.current = startAfter as number;
     loadEarlier(chats[id || ''].id, id || '', startAfter as number);
-  }, 3000);
+  }, [chats, id, loadEarlier, sorted]);
 
   return (
     <>
