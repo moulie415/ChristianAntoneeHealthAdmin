@@ -42,9 +42,7 @@ export type ChatContextType = {
     chatId: string,
     uid: string,
     startAfter: number,
-  ) => Promise<{
-    [key: string]: {[key: string]: Message};
-  }>;
+  ) => Promise<void>;
   setRead: (uid: string) => void;
 };
 
@@ -185,11 +183,9 @@ const ChatContextProvider = ({children}: {children: ReactNode}) => {
         };
         if (!_.isEqual(messages[uid], {...earlier, ...messages[uid]})) {
           setMessages(newMessages);
-          return newMessages;
         }
       } catch (e) {
         toast.error('Error loading messaging');
-        return {};
       }
     },
     [messages],
