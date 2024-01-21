@@ -102,21 +102,15 @@ const Chat = () => {
 
   const navigate = useNavigate();
 
-  const hasMore = useRef(true);
+  const cursor = useRef(0);
 
   const loadMore = useThrottle(async () => {
     const startAfter = sorted[0]?.date;
-    const newMessages = await loadEarlier(
-      chats[id || ''].id,
-      id || '',
-      startAfter as number,
-    );
-    const arr = Object.values(newMessages);
-    if (arr.length > sorted.length && arr.length % 20 === 0) {
-      hasMore.current = true;
-    } else {
-      hasMore.current = false;
+    if (cursor.current === startAfter) {
+      return;
     }
+    cursor.current = startAfter as number;
+    loadEarlier(chats[id || ''].id, id || '', startAfter as number);
   }, 3000);
 
   return (
@@ -164,8 +158,7 @@ const Chat = () => {
           onScroll={e => {
             if (
               // @ts-ignore
-              e.target.scrollTop === 0 &&
-              hasMore.current
+              e.target.scrollTop === 0
             ) {
               loadMore();
               // load more

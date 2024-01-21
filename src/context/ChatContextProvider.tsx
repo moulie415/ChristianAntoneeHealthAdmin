@@ -179,12 +179,14 @@ const ChatContextProvider = ({children}: {children: ReactNode}) => {
         const newMessages = {
           ...messages,
           [uid]: {
-            ...messages[uid],
             ...earlier,
+            ...messages[uid],
           },
         };
-        setMessages(newMessages);
-        return newMessages;
+        if (!_.isEqual(messages[uid], {...earlier, ...messages[uid]})) {
+          setMessages(newMessages);
+          return newMessages;
+        }
       } catch (e) {
         toast.error('Error loading messaging');
         return {};
