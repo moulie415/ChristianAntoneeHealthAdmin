@@ -3,7 +3,9 @@ import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 import RestaurantIcon from '@mui/icons-material/Restaurant';
 import SettingsIcon from '@mui/icons-material/Settings';
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import TimerIcon from '@mui/icons-material/Timer';
+import {ReCaptchaV3Provider, initializeAppCheck} from 'firebase/app-check';
 import firebase from 'firebase/compat/app';
 import {getFirestore} from 'firebase/firestore';
 import {getFunctions} from 'firebase/functions';
@@ -39,6 +41,7 @@ import {
   ExerciseList,
   ExerciseShow,
 } from './exercises/exercises';
+import {FeedbackList, FeedbackShow} from './feedback/Feedback';
 import Chat from './messaging/Chat';
 import Messaging from './messaging/Messaging';
 import {PlansCreate, PlansEdit, PlansList, PlansShow} from './plans/Plans';
@@ -66,13 +69,13 @@ export const functions = getFunctions(firebaseApp);
 export const storage = getStorage(firebaseApp);
 export const messaging = getMessaging(firebaseApp);
 
-// initializeAppCheck(firebaseApp, {
-//   provider: new ReCaptchaV3Provider('6Lft57sdAAAAAEQYT85mxqG4BsdFV4L6Gn3Ir9BY'),
+initializeAppCheck(firebaseApp, {
+  provider: new ReCaptchaV3Provider('6Lft57sdAAAAAEQYT85mxqG4BsdFV4L6Gn3Ir9BY'),
 
-//   // Optional argument. If true, the SDK automatically refreshes App Check
-//   // tokens as needed.
-//   isTokenAutoRefreshEnabled: true,
-// });
+  // Optional argument. If true, the SDK automatically refreshes App Check
+  // tokens as needed.
+  isTokenAutoRefreshEnabled: true,
+});
 
 const authProvider = FirebaseAuthProvider(firebaseConfig, {});
 const dataProvider = FirebaseDataProvider(firebaseConfig, {
@@ -178,6 +181,13 @@ class App extends React.Component {
             edit={RecipesEdit}
             create={RecipesCreate}
             icon={RestaurantIcon}
+          />
+          <Resource
+            options={{label: 'Feedback'}}
+            name="feedback"
+            list={FeedbackList}
+            show={FeedbackShow}
+            icon={ThumbUpIcon}
           />
           <CustomRoutes>
             <Route path="premium-users" element={<PremiumUsers />} />

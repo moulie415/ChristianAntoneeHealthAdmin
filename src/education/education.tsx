@@ -1,31 +1,30 @@
+import {Editor} from '@tinymce/tinymce-react';
+import {useCallback, useRef} from 'react';
 import {
-  Datagrid,
-  List,
-  Show,
-  Create,
-  Edit,
-  ImageInput,
-  ImageField,
-  SimpleShowLayout,
   BooleanField,
   BooleanInput,
-  TextField,
   ChipField,
-  TextInput,
-  SimpleForm,
-  ShowButton,
-  EditButton,
+  Create,
+  Datagrid,
   DeleteButton,
-  SelectInput,
-  useRecordContext,
-  required,
+  Edit,
+  EditButton,
+  ImageField,
+  ImageInput,
+  List,
   ResourceProps,
+  SelectInput,
+  Show,
+  ShowButton,
+  SimpleForm,
+  SimpleShowLayout,
+  TextField,
+  TextInput,
+  required,
+  useRecordContext,
 } from 'react-admin';
 import {useController} from 'react-hook-form';
-import {Editor} from '@tinymce/tinymce-react';
-import {useRef} from 'react';
 import EducationArticlePreview from './EducationArticlePreview';
-import {useCallback} from 'react';
 
 export const EducationList = (props: ResourceProps) => (
   <List {...props}>
