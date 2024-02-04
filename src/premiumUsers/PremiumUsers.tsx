@@ -24,7 +24,6 @@ const ClientPremiumField: React.FC<{client: any}> = ({client}) => {
   const clientPremium = client?.premium.Premium;
   const hasExpired =
     !!clientPremium && moment(clientPremium.expirationDate).isBefore(moment());
-  console.log(clientPremium);
   return (
     <div>
       {clientPremium ? (

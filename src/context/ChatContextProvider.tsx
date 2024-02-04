@@ -1,3 +1,4 @@
+import {User} from 'firebase/auth';
 import {
   Unsubscribe,
   collection,
@@ -15,11 +16,11 @@ import {
   useEffect,
   useState,
 } from 'react';
-import {useGetIdentity} from 'react-admin';
 import {useParams} from 'react-router-dom';
 import {toast} from 'react-toastify';
 import {db} from '../App';
 import * as api from '../helpers/api';
+import {isSafari} from '../helpers/isSafari';
 import useThrottle from '../hooks/UseThottle';
 import {Chat, Message, Profile} from '../types/Shared';
 
@@ -57,7 +58,13 @@ export const ChatContext = createContext<ChatContextType>({
   setRead: () => {},
 });
 
-const ChatContextProvider = ({children}: {children: ReactNode}) => {
+const ChatContextProvider = ({
+  children,
+  user,
+}: {
+  children: ReactNode;
+  user?: User;
+}) => {
   const [friends, setFriends] = useState<{[key: string]: Profile}>({});
   const [unread, setUnread] = useState<{[key: string]: number}>({});
   const [loading, setLoading] = useState(false);
@@ -66,9 +73,7 @@ const ChatContextProvider = ({children}: {children: ReactNode}) => {
     [key: string]: {[key: string]: Message};
   }>({});
 
-  const {data} = useGetIdentity();
-
-  const uid = data?.id as string;
+  const uid = user?.uid || '';
 
   const getFriends = useCallback(async () => {
     setLoading(true);
@@ -112,6 +117,7 @@ const ChatContextProvider = ({children}: {children: ReactNode}) => {
   useEffect(() => {
     const subscriptions: Unsubscribe[] = [];
     if (Object.values(chats)) {
+
       const uids = Object.keys(chats);
       for (const uid of uids) {
         const unsubscribe = onSnapshot(
@@ -220,6 +226,7 @@ const ChatContextProvider = ({children}: {children: ReactNode}) => {
 
   useEffect(() => {
     const requestPermission = async () => {
+
       const permission = await Notification.requestPermission();
       if (permission === 'granted') {
         const messaging = getMessaging();
@@ -241,7 +248,7 @@ const ChatContextProvider = ({children}: {children: ReactNode}) => {
         }
       }
     };
-    if (uid) {
+    if (uid && !isSafari) {
       requestPermission();
     }
   }, [uid]);
@@ -264,7 +271,6 @@ const ChatContextProvider = ({children}: {children: ReactNode}) => {
   useEffect(() => {
     const messaging = getMessaging();
     const unsubscribe = onMessage(messaging, payload => {
-      console.log('Message received. ', payload);
       const uid = payload.data?.uid as string;
       const newUnread = unread && unread[uid] ? unread[uid] + 1 : 1;
       if (!_.isEqual(newUnread, unread) && id !== uid) {

@@ -1,5 +1,6 @@
 import {
   Datagrid,
+  DateField,
   List,
   NumberField,
   ReferenceField,
@@ -11,13 +12,14 @@ import {
 } from 'react-admin';
 
 export const FeedbackList = (props: ResourceProps) => (
-  <List {...props} perPage={200}>
+  <List {...props} sort={{field: 'createdate', order: 'DESC'}} perPage={200}>
     <Datagrid>
       <TextField source="feedback" />
       <NumberField source="rating" />
       <ReferenceField label="User" source="id" reference="users">
         <TextField source="name" />
       </ReferenceField>
+      <DateField source="createdate" />
       <ShowButton label="" />
     </Datagrid>
   </List>
