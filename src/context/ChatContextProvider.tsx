@@ -63,7 +63,7 @@ const ChatContextProvider = ({
   user,
 }: {
   children: ReactNode;
-  user?: User;
+  user?: User | null;
 }) => {
   const [friends, setFriends] = useState<{[key: string]: Profile}>({});
   const [unread, setUnread] = useState<{[key: string]: number}>({});

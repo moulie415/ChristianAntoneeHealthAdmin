@@ -116,15 +116,13 @@ const theme: RaThemeOptions = {
 };
 
 const App = () => {
-  const [user, setUser] = useState<User>();
+  const [user, setUser] = useState<User | null>();
 
   useEffect(() => {}, []);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, user => {
-      if (user) {
-        setUser(user);
-      }
+      setUser(user);
     });
     return () => {
       unsubscribe();
