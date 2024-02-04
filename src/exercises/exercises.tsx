@@ -97,16 +97,10 @@ export const ExerciseList = (props: ResourceProps) => (
     // filter={{ updatedby: "test@example.com" }}
   >
     <Datagrid>
-      {/* <TextField source="id" /> */}
       <TextField source="name" />
-      {/* <RichTextField source="description" /> */}
-      <ChipField source="type" />
       <ChipField source="area" />
       <ChipField source="level" />
       <TextField source="muscles" />
-      {/* <ReferenceField label="User" source="user_id" reference="users">
-        <TextField source="name" />
-      </ReferenceField> */}
       <BooleanField source="premium" />
       <ShowButton label="" />
       <EditButton label="" />
@@ -122,7 +116,6 @@ export const ExerciseShow = (props: ResourceProps) => (
       <TextField source="name" />
       <TextField source="description" multiline />
       <TextField source="parameters" multiline />
-      <ChipField source="type" />
       <ChipField source="area" />
       <ChipField source="level" />
       <ChipField source="warmUp" />
@@ -146,22 +139,6 @@ export const ExerciseCreate = (props: ResourceProps) => (
         validate={required()}
         label="Time to complete (seconds)"
       />
-      {/* <TextInput source="parameters" multiline defaultValue="" />
-      <SelectInput
-        source="type"
-        defaultValue=""
-        choices={[
-          {
-            id: 'strength',
-            name: 'Improve strength',
-          },
-          {
-            id: 'fitness',
-            name: 'Improve fitness',
-          },
-          {id: '', name: 'None'},
-        ]}
-      /> */}
       <SelectInput
         source="area"
         defaultValue=""
@@ -241,22 +218,6 @@ export const ExerciseEdit = (props: ResourceProps) => (
         validate={required()}
         label="Time to complete (seconds)"
       />
-      {/* <TextInput source="parameters" multiline defaultValue="" />
-      <SelectInput
-        source="type"
-        defaultValue=""
-        choices={[
-          {
-            id: 'strength',
-            name: 'Improve strength',
-          },
-          {
-            id: 'fitness',
-            name: 'Improve fitness',
-          },
-          {id: '', name: 'None'},
-        ]}
-      /> */}
       <SelectInput
         source="area"
         defaultValue=""
