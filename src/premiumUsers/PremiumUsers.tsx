@@ -168,7 +168,7 @@ const ClientSummary = () => {
                         style={{textTransform: 'none'}}
                         onClick={e => {
                           e.stopPropagation();
-                          navigate(`/users/${client.uid}`);
+                          navigate(`/users/${client.uid}/show`);
                         }}>
                         {`${client.name} ${client.surname || ''}`}
                       </Button>

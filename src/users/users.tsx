@@ -15,15 +15,12 @@ import {
   Create,
   Datagrid,
   DateField,
-  Edit,
-  EditButton,
   EmailField,
   ExportButton,
   FilterButton,
   ImageField,
   List,
   ResourceProps,
-  SaveButton,
   Show,
   ShowButton,
   SimpleForm,
@@ -31,7 +28,6 @@ import {
   SortButton,
   TextField,
   TextInput,
-  Toolbar,
   TopToolbar,
 } from 'react-admin';
 import {useNavigate, useParams} from 'react-router-dom';
@@ -79,15 +75,16 @@ const ListActions = () => (
 
 export const UsersList = (props: ResourceProps) => {
   return (
-    <List {...props} perPage={50} actions={<ListActions />}>
+    <List {...props} perPage={200} actions={<ListActions />}>
       <Datagrid bulkActionButtons={false}>
         <TextField source="name" />
         <TextField source="surname" />
         <EmailField source="email" />
+        <BooleanField source="marketing" />
         <CreatePlanButton />
         <PremiumField source="premium" />
         <ShowButton label="" />
-        <EditButton label="" />
+        {/* <EditButton label="" /> */}
         {/* <DeleteButton label="" redirect={false} /> */}
       </Datagrid>
     </List>
@@ -120,6 +117,7 @@ export const UsersShow = (props: ResourceProps) => {
         <TextField source="surname" />
         <EmailField source="email" />
         <PremiumField source="premium" />
+        <BooleanField source="marketing" />
         <FormLabel style={{fontSize: 12}}>Plans</FormLabel>
         <div style={{display: 'flex', flexDirection: 'row'}}>
           {plans.map(p => {
@@ -153,63 +151,3 @@ export const UsersCreate = (props: ResourceProps) => (
     </SimpleForm>
   </Create>
 );
-
-export const UsersEdit = (props: ResourceProps) => {
-  const [plans, setPlans] = React.useState<Plan[]>([]);
-  const {id} = useParams();
-
-  const navigate = useNavigate();
-
-  React.useEffect(() => {
-    const checkPlans = async () => {
-      try {
-        const plans = await getPlans(id || '');
-        setPlans(plans);
-      } catch (e) {
-        toast.error('Error fetching plans');
-      }
-    };
-
-    checkPlans();
-  }, [id]);
-
-  const MyToolbar = () => (
-    <Toolbar>
-      <SaveButton label="Save" />
-    </Toolbar>
-  );
-  return (
-    <Edit {...props}>
-      <SimpleForm toolbar={<MyToolbar />}>
-        <ImageField source="avatar" title="avatar" />
-        <TextField source="name" />
-        <TextField source="surname" />
-        <EmailField source="email" />
-        <BooleanField source="premium" />
-        <FormLabel style={{fontSize: 12}}>Plans</FormLabel>
-        <div style={{display: 'flex', flexDirection: 'row'}}>
-          {plans.map(p => {
-            return (
-              <Chip
-                key={p.id}
-                style={{marginRight: 10}}
-                onClick={() => navigate(`/plans/${p.id}`)}
-                label={moment(p.createdate.toDate()).format('DD/MM/YYYY')}
-              />
-            );
-          })}
-        </div>
-        <FormLabel style={{fontSize: 12}}>Date of birth</FormLabel>
-        <DateField source="dob" label="Date of birth" />
-
-        {/* <TextField source="equipment" />
-        <TextField source="experience" />
-        <TextField source="gender" /> */}
-        <TextField label="goal" source="goal" />
-
-        <CreatePlanButton />
-      </SimpleForm>
-      <WorkoutsTable />
-    </Edit>
-  );
-};
