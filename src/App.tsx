@@ -8,7 +8,7 @@ import TimerIcon from '@mui/icons-material/Timer';
 import {ReCaptchaV3Provider, initializeAppCheck} from 'firebase/app-check';
 import {User, getAuth, onAuthStateChanged} from 'firebase/auth';
 import firebase from 'firebase/compat/app';
-import {getFirestore} from 'firebase/firestore';
+import {collection, getDocs, getFirestore, query} from 'firebase/firestore';
 import {getFunctions} from 'firebase/functions';
 import {getMessaging} from 'firebase/messaging/sw';
 import {getStorage} from 'firebase/storage';
@@ -117,11 +117,24 @@ const theme: RaThemeOptions = {
 
 const App = () => {
   const [user, setUser] = useState<User | null>();
-
-  useEffect(() => {}, []);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, user => {
+    const unsubscribe = onAuthStateChanged(auth, async user => {
+      if (user) {
+        try {
+          setLoading(true);
+          const settingsQuery = query(collection(db, 'settings'));
+          const settings = (await getDocs(settingsQuery)).docs[0]?.data();
+          if (!settings.admins.includes(user.uid)) {
+            await auth.signOut();
+            document.location.href = '/';
+          }
+        } catch (e) {
+          console.log(e);
+        }
+        setLoading(false);
+      }
       setUser(user);
     });
     return () => {
