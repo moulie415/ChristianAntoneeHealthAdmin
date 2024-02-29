@@ -62,7 +62,7 @@ import {
 } from './recipes/Recipes';
 import {SettingsEdit, SettingsList, SettingsShow} from './settings/settings';
 import {TestCreate, TestEdit, TestList, TestShow} from './tests/tests';
-import {UsersList, UsersShow} from './users/users';
+import {UsersEdit, UsersList, UsersShow} from './users/users';
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 
@@ -195,6 +195,7 @@ const App = () => {
           list={UsersList}
           show={UsersShow}
           icon={UserIcon}
+          edit={UsersEdit}
         />
 
         <Resource
