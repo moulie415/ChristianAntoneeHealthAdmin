@@ -130,7 +130,7 @@ const Chat = () => {
             marginLeft: 20,
           }}>
           <button
-            onClick={() => navigate(`/users/${id}/show`)}
+            onClick={() => navigate(`/users/${id}`)}
             style={{
               all: 'unset',
               cursor: 'pointer',

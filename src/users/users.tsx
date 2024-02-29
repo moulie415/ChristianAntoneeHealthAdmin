@@ -1,4 +1,4 @@
-import {Grid} from '@mui/material';
+import {Grid, Typography} from '@mui/material';
 import Chip from '@mui/material/Chip';
 import FormLabel from '@mui/material/FormLabel';
 import {
@@ -10,10 +10,9 @@ import {
   where,
 } from 'firebase/firestore';
 import moment from 'moment';
-import * as React from 'react';
+import {useEffect, useState} from 'react';
 import {
   BooleanField,
-  Create,
   Datagrid,
   DateField,
   Edit,
@@ -28,12 +27,9 @@ import {
   ResourceProps,
   SaveButton,
   SelectInput,
-  Show,
   SimpleForm,
-  SimpleShowLayout,
   SortButton,
   TextField,
-  TextInput,
   Toolbar,
   TopToolbar,
 } from 'react-admin';
@@ -43,6 +39,10 @@ import {db} from '../App';
 import PremiumField from '../common/PremiumField';
 import CreatePlanButton from '../plans/CreatePlanButton';
 import {Plan} from '../types/Shared';
+import CurrentExerciseField from './CurrentExerciseField';
+import DietaryPreferenceField from './DietaryPreferenceField';
+import SleepField from './SleepField';
+import StressField from './StressField';
 import WorkoutsTable from './WorkoutsTable';
 
 // const UserFilter = props => (
@@ -98,12 +98,56 @@ export const UsersList = (props: ResourceProps) => {
   );
 };
 
+const physicalReadinessQuestions = [
+  {
+    source: 'heartCondition',
+    question:
+      'Has your doctor ever said that you have a heart condition and that your should only do physical activity recommended by a doctor?',
+  },
+  {
+    source: 'activityChestPain',
+    question: 'Do your feel pain in your chest when you do physical activity?',
+  },
+  {
+    source: 'chestPain',
+    question:
+      'In the past month, have you had chest pain when you were not doing physical activity?',
+  },
+  {
+    source: 'loseBalanceConsciousness',
+    question:
+      'Do you lose your balance because of dizziness or do you ever lose consciousness?',
+  },
+  {
+    source: 'boneProblems',
+    question:
+      'Do you have a bone or joint problem (for example, back, knee or hip) that could be made worse by a change in your physical activity?',
+  },
+  {
+    source: 'drugPrescription',
+    question:
+      'Is your doctor currently prescribing drugs for your blood pressure or heart condition?',
+  },
+  {
+    source: 'otherReason',
+    question:
+      'Do you know of any other reason why you should not do physical activity?',
+  },
+
+  {
+    source: 'willInformDoctor',
+    question:
+      'If you answered YES to any of the above questions, will you inform your doctor that you intend to increase your physical activity levels?',
+  },
+];
+
 export const UsersEdit = (props: ResourceProps) => {
-  const [plans, setPlans] = React.useState<Plan[]>([]);
+  const [plans, setPlans] = useState<Plan[]>([]);
+
   const {id} = useParams();
   const navigate = useNavigate();
 
-  React.useEffect(() => {
+  useEffect(() => {
     const checkPlans = async () => {
       try {
         const plans = await getPlans(id || '');
@@ -220,70 +264,34 @@ export const UsersEdit = (props: ResourceProps) => {
             <NumberInput label="Workout minutes target" source="targets.mins" />
           </Grid>
         </Grid>
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm={6} md={6}>
+            <Typography variant="h6" component="h2">
+              Health & lifestyle questionnaire
+            </Typography>
+            <StressField />
+            <SleepField />
+            <DietaryPreferenceField />
+            <CurrentExerciseField />
+          </Grid>
+
+          <Grid item xs={12} sm={6} md={6}>
+            <Typography variant="h6" component="h2">
+              Physical activity readiness questionnaire
+            </Typography>
+            {physicalReadinessQuestions.map(({question, source}) => {
+              return (
+                <div>
+                  <FormLabel style={{fontSize: 12}}>{question}</FormLabel>
+                  <BooleanField source={source} />
+                </div>
+              );
+            })}
+          </Grid>
+        </Grid>
         <CreatePlanButton />
       </SimpleForm>
       <WorkoutsTable />
     </Edit>
   );
 };
-
-export const UsersShow = (props: ResourceProps) => {
-  const [plans, setPlans] = React.useState<Plan[]>([]);
-  const {id} = useParams();
-  const navigate = useNavigate();
-
-  React.useEffect(() => {
-    const checkPlans = async () => {
-      try {
-        const plans = await getPlans(id || '');
-        setPlans(plans);
-      } catch (e) {
-        toast.error('Error fetching plans');
-      }
-    };
-
-    checkPlans();
-  }, [id]);
-
-  return (
-    <Show {...props}>
-      <SimpleShowLayout>
-        <ImageField source="avatar" title="avatar" />
-        <TextField source="name" />
-        <TextField source="surname" />
-        <EmailField source="email" />
-        <PremiumField source="premium" />
-        <BooleanField source="marketing" />
-        <FormLabel style={{fontSize: 12}}>Plans</FormLabel>
-        <div style={{display: 'flex', flexDirection: 'row'}}>
-          {plans.map(p => {
-            return (
-              <Chip
-                key={p.id}
-                style={{marginRight: 10}}
-                onClick={() => navigate(`/plans/${p.id}`)}
-                label={moment(p.createdate.toDate()).format('DD/MM/YYYY')}
-              />
-            );
-          })}
-        </div>
-        <DateField source="dob" label="Date of birth" />
-        {/* <TextField source="equipment" />
-        <TextField source="experience" /> */}
-        <TextField source="gender" />
-        <TextField source="goal" />
-
-        <CreatePlanButton />
-      </SimpleShowLayout>
-      <WorkoutsTable />
-    </Show>
-  );
-};
-
-export const UsersCreate = (props: ResourceProps) => (
-  <Create {...props}>
-    <SimpleForm>
-      <TextInput source="name" />
-    </SimpleForm>
-  </Create>
-);

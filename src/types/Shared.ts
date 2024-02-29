@@ -6,18 +6,33 @@ export type Unit = 'metric' | 'imperial';
 
 export type StressLevel = 'low' | 'medium' | 'high';
 
-export enum SleepPattern {
-  FIVE = 1,
-  FIVE_SIX = 2,
-  SEVEN_EIGHT = 3,
-  EIGHT = 4,
+export enum TrainingAvailability {
+  ONE_TWO = 'ONE_TWO',
+  TWO_THREE = 'TWO_THREE',
+  THREE_FOUR = 'THREE_FOUR',
+  FOUR_PLUS = 'FOUR_PLUS',
 }
 
-export enum TrainingAvailability {
-  ONE_TWO = 1,
-  TWO_THREE = 2,
-  THREE_FOUR = 3,
-  FOUR_PLUS = 4,
+export enum Sleep {
+  LESS_THAN_FOUR = 'LESS_THAN_FOUR',
+  BETWEEN_FOUR_AND_SEVEN = 'BETWEEN_FOUR_AND_SEVEN',
+  MORE_THAN_SEVEN = 'MORE_THAN_SEVEN',
+}
+
+export enum DietaryPreference {
+  VEGETARIAN = 'VEGETARIAN',
+  VEGAN = 'VEGAN',
+  INTERMITTENT_FASTING = 'INTERMITTENT_FASTING',
+  KETOGENIC = 'KETOGENIC',
+  PALEO = 'PALEO',
+  GLUTEN_FREE = 'GLUTEN_FREE',
+}
+
+export enum CurrentExercise {
+  THREE_FOUR_WEEK = 'THREE_FOUR_WEEK',
+  ONE_TWO_WEEK = 'ONE_TWO_WEEK',
+  ONE_TWO_MONTH = 'ONE_TWO_MONTH',
+  NOT_AT_ALL = 'NOT_AT_ALL',
 }
 
 export enum Level {
@@ -227,18 +242,51 @@ export interface Profile {
   weight?: number;
   height?: number;
   goal?: Goal;
-  unit?: Unit;
+  targets?: Targets;
   marketing?: boolean;
   dob?: string;
   signedUp?: boolean;
   admin?: boolean;
-  premium?: boolean;
+  premium?: Premium;
   unread?: {[key: string]: number};
-  sleepPattern?: SleepPattern;
+  bodyFatPercentage?: number;
+  muscleMass?: number;
+  boneMass?: number;
+  garminAccessTokenSecret?: string;
+  garminAccessToken?: string;
+  polarAccessToken?: string;
+  fitbitToken?: string;
+  fitbitRefreshToken?: string;
+  fitbitUserId?: string;
+  fitbitTokenExpiresIn?: number;
+  fitbitTokenTimestamp?: number;
+  workoutReminders?: boolean;
+  workoutReminderTime?: string;
+  testReminderTime?: string;
+  testReminders?: boolean;
+  autoPlay?: boolean;
+  prepTime?: number;
+  workoutMusic?: boolean;
+  syncPlanWithCalendar?: boolean;
+  goalReminders?: boolean;
+  area?: Area;
+  equipment?: Equipment;
+  experience?: Level;
+  favouriteRecipes?: string[];
+
   stressLevel?: StressLevel;
-  equipment?: string;
-  trainingAvailability?: TrainingAvailability;
-  viewedPlan?: boolean;
+  sleep?: Sleep;
+  dietaryPreference?: DietaryPreference | string;
+  currentExercise?: CurrentExercise;
+  fitnessRating?: number;
+  heartCondition?: boolean;
+  activityChestPain?: boolean;
+  chestPain?: boolean;
+  loseBalanceConsciousness?: boolean;
+  boneProblems?: boolean;
+  drugPrescription?: boolean;
+  otherReason?: boolean;
+  willInformDoctor?: boolean;
 }
 
 export interface FitbitHeartRateResponse {
