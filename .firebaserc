@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "health-and-movement"
+    "default": "health-and-movement",
+    "target": "ca-health-admin"
   }
 }
