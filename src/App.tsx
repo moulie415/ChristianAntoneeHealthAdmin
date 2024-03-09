@@ -117,13 +117,11 @@ const theme: RaThemeOptions = {
 
 const App = () => {
   const [user, setUser] = useState<User | null>();
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async user => {
       if (user) {
         try {
-          setLoading(true);
           const settingsQuery = query(collection(db, 'settings'));
           const settings = (await getDocs(settingsQuery)).docs[0]?.data();
           if (!settings.admins.includes(user.uid)) {
@@ -133,7 +131,6 @@ const App = () => {
         } catch (e) {
           console.log(e);
         }
-        setLoading(false);
       }
       setUser(user);
     });

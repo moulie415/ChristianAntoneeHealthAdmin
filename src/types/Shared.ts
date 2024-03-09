@@ -232,6 +232,17 @@ export interface Message {
   filename?: string;
 }
 
+export type Premium = undefined | false | {[key: string]: any};
+
+export interface Targets {
+  calories: number;
+  mins: number;
+  workouts: {
+    level: Level;
+    number: number;
+  };
+}
+
 export interface Profile {
   email: string;
   uid: string;
