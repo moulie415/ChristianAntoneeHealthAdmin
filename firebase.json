@@ -1,6 +1,6 @@
 {
-  "site": "ca-health-admin",
   "hosting": {
+    "site": "ca-health-admin",
     "public": "dist",
     "ignore": [
       "firebase.json",
