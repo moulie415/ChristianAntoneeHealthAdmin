@@ -1,6 +1,7 @@
-import {BooleanField, BooleanInput} from 'ra-ui-materialui';
+import {BooleanField} from 'ra-ui-materialui';
 import {
   ArrayInput,
+  BooleanInput,
   ChipField,
   Create,
   Datagrid,

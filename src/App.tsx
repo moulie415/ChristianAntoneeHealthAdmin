@@ -13,13 +13,7 @@ import {getFunctions} from 'firebase/functions';
 import {getMessaging} from 'firebase/messaging/sw';
 import {getStorage} from 'firebase/storage';
 import {useEffect, useState} from 'react';
-import {
-  Admin,
-  CustomRoutes,
-  RaThemeOptions,
-  Resource,
-  defaultTheme,
-} from 'react-admin';
+import {Admin, CustomRoutes, Resource} from 'react-admin';
 import {FirebaseAuthProvider, FirebaseDataProvider} from 'react-admin-firebase';
 import 'react-chat-elements/dist/main.css';
 import {Route} from 'react-router-dom';
@@ -27,7 +21,6 @@ import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {firebaseConfig} from './FIREBASE_CONFIG';
 import CustomLoginPage from './auth/CustomLoginPage';
-import colors from './colors';
 import MyLayout from './common/MyLayout';
 import UserIcon from './common/UserIcon';
 import ChatContextProvider from './context/ChatContextProvider';
@@ -62,6 +55,7 @@ import {
 } from './recipes/Recipes';
 import {SettingsEdit, SettingsList, SettingsShow} from './settings/settings';
 import {TestCreate, TestEdit, TestList, TestShow} from './tests/tests';
+import {softDarkTheme, softLightTheme} from './theme';
 import {UsersEdit, UsersList} from './users/users';
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);
@@ -102,19 +96,6 @@ if (process.env.NODE_ENV !== 'development') {
   });
 }
 
-const theme: RaThemeOptions = {
-  ...defaultTheme,
-  palette: {
-    ...defaultTheme.palette,
-    // primary: {
-    //   main: colors.appBlue,
-    // },
-    secondary: {
-      main: colors.appBlue,
-    },
-  },
-};
-
 const App = () => {
   const [user, setUser] = useState<User | null>();
 
@@ -144,7 +125,8 @@ const App = () => {
       <Admin
         loginPage={CustomLoginPage}
         layout={MyLayout}
-        theme={theme}
+        theme={softLightTheme}
+        darkTheme={softDarkTheme}
         dataProvider={dataProvider}
         authProvider={authProvider}>
         <Resource

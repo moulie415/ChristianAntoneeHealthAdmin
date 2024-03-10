@@ -1,4 +1,4 @@
-import {Grid, Typography} from '@mui/material';
+import {Box, Grid, Typography} from '@mui/material';
 import Chip from '@mui/material/Chip';
 import FormLabel from '@mui/material/FormLabel';
 import {
@@ -14,13 +14,12 @@ import {useEffect, useState} from 'react';
 import {
   BooleanField,
   Datagrid,
-  DateField,
+  DateInput,
   Edit,
   EditButton,
   EmailField,
   ExportButton,
   FilterButton,
-  ImageField,
   Labeled,
   List,
   NumberInput,
@@ -30,6 +29,7 @@ import {
   SimpleForm,
   SortButton,
   TextField,
+  TextInput,
   Toolbar,
   TopToolbar,
 } from 'react-admin';
@@ -39,8 +39,10 @@ import {db} from '../App';
 import PremiumField from '../common/PremiumField';
 import CreatePlanButton from '../plans/CreatePlanButton';
 import {Plan} from '../types/Shared';
+import Aside from './Aside';
 import CurrentExerciseField from './CurrentExerciseField';
 import DietaryPreferenceField from './DietaryPreferenceField';
+import FullNameField from './FullNameField';
 import SleepField from './SleepField';
 import StressField from './StressField';
 import WorkoutsTable from './WorkoutsTable';
@@ -167,103 +169,207 @@ export const UsersEdit = (props: ResourceProps) => {
   );
 
   return (
-    <Edit {...props}>
+    <Edit
+      title={<FullNameField size="32" sx={{margin: '5px 0'}} />}
+      aside={<Aside />}
+      {...props}>
       <SimpleForm toolbar={<MyToolbar />}>
-        <Grid container spacing={2}>
-          <Grid item xs={12} sm={6} md={3}>
-            <Labeled>
-              <ImageField source="avatar" title="avatar" />
-            </Labeled>
+        <Grid container width={{xs: '100%', xl: 800}} spacing={2}>
+          <Grid item xs={12} md={8}>
+            <Typography variant="h6" gutterBottom>
+              Personal Info
+            </Typography>
+            <Box display={{xs: 'block', sm: 'flex'}}>
+              <Box flex={1} mr={{xs: 0, sm: '0.5em'}}>
+                <TextInput
+                  source="name"
+                  disabled
+                  variant="outlined"
+                  fullWidth
+                />
+              </Box>
+              <Box flex={1} ml={{xs: 0, sm: '0.5em'}}>
+                <TextInput
+                  source="surname"
+                  fullWidth
+                  disabled
+                  variant="outlined"
+                />
+              </Box>
+            </Box>
+            <Box display={{xs: 'block', sm: 'flex'}}>
+              <Box flex={1} mr={{xs: 0, sm: '0.5em'}}>
+                <TextInput
+                  source="email"
+                  fullWidth
+                  disabled
+                  variant="outlined"
+                />
+              </Box>
+              <Box flex={1} ml={{xs: 0, sm: '0.5em'}}>
+                <DateInput
+                  label="Date of birth"
+                  source="dob"
+                  fullWidth
+                  disabled
+                  variant="outlined"
+                />
+              </Box>
+            </Box>
+            <Box display={{xs: 'block', sm: 'flex'}}>
+              <Box flex={1} mr={{xs: 0, sm: '0.5em'}}>
+                <NumberInput
+                  source="weight"
+                  label="Weight (kg)"
+                  fullWidth
+                  disabled
+                  variant="outlined"
+                />
+              </Box>
+              <Box flex={1} ml={{xs: 0, sm: '0.5em'}}>
+                <NumberInput
+                  source="height"
+                  label="height (cm)"
+                  fullWidth
+                  disabled
+                  variant="outlined"
+                />
+              </Box>
+            </Box>
+            <Box display={{xs: 'block', sm: 'flex'}}>
+              <Box flex={1} mr={{xs: 0, sm: '0.5em'}}>
+                <TextInput
+                  source="gender"
+                  label="Sex"
+                  disabled
+                  variant="outlined"
+                  fullWidth
+                />
+              </Box>
+              <Box flex={1} ml={{xs: 0, sm: '0.5em'}}>
+                <NumberInput source="phone" fullWidth variant="outlined" />
+              </Box>
+            </Box>
+            <Box display={{xs: 'block', sm: 'flex'}}>
+              <Box flex={1} mr={{xs: 0, sm: '0.5em'}}>
+                <TextInput
+                  source="equipment"
+                  label="Access to equipment"
+                  disabled
+                  variant="outlined"
+                  fullWidth
+                />
+              </Box>
+              <Box flex={1} ml={{xs: 0, sm: '0.5em'}}>
+                <TextInput
+                  source="experience"
+                  label="Experience level"
+                  fullWidth
+                  disabled
+                  variant="outlined"
+                />
+              </Box>
+            </Box>
+            <Box display={{xs: 'block', sm: 'flex'}}>
+              <Box flex={1} mr={{xs: 0, sm: '0.5em'}}>
+                <TextInput
+                  disabled
+                  fullWidth
+                  label="Area of focus"
+                  variant="outlined"
+                  source="area"
+                />
+              </Box>
+              <Box flex={1} mr={{xs: 0, sm: '0.5em'}}>
+                <TextInput
+                  disabled
+                  fullWidth
+                  variant="outlined"
+                  source="goal"
+                />
+              </Box>
+            </Box>
+            <Box display={{xs: 'block', sm: 'flex'}}>
+              <Box flex={1} mr={{xs: 0, sm: '0.5em'}}>
+                <NumberInput
+                  label="Workout number target"
+                  source="targets.workouts.number"
+                  fullWidth
+                  variant="outlined"
+                />
+              </Box>
+              <Box flex={1} ml={{xs: 0, sm: '0.5em'}}>
+                <SelectInput
+                  choices={[
+                    {id: 'beginner', name: 'beginner'},
+                    {id: 'intermediate', name: 'intermediate'},
+                    {id: 'advanced', name: 'advanced'},
+                  ]}
+                  label="Workout level target"
+                  source="targets.workouts.level"
+                  fullWidth
+                  variant="outlined"
+                />
+              </Box>
+            </Box>
+            <Box display={{xs: 'block', sm: 'flex'}}>
+              <Box flex={1} mr={{xs: 0, sm: '0.5em'}}>
+                <NumberInput
+                  label="Calories target"
+                  source="targets.calories"
+                  variant="outlined"
+                  fullWidth
+                />
+              </Box>
+              <Box flex={1} ml={{xs: 0, sm: '0.5em'}}>
+                <NumberInput
+                  label="Workout minutes target"
+                  source="targets.mins"
+                  fullWidth
+                  variant="outlined"
+                />
+              </Box>
+            </Box>
+            <Box display={{xs: 'block', sm: 'flex'}}>
+              <Box flex={1} mr={{xs: 0, sm: '0.5em'}}>
+                <Labeled>
+                  <PremiumField source="premium" />
+                </Labeled>
+              </Box>
+              <Box flex={1} ml={{xs: 0, sm: '0.5em'}}>
+                <Labeled>
+                  <BooleanField source="marketing" />
+                </Labeled>
+              </Box>
+            </Box>
           </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <Labeled>
-              <TextField source="name" />
-            </Labeled>
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <Labeled>
-              <TextField source="surname" />
-            </Labeled>
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <Labeled>
-              <EmailField source="email" />
-            </Labeled>
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <Labeled>
-              <PremiumField source="premium" />
-            </Labeled>
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <Labeled>
-              <BooleanField source="marketing" />
-            </Labeled>
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <FormLabel style={{fontSize: 12}}>Plans</FormLabel>
-            <div style={{display: 'flex', flexDirection: 'row'}}>
+          <Grid item xs={12} md={4}>
+            <Typography variant="h6" gutterBottom>
+              Plans
+            </Typography>
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                flexWrap: 'wrap',
+                justifyContent: 'space-evenly',
+                flex: 1,
+              }}>
               {plans.map(p => {
                 return (
                   <Chip
                     key={p.id}
-                    style={{marginRight: 10}}
+                    style={{marginBottom: 10}}
                     onClick={() => navigate(`/plans/${p.id}`)}
                     label={moment(p.createdate.toDate()).format('DD/MM/YYYY')}
                   />
                 );
               })}
             </div>
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <Labeled>
-              <DateField source="dob" label="Date of birth" />
-            </Labeled>
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <Labeled>
-              <TextField source="equipment" />
-            </Labeled>
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <Labeled>
-              <TextField source="experience" />
-            </Labeled>
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <Labeled>
-              <TextField source="gender" />
-            </Labeled>
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <Labeled>
-              <TextField source="goal" />
-            </Labeled>
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <NumberInput
-              label="Workout number target"
-              source="targets.workouts.number"
-            />
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <SelectInput
-              choices={[
-                {id: 'beginner', name: 'beginner'},
-                {id: 'intermediate', name: 'intermediate'},
-                {id: 'advanced', name: 'advanced'},
-              ]}
-              label="Workout level target"
-              source="targets.workouts.level"
-            />
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <NumberInput label="Calories target" source="targets.calories" />
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <NumberInput label="Workout minutes target" source="targets.mins" />
+            <CreatePlanButton />
           </Grid>
         </Grid>
+
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6} md={6}>
             <Typography variant="h6" component="h2">
@@ -289,7 +395,6 @@ export const UsersEdit = (props: ResourceProps) => {
             })}
           </Grid>
         </Grid>
-        <CreatePlanButton />
       </SimpleForm>
       <WorkoutsTable />
     </Edit>
