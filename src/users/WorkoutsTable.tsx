@@ -218,7 +218,11 @@ const WorkoutsTable = () => {
                   </TableCell>
                   <TableCell>{workout?.planWorkout?.name}</TableCell>
                   <TableCell>{hhmmss(workout.seconds)}</TableCell>
-                  <TableCell>{workout.calories?.toFixed(1)}</TableCell>
+                  <TableCell>
+                    {workout.calories?.toFixed
+                      ? workout.calories.toFixed(1)
+                      : workout.calories}
+                  </TableCell>
                   <TableCell>{`${workout.difficulty}/10`}</TableCell>
                   <TableCell>
                     {workout.averageHeartRate ? workout.averageHeartRate : ''}
