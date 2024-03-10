@@ -6,8 +6,6 @@ import {Profile} from '../types/Shared';
 
 const Aside = () => {
   const record = useRecordContext<Profile>();
-  console.log(record?.signUpDate);
-  console.log(moment.unix(record?.signUpDate as number).toDate());
   return (
     <Box width={400} display={{xs: 'none', lg: 'block'}}>
       <Box ml={2}>

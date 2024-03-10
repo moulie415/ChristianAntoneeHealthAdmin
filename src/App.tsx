@@ -56,7 +56,8 @@ import {
 import {SettingsEdit, SettingsList, SettingsShow} from './settings/settings';
 import {TestCreate, TestEdit, TestList, TestShow} from './tests/tests';
 import {softDarkTheme, softLightTheme} from './theme';
-import {UsersEdit, UsersList} from './users/users';
+import {UsersEdit} from './users/UsersEdit';
+import {UsersList} from './users/users';
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 
