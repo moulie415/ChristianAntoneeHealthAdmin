@@ -89,9 +89,7 @@ const authProvider = FirebaseAuthProvider(firebaseConfig, {});
 
 if (import.meta.env.MODE !== 'development') {
   initializeAppCheck(firebaseApp, {
-    provider: new ReCaptchaV3Provider(
-      '6Lft57sdAAAAAEQYT85mxqG4BsdFV4L6Gn3Ir9BY',
-    ),
+    provider: new ReCaptchaV3Provider(import.meta.env.VITE_RECAPTCHA_SITE_KEY),
 
     // Optional argument. If true, the SDK automatically refreshes App Check
     // tokens as needed.

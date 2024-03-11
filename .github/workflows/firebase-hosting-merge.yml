@@ -15,9 +15,11 @@ jobs:
         env:
           FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
           VITE_TINY_API_KEY: ${{ secrets.REACT_APP_TINY_API_KEY }}
+          VITE_RECAPTCHA_SITE_KEY: ${{ secrets.VITE_RECAPTCHA_SITE_KEY }}
         run: |
           touch .env
           echo "VITE_TINY_API_KEY=$REACT_APP_TINY_API_KEY" >> .env
+          echo "VITE_RECAPTCHA_SITE_KEY=$VITE_RECAPTCHA_SITE_KEY" >> .env
           cd src
           touch FIREBASE_CONFIG.ts
           echo "$FIREBASE_CONFIG" >> FIREBASE_CONFIG.ts
