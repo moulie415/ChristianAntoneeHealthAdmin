@@ -12,8 +12,9 @@ import {
 } from 'firebase/firestore';
 import {httpsCallable} from 'firebase/functions';
 import {getDownloadURL, ref, uploadBytes} from 'firebase/storage';
+import {toast} from 'react-toastify';
 import {db, functions, storage} from '../App';
-import {Chat, Message, Profile} from '../types/Shared';
+import {Chat, Message, Profile, WeeklyItems} from '../types/Shared';
 import {chunkArrayInGroups} from './chunkArrayInGroups';
 
 export const getUser = (uid: string) => {
@@ -135,4 +136,24 @@ export const setUnread = (uid: string, unread: {[key: string]: number}) => {
 
 export const setWebPushToken = (uid: string, webPushToken: string) => {
   return updateDoc(doc(db, 'users', uid), {webPushToken});
+};
+
+export const getWeeklyItems = async (uid: string): Promise<WeeklyItems> => {
+  try {
+    const response = await httpsCallable<{uid: string}, WeeklyItems>(
+      functions,
+      'getWeeklyItems',
+    )({uid});
+
+    const {quickRoutines, tests, workouts} = response.data;
+    return {quickRoutines, tests, workouts};
+  } catch (e) {
+    toast.error('Error fetching weekly items');
+    return {quickRoutines: {}, tests: {}, workouts: {}};
+  }
+};
+
+export const getSettings = async () => {
+  const snapshot = await getDoc(doc(db, 'settings', 'settings'));
+  return snapshot.data();
 };

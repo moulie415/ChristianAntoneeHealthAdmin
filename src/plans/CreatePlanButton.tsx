@@ -2,7 +2,7 @@ import Button from '@mui/material/Button';
 import {useRecordContext} from 'react-admin';
 import {useNavigate} from 'react-router-dom';
 
-const CreatePlanButton = () => {
+const CreatePlanButton: React.FC = () => {
   const record = useRecordContext();
   const navigate = useNavigate();
   const {id} = record;

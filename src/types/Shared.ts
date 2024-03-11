@@ -505,3 +505,9 @@ export enum RecipeCategory {
   FIVE_INGREDIENT = 'fiveIngredient',
   GLUTEN_FREE = 'glutenFree',
 }
+
+export interface WeeklyItems {
+  quickRoutines: {[key: string]: SavedQuickRoutine};
+  tests: {[key: string]: SavedTest};
+  workouts: {[key: string]: SavedWorkout};
+}

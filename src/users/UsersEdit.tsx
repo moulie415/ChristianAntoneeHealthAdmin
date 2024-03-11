@@ -37,6 +37,7 @@ import FullNameField from './FullNameField';
 import SleepField from './SleepField';
 import StressField from './StressField';
 import WorkoutsTable from './WorkoutsTable';
+import GoalSummaries from './GoalSummaries';
 
 const physicalReadinessQuestions = [
   {
@@ -324,6 +325,7 @@ export const UsersEdit = (props: ResourceProps) => {
             </div>
 
             <CreatePlanButton />
+            <GoalSummaries />
             {/* <Typography style={{marginTop: 10}} variant="h6" gutterBottom>
               Weight
             </Typography>
