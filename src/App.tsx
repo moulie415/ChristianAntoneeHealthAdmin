@@ -67,8 +67,6 @@ export const storage = getStorage(firebaseApp);
 export const messaging = getMessaging(firebaseApp);
 export const auth = getAuth(firebaseApp);
 
-console.log(import.meta.env);
-
 const dataProvider = FirebaseDataProvider(firebaseConfig, {
   logging: import.meta.env.MODE === 'development',
   // rootRef: 'rootrefcollection/QQG2McwjR2Bohi9OwQzP',
