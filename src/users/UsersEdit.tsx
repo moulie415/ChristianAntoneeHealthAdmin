@@ -121,8 +121,8 @@ export const UsersEdit = (props: ResourceProps) => {
     </Toolbar>
   );
 
-  const dateFormatter = (date: number): string =>
-    new Date(date).toLocaleDateString();
+  // const dateFormatter = (date: number): string =>
+  //   new Date(date).toLocaleDateString();
 
   return (
     <Edit
