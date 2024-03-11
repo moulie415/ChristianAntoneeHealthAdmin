@@ -67,8 +67,10 @@ export const storage = getStorage(firebaseApp);
 export const messaging = getMessaging(firebaseApp);
 export const auth = getAuth(firebaseApp);
 
+console.log(import.meta.env);
+
 const dataProvider = FirebaseDataProvider(firebaseConfig, {
-  logging: process.env.NODE_ENV === 'development',
+  logging: import.meta.env.MODE === 'development',
   // rootRef: 'rootrefcollection/QQG2McwjR2Bohi9OwQzP',
   app: firebaseApp,
   // watch: ['posts'];
@@ -80,12 +82,12 @@ const dataProvider = FirebaseDataProvider(firebaseConfig, {
     enabled: true,
   },
   firestoreCostsLogger: {
-    enabled: process.env.NODE_ENV === 'development',
+    enabled: import.meta.env.MODE === 'development',
   },
 });
 const authProvider = FirebaseAuthProvider(firebaseConfig, {});
 
-if (process.env.NODE_ENV !== 'development') {
+if (import.meta.env.MODE !== 'development') {
   initializeAppCheck(firebaseApp, {
     provider: new ReCaptchaV3Provider(
       '6Lft57sdAAAAAEQYT85mxqG4BsdFV4L6Gn3Ir9BY',

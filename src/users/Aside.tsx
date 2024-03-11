@@ -7,7 +7,7 @@ import {Profile} from '../types/Shared';
 const Aside = () => {
   const record = useRecordContext<Profile>();
   return (
-    <Box width={400} display={{xs: 'none', lg: 'block'}}>
+    <Box width={200} display={{xs: 'none', lg: 'block'}}>
       <Box ml={2}>
         <Card>
           <CardContent>
@@ -15,7 +15,7 @@ const Aside = () => {
               History
             </Typography>
             <Grid container rowSpacing={1} columnSpacing={1}>
-              <Grid item xs={6} display="flex" gap={1}>
+              <Grid item xs={12} display="flex" gap={1}>
                 <AccessTimeIcon fontSize="small" color="disabled" />
                 <Box flexGrow={1}>
                   <Typography variant="body2">Sign up date</Typography>
@@ -27,7 +27,7 @@ const Aside = () => {
                 </Box>
               </Grid>
 
-              <Grid item xs={6} display="flex" gap={1}>
+              <Grid item xs={12} display="flex" gap={1}>
                 <AccessTimeIcon fontSize="small" color="disabled" />
                 <Box flexGrow={1}>
                   <Typography variant="body2">Last seen</Typography>

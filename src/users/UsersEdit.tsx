@@ -131,7 +131,7 @@ export const UsersEdit = (props: ResourceProps) => {
       {...props}>
       <SimpleForm toolbar={<MyToolbar />}>
         <Grid container width={{xs: '100%', xl: 800}} spacing={2}>
-          <Grid item xs={12} md={8}>
+          <Grid item xs={12} md={6}>
             <Typography variant="h6" gutterBottom>
               Personal Info
             </Typography>
@@ -299,7 +299,7 @@ export const UsersEdit = (props: ResourceProps) => {
               </Box>
             </Box>
           </Grid>
-          <Grid item xs={12} md={4}>
+          <Grid item xs={12} md={6}>
             <Typography variant="h6" gutterBottom>
               Plans
             </Typography>
@@ -322,7 +322,68 @@ export const UsersEdit = (props: ResourceProps) => {
                 );
               })}
             </div>
+
             <CreatePlanButton />
+            {/* <Typography style={{marginTop: 10}} variant="h6" gutterBottom>
+              Weight
+            </Typography>
+            <div style={{width: '100%', height: 300}}>
+              <ResponsiveContainer>
+                <AreaChart
+                  data={[
+                    {date: new Date().getTime(), total: 5},
+                    {
+                      date: moment().subtract(3, 'days').toDate().getTime(),
+                      total: 3,
+                    },
+                  ]}>
+                  <defs>
+                    <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+                      <stop
+                        offset="5%"
+                        stopColor={colors.appBlue}
+                        stopOpacity={0.8}
+                      />
+                      <stop
+                        offset="95%"
+                        stopColor={colors.appBlue}
+                        stopOpacity={0}
+                      />
+                    </linearGradient>
+                  </defs>
+                  <XAxis
+                    dataKey="date"
+                    name="Date"
+                    type="number"
+                    scale="time"
+                    domain={[
+                      moment().subtract(1, 'month').toDate().getTime(),
+                      new Date().getTime(),
+                    ]}
+                    tickFormatter={dateFormatter}
+                  />
+                  <YAxis dataKey="total" name="Revenue" unit="€" />
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <Tooltip
+                    cursor={{strokeDasharray: '3 3'}}
+                    formatter={(value: any) =>
+                      new Intl.NumberFormat(undefined, {
+                        style: 'currency',
+                        currency: 'USD',
+                      }).format(value)
+                    }
+                    labelFormatter={(label: any) => dateFormatter(label)}
+                  />
+                  <Area
+                    type="monotone"
+                    dataKey="total"
+                    stroke="#8884d8"
+                    strokeWidth={2}
+                    fill="url(#colorUv)"
+                  />
+                </AreaChart>
+              </ResponsiveContainer>
+            </div> */}
           </Grid>
         </Grid>
 

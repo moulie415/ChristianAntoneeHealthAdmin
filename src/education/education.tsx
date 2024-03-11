@@ -70,7 +70,7 @@ const CustomBodyInput = () => {
     <div style={{display: 'flex'}}>
       <Editor
         key="editor"
-        apiKey={process.env.REACT_APP_TINY_API_KEY}
+        apiKey={import.meta.env.VITE_TINY_API_KEY}
         onInit={(_, editor) => (editorRef.current = editor)}
         initialValue={record?.body}
         onEditorChange={onEditorChange}
@@ -78,13 +78,8 @@ const CustomBodyInput = () => {
           height: 500,
           menubar: true,
           plugins: [
-            'a11ychecker',
             'advlist',
-            'advcode',
-            'advtable',
             'autolink',
-            'checklist',
-            'export',
             'lists',
             'link',
             'image',
@@ -93,9 +88,7 @@ const CustomBodyInput = () => {
             'anchor',
             'searchreplace',
             'visualblocks',
-            'powerpaste',
             'fullscreen',
-            'formatpainter',
             'insertdatetime',
             'media',
             'table',
