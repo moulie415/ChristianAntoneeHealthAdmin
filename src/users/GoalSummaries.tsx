@@ -94,12 +94,13 @@ const GoalSummaries: React.FC = () => {
       return acc;
     }, {});
 
-  if (loading || !quickRoutinesObj)
+  if (loading || !quickRoutinesObj) {
     return (
       <div style={{marginTop: 20, display: 'flex', justifyContent: 'center'}}>
         <CircularProgress />
       </div>
     );
+  }
 
   const {
     calories,

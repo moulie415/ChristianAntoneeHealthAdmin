@@ -1,7 +1,7 @@
 import {
   AutocompleteArrayInput,
-  useGetList,
   AutocompleteArrayInputProps,
+  useGetList,
 } from 'react-admin';
 
 interface Props extends AutocompleteArrayInputProps {

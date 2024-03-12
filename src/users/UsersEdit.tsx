@@ -34,10 +34,11 @@ import Aside from './Aside';
 import CurrentExerciseField from './CurrentExerciseField';
 import DietaryPreferenceField from './DietaryPreferenceField';
 import FullNameField from './FullNameField';
+import GoalSummaries from './GoalSummaries';
+import MetricChart from './MetricChart';
 import SleepField from './SleepField';
 import StressField from './StressField';
 import WorkoutsTable from './WorkoutsTable';
-import GoalSummaries from './GoalSummaries';
 
 const physicalReadinessQuestions = [
   {
@@ -121,9 +122,6 @@ export const UsersEdit = (props: ResourceProps) => {
       <SaveButton label="Save" />
     </Toolbar>
   );
-
-  // const dateFormatter = (date: number): string =>
-  //   new Date(date).toLocaleDateString();
 
   return (
     <Edit
@@ -326,66 +324,27 @@ export const UsersEdit = (props: ResourceProps) => {
 
             <CreatePlanButton />
             <GoalSummaries />
-            {/* <Typography style={{marginTop: 10}} variant="h6" gutterBottom>
-              Weight
-            </Typography>
-            <div style={{width: '100%', height: 300}}>
-              <ResponsiveContainer>
-                <AreaChart
-                  data={[
-                    {date: new Date().getTime(), total: 5},
-                    {
-                      date: moment().subtract(3, 'days').toDate().getTime(),
-                      total: 3,
-                    },
-                  ]}>
-                  <defs>
-                    <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-                      <stop
-                        offset="5%"
-                        stopColor={colors.appBlue}
-                        stopOpacity={0.8}
-                      />
-                      <stop
-                        offset="95%"
-                        stopColor={colors.appBlue}
-                        stopOpacity={0}
-                      />
-                    </linearGradient>
-                  </defs>
-                  <XAxis
-                    dataKey="date"
-                    name="Date"
-                    type="number"
-                    scale="time"
-                    domain={[
-                      moment().subtract(1, 'month').toDate().getTime(),
-                      new Date().getTime(),
-                    ]}
-                    tickFormatter={dateFormatter}
-                  />
-                  <YAxis dataKey="total" name="Revenue" unit="€" />
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <Tooltip
-                    cursor={{strokeDasharray: '3 3'}}
-                    formatter={(value: any) =>
-                      new Intl.NumberFormat(undefined, {
-                        style: 'currency',
-                        currency: 'USD',
-                      }).format(value)
-                    }
-                    labelFormatter={(label: any) => dateFormatter(label)}
-                  />
-                  <Area
-                    type="monotone"
-                    dataKey="total"
-                    stroke="#8884d8"
-                    strokeWidth={2}
-                    fill="url(#colorUv)"
-                  />
-                </AreaChart>
-              </ResponsiveContainer>
-            </div> */}
+            <MetricChart
+              title="Body fat percentage"
+              source="bodyFatPercentage"
+              suffix="%"
+              minValue={0}
+              maxValue={30}
+            />
+            <MetricChart
+              title="Muscle mass"
+              source="muscleMass"
+              suffix="kg"
+              minValue={0}
+              maxValue={70}
+            />
+            <MetricChart
+              title="Bone mass"
+              source="boneMass"
+              suffix="kg"
+              minValue={0}
+              maxValue={10}
+            />
           </Grid>
         </Grid>
 
