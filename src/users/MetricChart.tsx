@@ -1,7 +1,10 @@
 import {CircularProgress, Typography} from '@mui/material';
+import {Timestamp, collection, getDocs, query, where} from 'firebase/firestore';
 import * as _ from 'lodash';
-import {useState} from 'react';
-import {useGetList, useRecordContext} from 'react-admin';
+import moment from 'moment';
+import {useEffect, useState} from 'react';
+import {useRecordContext} from 'react-admin';
+import {toast} from 'react-toastify';
 import {
   Area,
   AreaChart,
@@ -11,6 +14,7 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
+import {db} from '../App';
 import colors from '../colors';
 import {Profile} from '../types/Shared';
 
@@ -24,18 +28,42 @@ const MetricChart: React.FC<{
   minValue: number;
   maxValue: number;
 }> = ({title, source, suffix = '', minValue, maxValue}) => {
-  const [page, setPage] = useState(1);
   const profile = useRecordContext<Profile>();
-  const {data, isLoading} = useGetList<{
-    createdate: Date;
-    value: number;
-    id: string;
-  }>(`users/${profile.uid}/${source}`, {
-    pagination: {perPage: 100, page},
-    sort: {field: 'createdate', order: 'DESC'},
-  });
+  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState<{createdate: Timestamp; value: number}[]>(
+    [],
+  );
 
-  if (isLoading) {
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        setLoading(true);
+        const d = await getDocs(
+          query(
+            collection(db, 'users', profile.uid, source),
+
+            where('createdate', '>=', moment().subtract(1, 'year').toDate()),
+          ),
+        );
+        setData(
+          d.docs.map(doc => doc.data()) as {
+            value: number;
+            createdate: Timestamp;
+          }[],
+        );
+      } catch (e) {
+        console.log(e);
+        toast.error(`Error fetching ${title}`);
+      }
+      setLoading(false);
+    };
+
+    if (profile.uid) {
+      getData();
+    }
+  }, [profile.uid, source, title]);
+
+  if (loading) {
     return (
       <div style={{marginTop: 20, display: 'flex', justifyContent: 'center'}}>
         <CircularProgress />
@@ -44,8 +72,6 @@ const MetricChart: React.FC<{
   }
 
   const minDate = _.minBy(data, 'createdate');
-
-  console.log(minDate);
 
   return (
     <>
@@ -57,7 +83,7 @@ const MetricChart: React.FC<{
           <AreaChart
             data={data?.map(sample => ({
               ...sample,
-              date: sample.createdate.getTime(),
+              date: sample.createdate.toDate().getTime(),
             }))}>
             <defs>
               <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
@@ -75,7 +101,7 @@ const MetricChart: React.FC<{
               type="number"
               scale="time"
               domain={[
-                minDate?.createdate.getTime() || new Date().getTime(),
+                minDate?.createdate.toDate().getTime() || new Date().getTime(),
                 new Date().getTime(),
               ]}
               tickFormatter={dateFormatter}
