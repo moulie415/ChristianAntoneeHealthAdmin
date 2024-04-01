@@ -6,8 +6,6 @@ const WelcomeMessageField: React.FC<TextFieldProps> = props => {
 
   const previewMessage = record?.welcomeMessage?.replace('{{name}}', 'Nigel');
 
-  console.log(record);
-
   return (
     <div>
       <TextField source="welcomeMessage" {...props} />
