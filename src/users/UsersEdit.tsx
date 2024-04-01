@@ -325,6 +325,20 @@ export const UsersEdit = (props: ResourceProps) => {
             <CreatePlanButton />
             <GoalSummaries />
             <MetricChart
+              title="Weight"
+              source="weight"
+              suffix="kg"
+              minValue={0}
+              maxValue={150}
+            />
+            <MetricChart
+              title="Height"
+              source="height"
+              suffix="cm"
+              minValue={0}
+              maxValue={250}
+            />
+            <MetricChart
               title="Body fat percentage"
               source="bodyFatPercentage"
               suffix="%"

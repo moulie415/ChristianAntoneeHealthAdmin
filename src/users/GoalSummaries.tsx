@@ -69,6 +69,9 @@ const GoalSummaries: React.FC = () => {
   const {data, isLoading} = useGetList<QuickRoutine>('quickRoutines', {
     pagination: {perPage: 500, page: 1},
   });
+
+  const loading = loadingWeeklyItems || isLoading;
+
   useEffect(() => {
     const getWeeklyItems = async () => {
       setLoading(true);
@@ -81,8 +84,6 @@ const GoalSummaries: React.FC = () => {
       getWeeklyItems();
     }
   }, [profile.uid]);
-
-  const loading = loadingWeeklyItems || isLoading;
 
   const quickRoutinesObj =
     data &&
