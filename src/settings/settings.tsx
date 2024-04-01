@@ -20,6 +20,7 @@ import {
 } from 'react-admin';
 import MyAutoCompleteArrayInput from '../common/MyAutoCompleteArrayInput';
 import WelcomeMessageInput from './WelcomeMessageInput';
+import WelcomeMessageField from './WelcomeMessageField';
 
 export const SettingsList = (props: ResourceProps) => (
   <List {...props}>
@@ -59,7 +60,7 @@ export const SettingsShow = (props: ResourceProps) => (
           <ChipField source="name" />
         </SingleFieldList>
       </ReferenceArrayField>
-      <TextField source="welcomeMessage" />
+      <WelcomeMessageField source="welcomeMessage" />
     </SimpleShowLayout>
   </Show>
 );
