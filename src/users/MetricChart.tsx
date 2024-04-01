@@ -104,7 +104,8 @@ const MetricChart: React.FC<{
                 minDate?.createdate.toDate().getTime() || new Date().getTime(),
                 new Date().getTime(),
               ]}
-              tickFormatter={dateFormatter}
+              fontSize={12}
+              tickFormatter={number => moment(number).format('DD/MM')}
             />
             <YAxis
               dataKey="value"

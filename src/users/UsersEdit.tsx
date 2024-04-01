@@ -297,6 +297,32 @@ export const UsersEdit = (props: ResourceProps) => {
                 </Labeled>
               </Box>
             </Box>
+            <Box display={{xs: 'block', sm: 'flex'}}>
+              <Box flex={1} ml={{xs: 0, sm: '0.5em'}}>
+                <Typography variant="h6">
+                  Health & lifestyle questionnaire
+                </Typography>
+                <StressField />
+                <SleepField />
+                <DietaryPreferenceField />
+                <CurrentExerciseField />
+              </Box>
+            </Box>
+            <Box display={{xs: 'block', sm: 'flex'}}>
+              <Box flex={1} ml={{xs: 0, sm: '0.5em'}}>
+                <Typography variant="h6">
+                  Physical activity readiness questionnaire
+                </Typography>
+                {physicalReadinessQuestions.map(({question, source}) => {
+                  return (
+                    <div key={question}>
+                      <FormLabel style={{fontSize: 12}}>{question}</FormLabel>
+                      <BooleanField source={source} />
+                    </div>
+                  );
+                })}
+              </Box>
+            </Box>
           </Grid>
           <Grid item xs={12} md={6}>
             <Typography variant="h6" gutterBottom>
@@ -359,32 +385,6 @@ export const UsersEdit = (props: ResourceProps) => {
               minValue={0}
               maxValue={10}
             />
-          </Grid>
-        </Grid>
-
-        <Grid container spacing={2}>
-          <Grid item xs={12} sm={6} md={6}>
-            <Typography variant="h6">
-              Health & lifestyle questionnaire
-            </Typography>
-            <StressField />
-            <SleepField />
-            <DietaryPreferenceField />
-            <CurrentExerciseField />
-          </Grid>
-
-          <Grid item xs={12} sm={6} md={6}>
-            <Typography variant="h6">
-              Physical activity readiness questionnaire
-            </Typography>
-            {physicalReadinessQuestions.map(({question, source}) => {
-              return (
-                <div key={question}>
-                  <FormLabel style={{fontSize: 12}}>{question}</FormLabel>
-                  <BooleanField source={source} />
-                </div>
-              );
-            })}
           </Grid>
         </Grid>
       </SimpleForm>
