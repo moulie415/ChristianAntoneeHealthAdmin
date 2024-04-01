@@ -9,7 +9,7 @@ const WelcomeMessageInput: React.FC<TextInputProps> = props => {
   return (
     <div>
       <TextInput multiline fullWidth {...props} />
-      <div style={{fontStyle: 'italic'}}>Preview: {previewMessage}</div>
+      <div style={{fontStyle: 'italic'}}>Example: {previewMessage}</div>
     </div>
   );
 };
