@@ -4,7 +4,10 @@ import {TextField, TextFieldProps, useRecordContext} from 'react-admin';
 const WelcomeMessageField: React.FC<TextFieldProps> = props => {
   const record = useRecordContext();
 
-  const previewMessage = record?.welcomeMessage?.replace('{{name}}', 'Nigel');
+  const previewMessage = record?.welcomeMessage?.replaceAll(
+    '{{name}}',
+    'Nigel',
+  );
 
   return (
     <div>
