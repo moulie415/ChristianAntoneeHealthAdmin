@@ -1,4 +1,3 @@
-import InventoryOutlinedIcon from '@mui/icons-material/InventoryOutlined';
 import {getMessaging, getToken} from 'firebase/messaging';
 import {useContext} from 'react';
 import {Menu} from 'react-admin';
@@ -42,11 +41,6 @@ const MyMenu = () => {
       <Menu.ResourceItem name="education" />
       <Menu.ResourceItem name="settings" />
       <Menu.ResourceItem name="users" />
-      <Menu.Item
-        to="/premium-users"
-        primaryText="Premium users"
-        leftIcon={<InventoryOutlinedIcon />}
-      />
       <Menu.ResourceItem name="plans" />
       <Menu.ResourceItem name="recipes" />
       <Menu.ResourceItem name="feedback" />

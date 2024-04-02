@@ -40,7 +40,6 @@ import {FeedbackList, FeedbackShow} from './feedback/Feedback';
 import Chat from './messaging/Chat';
 import Messaging from './messaging/Messaging';
 import {PlansCreate, PlansEdit, PlansList, PlansShow} from './plans/Plans';
-import PremiumUsers from './premiumUsers/PremiumUsers';
 import {
   QuickRoutineCreate,
   QuickRoutineEdit,
@@ -57,7 +56,7 @@ import {SettingsEdit, SettingsList, SettingsShow} from './settings/settings';
 import {TestCreate, TestEdit, TestList, TestShow} from './tests/tests';
 import {softDarkTheme, softLightTheme} from './theme';
 import {UsersEdit} from './users/UsersEdit';
-import {UsersList} from './users/users';
+import UsersList from './users/UsersList';
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 
@@ -170,9 +169,9 @@ const App = () => {
         />
         <Resource
           name="users"
-          list={UsersList}
           icon={UserIcon}
           edit={UsersEdit}
+          list={UsersList}
         />
 
         <Resource
@@ -199,7 +198,6 @@ const App = () => {
           icon={ThumbUpIcon}
         />
         <CustomRoutes>
-          <Route path="premium-users" element={<PremiumUsers />} />
           <Route path="messaging" element={<Messaging />} />
           <Route path="messaging/:id" element={<Chat />} />
         </CustomRoutes>
