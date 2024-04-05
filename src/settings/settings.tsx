@@ -84,7 +84,7 @@ export const SettingsEdit = (props: ResourceProps) => (
         optionText="name"
       />
       <WelcomeMessageInput
-        label="Welcome message (use {{name}} to substitute users name)"
+        label="Premium plus welcome message (use {{name}} to substitute users name)"
         multiline
         fullWidth
         validate={[required()]}
