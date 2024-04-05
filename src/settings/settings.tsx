@@ -13,14 +13,12 @@ import {
   SimpleForm,
   SimpleShowLayout,
   SingleFieldList,
-  TextField,
-  TextInput,
   Toolbar,
   ToolbarProps,
 } from 'react-admin';
 import MyAutoCompleteArrayInput from '../common/MyAutoCompleteArrayInput';
-import WelcomeMessageInput from './WelcomeMessageInput';
 import WelcomeMessageField from './WelcomeMessageField';
+import WelcomeMessageInput from './WelcomeMessageInput';
 
 export const SettingsList = (props: ResourceProps) => (
   <List {...props}>

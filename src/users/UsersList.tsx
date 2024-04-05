@@ -168,14 +168,14 @@ const UsersList = () => {
   const navigate = useNavigate();
 
   const handlePremiumToggleChange = (
-    event: React.MouseEvent<HTMLElement>,
+    _: React.MouseEvent<HTMLElement>,
     toggle: PremiumToggle,
   ) => {
     setPremiumToggle(toggle);
   };
 
   const handleMarketingToggleChange = (
-    event: React.MouseEvent<HTMLElement>,
+    _: React.MouseEvent<HTMLElement>,
     toggle: boolean,
   ) => {
     setMarketing(toggle);
