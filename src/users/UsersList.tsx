@@ -23,7 +23,6 @@ import {
   query,
   where,
 } from 'firebase/firestore';
-import * as _ from 'lodash';
 import moment from 'moment';
 import {useCallback, useEffect, useRef, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
@@ -71,7 +70,8 @@ const UsersList = () => {
 
   const [premiumToggle, setPremiumToggle] = useState<PremiumToggle>();
 
-  const cursor = useRef(0);
+  const cursor = useRef(100);
+  const isAtEnd = useRef(false);
 
   const getUsers = useCallback(async () => {
     try {
@@ -84,16 +84,12 @@ const UsersList = () => {
       if (marketing !== undefined && marketing !== null) {
         conditions.push(where('marketing', '==', marketing));
       }
-
-      if (cursor.current) {
-        conditions.push(where('signUpDate', '<', cursor.current));
-      }
-
+      console.log(cursor.current);
       const userQuery = query(
         collection(db, 'users'),
         ...conditions,
-        orderBy('signUpDate', 'desc'),
-        limit(100),
+        orderBy('premium', 'desc'),
+        limit(cursor.current),
       );
 
       const c = await getDocs(userQuery);
@@ -146,6 +142,7 @@ const UsersList = () => {
           return {...data, plans: userPlans, upToDatePlan};
         });
     } catch (e) {
+      console.log(e);
       if (e instanceof Error) {
         toast.error('Error fetching users: ' + e.message);
       } else {
@@ -190,14 +187,15 @@ const UsersList = () => {
     if (table) {
       const isAtBottom =
         table.scrollTop + table.clientHeight >= table.scrollHeight - 5;
-      if (isAtBottom) {
-        const newCursor = _.minBy(users, 'signUpDate')?.signUpDate;
-        if (newCursor !== cursor.current) {
-          cursor.current = newCursor;
-          const newUsers = await getUsers();
-          if (newUsers) {
-            setUsers([...users, ...newUsers]);
-          }
+      if (isAtBottom && !isAtEnd.current) {
+        cursor.current = cursor.current + 100;
+
+        const newUsers = await getUsers();
+        if (newUsers && newUsers?.length > users.length) {
+          setUsers(newUsers);
+        } else {
+          isAtEnd.current = true;
+          console.log('is at end');
         }
       }
     }
