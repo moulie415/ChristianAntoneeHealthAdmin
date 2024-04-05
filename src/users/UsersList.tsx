@@ -76,7 +76,6 @@ const UsersList = () => {
   const getUsers = useCallback(async () => {
     try {
       setLoading(true);
-      console.log('fetching');
       const conditions = [];
       if (premiumToggle === 'premiumPlus' || premiumToggle === 'premium') {
         conditions.push(where('premium', '!=', false));
@@ -84,7 +83,6 @@ const UsersList = () => {
       if (marketing !== undefined && marketing !== null) {
         conditions.push(where('marketing', '==', marketing));
       }
-      console.log(cursor.current);
       const userQuery = query(
         collection(db, 'users'),
         ...conditions,
@@ -142,7 +140,6 @@ const UsersList = () => {
           return {...data, plans: userPlans, upToDatePlan};
         });
     } catch (e) {
-      console.log(e);
       if (e instanceof Error) {
         toast.error('Error fetching users: ' + e.message);
       } else {
@@ -195,7 +192,6 @@ const UsersList = () => {
           setUsers(newUsers);
         } else {
           isAtEnd.current = true;
-          console.log('is at end');
         }
       }
     }
