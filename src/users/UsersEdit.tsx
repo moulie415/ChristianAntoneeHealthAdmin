@@ -297,9 +297,11 @@ export const UsersEdit = (props: ResourceProps) => {
                 </Labeled>
               </Box>
             </Box>
+            <WorkoutsTable />
+
             <Box display={{xs: 'block', sm: 'flex'}}>
               <Box flex={1} ml={{xs: 0, sm: '0.5em'}}>
-                <Typography variant="h6">
+                <Typography variant="h6" style={{marginTop: 10}}>
                   Health & lifestyle questionnaire
                 </Typography>
                 <StressField />
@@ -388,7 +390,6 @@ export const UsersEdit = (props: ResourceProps) => {
           </Grid>
         </Grid>
       </SimpleForm>
-      <WorkoutsTable />
     </Edit>
   );
 };

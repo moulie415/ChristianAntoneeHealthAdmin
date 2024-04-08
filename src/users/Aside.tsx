@@ -28,11 +28,11 @@ const Aside = () => {
               </Grid>
 
               <Grid item xs={12} display="flex" gap={1}>
-                <AccessTimeIcon fontSize="small" color="disabled" />
+                {/* <AccessTimeIcon fontSize="small" color="disabled" />
                 <Box flexGrow={1}>
                   <Typography variant="body2">Last seen</Typography>
                   <DateField record={record} source="last_seen" />
-                </Box>
+                </Box> */}
               </Grid>
             </Grid>
           </CardContent>

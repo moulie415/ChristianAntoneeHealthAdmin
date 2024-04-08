@@ -187,7 +187,7 @@ const WorkoutsTable = () => {
 
   return (
     <>
-      <Typography style={{marginLeft: 20, marginTop: 20}}>
+      <Typography variant="h6" gutterBottom>
         Completed workouts
       </Typography>
       <TableContainer style={{}} component={Paper}>
