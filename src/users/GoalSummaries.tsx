@@ -19,11 +19,15 @@ interface GoalSet {
 }
 
 function CircularProgressWithLabel(
-  props: CircularProgressProps & {value: number},
+  props: CircularProgressProps & {value: number; score: number; goal: number},
 ) {
   return (
     <Box sx={{position: 'relative', display: 'inline-flex'}}>
-      <CircularProgress variant="determinate" {...props} />
+      <CircularProgress
+        variant="determinate"
+        {...props}
+        value={(100 / props.goal) * props.score}
+      />
       <Box
         sx={{
           top: 0,
@@ -36,7 +40,7 @@ function CircularProgressWithLabel(
           justifyContent: 'center',
         }}>
         <Typography variant="caption" component="div" color="text.secondary">
-          {Math.round(props.value)}
+          {Math.round(props.score)}
         </Typography>
       </Box>
     </Box>
@@ -51,7 +55,7 @@ const GoalCircle: React.FC<{
   return (
     <Grid item xs={12} md={4} style={{textAlign: 'center'}}>
       <Typography>{title}</Typography>
-      <CircularProgressWithLabel value={(100 / goal) * score} />
+      <CircularProgressWithLabel goal={goal} score={score} />
     </Grid>
   );
 };
