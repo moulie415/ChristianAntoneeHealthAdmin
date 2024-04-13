@@ -19,7 +19,7 @@ interface GoalSet {
 }
 
 function CircularProgressWithLabel(
-  props: CircularProgressProps & {value: number; score: number; goal: number},
+  props: CircularProgressProps & {score: number; goal: number},
 ) {
   return (
     <Box sx={{position: 'relative', display: 'inline-flex'}}>
