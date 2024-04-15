@@ -360,13 +360,6 @@ export const UsersEdit = (props: ResourceProps) => {
               maxValue={150}
             />
             <MetricChart
-              title="Height"
-              source="height"
-              suffix="cm"
-              minValue={0}
-              maxValue={250}
-            />
-            <MetricChart
               title="Body fat percentage"
               source="bodyFatPercentage"
               suffix="%"
