@@ -1,4 +1,14 @@
-import {CircularProgress, Typography} from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
+import {
+  Box,
+  Button,
+  CircularProgress,
+  FormControlLabel,
+  Modal,
+  Typography,
+} from '@mui/material';
+import Checkbox from '@mui/material/Checkbox';
+import {DatePicker} from '@mui/x-date-pickers';
 import {Timestamp, collection, getDocs, query, where} from 'firebase/firestore';
 import * as _ from 'lodash';
 import moment from 'moment';
@@ -16,6 +26,7 @@ import {
 } from 'recharts';
 import {db} from '../App';
 import colors from '../colors';
+import NumberInput from '../common/NumberInput';
 import {Profile} from '../types/Shared';
 
 const dateFormatter = (date: number): string =>
@@ -27,12 +38,25 @@ const MetricChart: React.FC<{
   suffix?: string;
   minValue: number;
   maxValue: number;
-}> = ({title, source, suffix = '', minValue, maxValue}) => {
+  entryDisabled?: boolean;
+}> = ({title, source, suffix = '', minValue, maxValue, entryDisabled}) => {
   const profile = useRecordContext<Profile>();
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<{createdate: Timestamp; value: number}[]>(
     [],
   );
+  const [value, setValue] = useState<number>();
+  const [pastValue, setPastValue] = useState(false);
+
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => {
+    setOpen(false);
+    setValue(undefined);
+    setPastValue(false);
+  };
+
+  const [date, setDate] = useState(moment());
 
   useEffect(() => {
     const getData = async () => {
@@ -75,9 +99,25 @@ const MetricChart: React.FC<{
 
   return (
     <>
-      <Typography style={{marginTop: 10}} variant="h6" gutterBottom>
-        {title}
-      </Typography>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          marginTop: 10,
+          marginBottom: 10,
+        }}>
+        <Typography style={{}} variant="h6" gutterBottom>
+          {title}
+        </Typography>
+        {!entryDisabled && (
+          <Button
+            onClick={handleOpen}
+            variant="contained"
+            endIcon={<AddIcon />}>
+            Add entry
+          </Button>
+        )}
+      </div>
       <div style={{width: '100%', height: 250}}>
         <ResponsiveContainer>
           <AreaChart
@@ -129,6 +169,69 @@ const MetricChart: React.FC<{
           </AreaChart>
         </ResponsiveContainer>
       </div>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description">
+        <Box
+          sx={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            // width: 400,
+            bgcolor: 'background.paper',
+            borderRadius: '15px',
+            boxShadow: 24,
+            p: 4,
+          }}>
+          <Typography
+            id="modal-modal-title"
+            variant="h6"
+            gutterBottom
+            component="h2">
+            {`Add ${title} entry`}
+          </Typography>
+
+          <NumberInput
+            value={value}
+            onChange={(_, val) => val && setValue(val)}
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={pastValue}
+                onChange={event => setPastValue(event.target.checked)}
+              />
+            }
+            label="Set past value"
+          />
+          <div>
+            <DatePicker
+              maxDate={moment()}
+              format="DD/MM/YYYY"
+              disabled={!pastValue}
+              value={date}
+              onChange={val => {
+                if (val) {
+                  setDate(val);
+                }
+              }}
+            />
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              marginTop: '10px',
+            }}>
+            <Button disabled={!value} variant="contained">
+              Submit
+            </Button>
+          </div>
+        </Box>
+      </Modal>
     </>
   );
 };

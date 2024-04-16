@@ -31,7 +31,7 @@ const PercentileTable = () => {
         </tr>
         {percentiles.map(percentile => {
           return (
-            <tr>
+            <tr key={percentile}>
               <td>{`${percentile}th`}</td>
               <td>
                 <MyInput name={`mens.`} percentile={percentile} />
