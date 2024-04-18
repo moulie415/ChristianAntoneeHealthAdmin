@@ -1,4 +1,5 @@
 import {
+  addDoc,
   collection,
   doc,
   documentId,
@@ -12,9 +13,10 @@ import {
 } from 'firebase/firestore';
 import {httpsCallable} from 'firebase/functions';
 import {getDownloadURL, ref, uploadBytes} from 'firebase/storage';
+import moment from 'moment';
 import {toast} from 'react-toastify';
 import {db, functions, storage} from '../App';
-import {Chat, Message, Profile, WeeklyItems} from '../types/Shared';
+import {Chat, Message, Profile, Sample, WeeklyItems} from '../types/Shared';
 import {chunkArrayInGroups} from './chunkArrayInGroups';
 
 export const getUser = (uid: string) => {
@@ -156,4 +158,37 @@ export const getWeeklyItems = async (uid: string): Promise<WeeklyItems> => {
 export const getSettings = async () => {
   const snapshot = await getDoc(doc(db, 'settings', 'settings'));
   return snapshot.data();
+};
+
+export const getSamples = async (
+  sample: string,
+  uid: string,
+): Promise<Sample[]> => {
+  const samples = await getDocs(
+    query(
+      collection(db, 'users', uid, sample),
+      where('createdAt', '>=', moment().subtract(1, 'year').toDate()),
+    ),
+  );
+
+  return samples.docs.map(doc => {
+    const data = doc.data();
+    return {
+      startDate: data.createdate,
+      endDate: data.createdate,
+      value: data.value,
+    };
+  });
+};
+
+export const saveSample = (
+  sample: string,
+  value: number,
+  uid: string,
+  createdate = new Date(),
+) => {
+  return addDoc(collection(db, 'users', uid, sample), {
+    value,
+    createdate,
+  });
 };

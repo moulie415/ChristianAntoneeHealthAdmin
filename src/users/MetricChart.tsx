@@ -13,7 +13,8 @@ import {Timestamp, collection, getDocs, query, where} from 'firebase/firestore';
 import * as _ from 'lodash';
 import moment from 'moment';
 import {useEffect, useState} from 'react';
-import {useRecordContext} from 'react-admin';
+import {useEditController, useRecordContext} from 'react-admin';
+import {useFormContext} from 'react-hook-form';
 import {toast} from 'react-toastify';
 import {
   Area,
@@ -26,7 +27,7 @@ import {
 } from 'recharts';
 import {db} from '../App';
 import colors from '../colors';
-import NumberInput from '../common/NumberInput';
+import {saveSample} from '../helpers/api';
 import {Profile} from '../types/Shared';
 
 const dateFormatter = (date: number): string =>
@@ -39,7 +40,16 @@ const MetricChart: React.FC<{
   minValue: number;
   maxValue: number;
   entryDisabled?: boolean;
-}> = ({title, source, suffix = '', minValue, maxValue, entryDisabled}) => {
+  updateCurrent?: boolean;
+}> = ({
+  title,
+  source,
+  suffix = '',
+  minValue,
+  maxValue,
+  entryDisabled,
+  updateCurrent,
+}) => {
   const profile = useRecordContext<Profile>();
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<{createdate: Timestamp; value: number}[]>(
@@ -58,6 +68,12 @@ const MetricChart: React.FC<{
 
   const [date, setDate] = useState(moment());
 
+  const context = useFormContext();
+
+  const {save} = useEditController();
+
+  console.log(save);
+
   useEffect(() => {
     const getData = async () => {
       try {
@@ -65,7 +81,6 @@ const MetricChart: React.FC<{
         const d = await getDocs(
           query(
             collection(db, 'users', profile.uid, source),
-
             where('createdate', '>=', moment().subtract(1, 'year').toDate()),
           ),
         );
@@ -86,6 +101,32 @@ const MetricChart: React.FC<{
       getData();
     }
   }, [profile.uid, source, title]);
+
+  const [modalLoading, setModalLoading] = useState(false);
+
+  const onSubmit = async () => {
+    setModalLoading(true);
+    try {
+      if (value) {
+        await saveSample(
+          source,
+          value,
+          profile.uid,
+          pastValue ? date.toDate() : new Date(),
+        );
+        if (!pastValue && updateCurrent) {
+          context.setValue(source, value, {shouldDirty: true});
+          if (save) {
+            save({[source]: value});
+          }
+        }
+        toast.success('Sample saved successfully');
+      }
+    } catch (e) {
+      toast.error('Error submitting entry');
+    }
+    setModalLoading(false);
+  };
 
   if (loading) {
     return (
@@ -191,18 +232,27 @@ const MetricChart: React.FC<{
             variant="h6"
             gutterBottom
             component="h2">
-            {`Add ${title} entry`}
+            {`Add ${title} entry (${suffix})`}
           </Typography>
-
-          <NumberInput
-            value={value}
-            onChange={(_, val) => val && setValue(val)}
-          />
+          <div>
+            <input
+              style={{width: 200, height: 30}}
+              type="number"
+              value={value}
+              onChange={event =>
+                setValue(
+                  event.target.value ? Number(event.target.value) : undefined,
+                )
+              }
+            />
+          </div>
           <FormControlLabel
             control={
               <Checkbox
                 checked={pastValue}
-                onChange={event => setPastValue(event.target.checked)}
+                onChange={event => {
+                  setPastValue(event.target.checked);
+                }}
               />
             }
             label="Set past value"
@@ -226,7 +276,10 @@ const MetricChart: React.FC<{
               justifyContent: 'center',
               marginTop: '10px',
             }}>
-            <Button disabled={!value} variant="contained">
+            <Button
+              onClick={onSubmit}
+              disabled={!value || modalLoading}
+              variant="contained">
               Submit
             </Button>
           </div>

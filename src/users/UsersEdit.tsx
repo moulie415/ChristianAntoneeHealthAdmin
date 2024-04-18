@@ -358,6 +358,7 @@ export const UsersEdit = (props: ResourceProps) => {
               suffix="kg"
               minValue={0}
               maxValue={150}
+              updateCurrent
             />
             <MetricChart
               title="Body fat percentage"
