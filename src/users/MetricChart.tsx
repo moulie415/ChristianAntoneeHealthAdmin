@@ -1,18 +1,10 @@
 import AddIcon from '@mui/icons-material/Add';
-import {
-  Box,
-  Button,
-  CircularProgress,
-  FormControlLabel,
-  Modal,
-  Typography,
-} from '@mui/material';
+import {Box, Button, FormControlLabel, Modal, Typography} from '@mui/material';
 import Checkbox from '@mui/material/Checkbox';
 import {DatePicker} from '@mui/x-date-pickers';
-import {Timestamp, collection, getDocs, query, where} from 'firebase/firestore';
 import * as _ from 'lodash';
 import moment from 'moment';
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 import {useEditController, useRecordContext} from 'react-admin';
 import {useFormContext} from 'react-hook-form';
 import {toast} from 'react-toastify';
@@ -25,22 +17,22 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-import {db} from '../App';
 import colors from '../colors';
 import {saveSample} from '../helpers/api';
-import {Profile} from '../types/Shared';
+import {Profile, Sample} from '../types/Shared';
 
 const dateFormatter = (date: number): string =>
   new Date(date).toLocaleDateString();
 
 const MetricChart: React.FC<{
   title: string;
-  source: string;
+  source?: string;
   suffix?: string;
   minValue: number;
   maxValue: number;
   entryDisabled?: boolean;
   updateCurrent?: boolean;
+  samples: Sample[];
 }> = ({
   title,
   source,
@@ -49,12 +41,10 @@ const MetricChart: React.FC<{
   maxValue,
   entryDisabled,
   updateCurrent,
+  samples,
 }) => {
   const profile = useRecordContext<Profile>();
-  const [loading, setLoading] = useState(false);
-  const [data, setData] = useState<{createdate: Timestamp; value: number}[]>(
-    [],
-  );
+
   const [value, setValue] = useState<number>();
   const [pastValue, setPastValue] = useState(false);
 
@@ -72,42 +62,12 @@ const MetricChart: React.FC<{
 
   const {save} = useEditController();
 
-  console.log(save);
-
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        setLoading(true);
-        const d = await getDocs(
-          query(
-            collection(db, 'users', profile.uid, source),
-            where('createdate', '>=', moment().subtract(1, 'year').toDate()),
-          ),
-        );
-        setData(
-          d.docs.map(doc => doc.data()) as {
-            value: number;
-            createdate: Timestamp;
-          }[],
-        );
-      } catch (e) {
-        console.log(e);
-        toast.error(`Error fetching ${title}`);
-      }
-      setLoading(false);
-    };
-
-    if (profile.uid) {
-      getData();
-    }
-  }, [profile.uid, source, title]);
-
   const [modalLoading, setModalLoading] = useState(false);
 
   const onSubmit = async () => {
     setModalLoading(true);
     try {
-      if (value) {
+      if (value && source) {
         await saveSample(
           source,
           value,
@@ -128,15 +88,15 @@ const MetricChart: React.FC<{
     setModalLoading(false);
   };
 
-  if (loading) {
-    return (
-      <div style={{marginTop: 20, display: 'flex', justifyContent: 'center'}}>
-        <CircularProgress />
-      </div>
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     <div style={{marginTop: 20, display: 'flex', justifyContent: 'center'}}>
+  //       <CircularProgress />
+  //     </div>
+  //   );
+  // }
 
-  const minDate = _.minBy(data, 'createdate');
+  const minDate = _.minBy(samples, 'startDate');
 
   return (
     <>
@@ -162,9 +122,9 @@ const MetricChart: React.FC<{
       <div style={{width: '100%', height: 250}}>
         <ResponsiveContainer>
           <AreaChart
-            data={data?.map(sample => ({
+            data={samples?.map(sample => ({
               ...sample,
-              date: sample.createdate.toDate().getTime(),
+              date: moment(sample.startDate).valueOf(),
             }))}>
             <defs>
               <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
@@ -182,7 +142,9 @@ const MetricChart: React.FC<{
               type="number"
               scale="time"
               domain={[
-                minDate?.createdate.toDate().getTime() || new Date().getTime(),
+                minDate
+                  ? moment(minDate.startDate).valueOf()
+                  : new Date().getTime(),
                 new Date().getTime(),
               ]}
               fontSize={12}
@@ -232,7 +194,7 @@ const MetricChart: React.FC<{
             variant="h6"
             gutterBottom
             component="h2">
-            {`Add ${title} entry (${suffix})`}
+            {`Add ${title} entry ` + (suffix ? `(${suffix})` : '')}
           </Typography>
           <div>
             <input

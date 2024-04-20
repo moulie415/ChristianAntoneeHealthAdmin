@@ -104,7 +104,7 @@ export const sendMessage = async (
     if (size && size / 1000000 < maxFileSize) {
       const imageRef = ref(storage, `chats/${yourUid}/${message._id}`);
       await uploadBytes(imageRef, data);
-      const url = getDownloadURL(imageRef);
+      const url = await getDownloadURL(imageRef);
 
       message = {
         ...message,
@@ -167,15 +167,15 @@ export const getSamples = async (
   const samples = await getDocs(
     query(
       collection(db, 'users', uid, sample),
-      where('createdAt', '>=', moment().subtract(1, 'year').toDate()),
+      where('createdate', '>=', moment().subtract(1, 'year').toDate()),
     ),
   );
 
   return samples.docs.map(doc => {
     const data = doc.data();
     return {
-      startDate: data.createdate,
-      endDate: data.createdate,
+      startDate: data.createdate.toDate(),
+      endDate: data.createdate.toDate(),
       value: data.value,
     };
   });

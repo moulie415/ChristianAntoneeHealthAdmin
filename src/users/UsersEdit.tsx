@@ -23,13 +23,17 @@ import {
   SimpleForm,
   TextInput,
   Toolbar,
+  useRecordContext,
 } from 'react-admin';
 import {useNavigate, useParams} from 'react-router-dom';
 import {toast} from 'react-toastify';
 import {db} from '../App';
 import PremiumField from '../common/PremiumField';
+import {getBMIItems} from '../helpers/getBMI';
+import {getBMRItems} from '../helpers/getBMR';
+import useGetSamples from '../hooks/UseGetSamples';
 import CreatePlanButton from '../plans/CreatePlanButton';
-import {Plan} from '../types/Shared';
+import {Plan, Profile, Sample} from '../types/Shared';
 import Aside from './Aside';
 import CurrentExerciseField from './CurrentExerciseField';
 import DietaryPreferenceField from './DietaryPreferenceField';
@@ -98,11 +102,13 @@ const getPlans = async (uid: string): Promise<Plan[]> => {
     .reverse();
 };
 
-export const UsersEdit = (props: ResourceProps) => {
+const MyForm = (props: ResourceProps) => {
   const [plans, setPlans] = useState<Plan[]>([]);
 
   const {id} = useParams();
   const navigate = useNavigate();
+
+  const record = useRecordContext<Profile>(props);
 
   useEffect(() => {
     const checkPlans = async () => {
@@ -123,11 +129,117 @@ export const UsersEdit = (props: ResourceProps) => {
     </Toolbar>
   );
 
+  const weightSamples = useGetSamples('weight', id || '');
+  const heightSamples = useGetSamples('height', id || '');
+  const bodyFatPercentageSamples = useGetSamples('bodyFatPercentage', id || '');
+  const muscleMassSamples = useGetSamples('muscleMass', id || '');
+  const boneMassSamples = useGetSamples('boneMass', id || '');
+  const visceralFatSamples = useGetSamples('visceralFat', id || '');
+  const metabolicAgeSamples = useGetSamples('metabolicAge', id || '');
+
+  const bmiItems = getBMIItems(
+    weightSamples,
+    heightSamples,
+    record.weight,
+    record.height,
+  );
+
+  const bmrItems = getBMRItems(
+    weightSamples,
+    heightSamples,
+    record.weight,
+    record.height,
+    record.gender,
+    record.dob,
+  );
+
+  const charts: {
+    title: string;
+    source?: string;
+    suffix?: string;
+    minValue: number;
+    maxValue: number;
+    updateCurrent?: boolean;
+    samples: Sample[];
+    entryDisabled?: boolean;
+  }[] = [
+    {
+      title: 'Weight',
+      source: 'weight',
+      suffix: 'kg',
+      minValue: 0,
+      maxValue: 150,
+      updateCurrent: true,
+      samples: weightSamples,
+    },
+    {
+      title: 'Height',
+      source: 'height',
+      suffix: 'cm',
+      minValue: 0,
+      maxValue: 300,
+      updateCurrent: true,
+      samples: heightSamples,
+    },
+    {
+      title: 'BMI',
+      suffix: '',
+      minValue: 0,
+      maxValue: 40,
+      samples: bmiItems,
+      entryDisabled: true,
+    },
+    {
+      title: 'BMR',
+      suffix: '',
+      minValue: 1000,
+      maxValue: 2000,
+      samples: bmrItems,
+      entryDisabled: true,
+    },
+    {
+      title: 'Body fat percentage',
+      source: 'bodyFatPercentage',
+      suffix: '%',
+      minValue: 0,
+      maxValue: 30,
+      samples: bodyFatPercentageSamples,
+    },
+    {
+      title: 'Muscle mass',
+      source: 'muscleMass',
+      suffix: 'kg',
+      minValue: 0,
+      maxValue: 70,
+      samples: muscleMassSamples,
+    },
+    {
+      title: 'Bone mass',
+      source: 'boneMass',
+      suffix: 'kg',
+      minValue: 0,
+      maxValue: 10,
+      samples: boneMassSamples,
+    },
+    {
+      title: 'Visceral Fat',
+      source: 'visceralFat',
+      suffix: '',
+      minValue: 0,
+      maxValue: 60,
+      samples: visceralFatSamples,
+    },
+    {
+      title: 'Metabolic Age',
+      source: 'metabolicAge',
+      suffix: '',
+      minValue: 1,
+      maxValue: 100,
+      samples: metabolicAgeSamples,
+    },
+  ];
   return (
-    <Edit
-      title={<FullNameField size="32" sx={{margin: '5px 0'}} />}
-      aside={<Aside />}
-      {...props}>
+    <>
       <SimpleForm toolbar={<MyToolbar />}>
         <Grid container width={{xs: '100%', xl: 800}} spacing={2}>
           <Grid item xs={12} md={6}>
@@ -352,38 +464,46 @@ export const UsersEdit = (props: ResourceProps) => {
 
             <CreatePlanButton />
             <GoalSummaries />
-            <MetricChart
-              title="Weight"
-              source="weight"
-              suffix="kg"
-              minValue={0}
-              maxValue={150}
-              updateCurrent
-            />
-            <MetricChart
-              title="Body fat percentage"
-              source="bodyFatPercentage"
-              suffix="%"
-              minValue={0}
-              maxValue={30}
-            />
-            <MetricChart
-              title="Muscle mass"
-              source="muscleMass"
-              suffix="kg"
-              minValue={0}
-              maxValue={70}
-            />
-            <MetricChart
-              title="Bone mass"
-              source="boneMass"
-              suffix="kg"
-              minValue={0}
-              maxValue={10}
-            />
+            {charts.map(
+              ({
+                title,
+                source,
+                suffix,
+                minValue,
+                maxValue,
+                updateCurrent,
+                samples,
+                entryDisabled,
+              }) => {
+                return (
+                  <MetricChart
+                    key={title}
+                    title={title}
+                    source={source}
+                    suffix={suffix}
+                    minValue={minValue}
+                    maxValue={maxValue}
+                    updateCurrent={updateCurrent}
+                    samples={samples}
+                    entryDisabled={entryDisabled}
+                  />
+                );
+              },
+            )}
           </Grid>
         </Grid>
       </SimpleForm>
+    </>
+  );
+};
+
+export const UsersEdit = (props: ResourceProps) => {
+  return (
+    <Edit
+      title={<FullNameField size="32" sx={{margin: '5px 0'}} />}
+      aside={<Aside />}
+      {...props}>
+      <MyForm {...props} />
     </Edit>
   );
 };
