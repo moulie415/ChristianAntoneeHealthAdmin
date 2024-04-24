@@ -86,15 +86,20 @@ const dataProvider = FirebaseDataProvider(firebaseConfig, {
 });
 const authProvider = FirebaseAuthProvider(firebaseConfig, {});
 
-initializeAppCheck(firebaseApp, {
-  provider: new ReCaptchaV3Provider(import.meta.env.VITE_RECAPTCHA_SITE_KEY),
-
-  // Optional argument. If true, the SDK automatically refreshes App Check
-  // tokens as needed.
-  isTokenAutoRefreshEnabled: true,
-});
-
 const App = () => {
+  useEffect(() => {
+    // @ts-ignore
+    self.FIREBASE_APPCHECK_DEBUG_TOKEN = import.meta.env.MODE === 'development';
+    initializeAppCheck(firebaseApp, {
+      provider: new ReCaptchaV3Provider(
+        import.meta.env.VITE_RECAPTCHA_SITE_KEY,
+      ),
+
+      // Optional argument. If true, the SDK automatically refreshes App Check
+      // tokens as needed.
+      isTokenAutoRefreshEnabled: true,
+    });
+  }, []);
   const [user, setUser] = useState<User | null>();
 
   useEffect(() => {

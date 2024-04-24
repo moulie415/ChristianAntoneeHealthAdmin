@@ -1,4 +1,4 @@
-import {Box, Grid, Typography} from '@mui/material';
+import {Box, Button, Grid, Typography} from '@mui/material';
 import Chip from '@mui/material/Chip';
 import FormLabel from '@mui/material/FormLabel';
 import {
@@ -40,6 +40,7 @@ import DietaryPreferenceField from './DietaryPreferenceField';
 import FullNameField from './FullNameField';
 import GoalSummaries from './GoalSummaries';
 import MetricChart from './MetricChart';
+import PremiumModal from './PremiumModal';
 import SleepField from './SleepField';
 import StressField from './StressField';
 import WorkoutsTable from './WorkoutsTable';
@@ -109,6 +110,9 @@ const MyForm = (props: ResourceProps) => {
   const navigate = useNavigate();
 
   const record = useRecordContext<Profile>(props);
+
+  const [premiumModalOpen, setPremiumModalOpen] = useState(false);
+  const [grant, setGrant] = useState(false);
 
   useEffect(() => {
     const checkPlans = async () => {
@@ -409,6 +413,31 @@ const MyForm = (props: ResourceProps) => {
                 </Labeled>
               </Box>
             </Box>
+            <Box display={{xs: 'block', sm: 'flex'}}>
+              <Box flex={1} mr={{xs: 0, sm: '0.5em'}}>
+                <Button
+                  style={{marginBottom: 10}}
+                  variant="contained"
+                  onClick={() => {
+                    setGrant(true);
+                    setPremiumModalOpen(true);
+                  }}>
+                  Grant premium
+                </Button>
+              </Box>
+              <Box flex={1} ml={{xs: 0, sm: '0.5em'}}>
+                <Box flex={1} mr={{xs: 0, sm: '0.5em'}}>
+                  <Button
+                    variant="contained"
+                    onClick={() => {
+                      setGrant(false);
+                      setPremiumModalOpen(true);
+                    }}>
+                    Revoke premium
+                  </Button>
+                </Box>
+              </Box>
+            </Box>
             <WorkoutsTable />
 
             <Box display={{xs: 'block', sm: 'flex'}}>
@@ -493,6 +522,12 @@ const MyForm = (props: ResourceProps) => {
           </Grid>
         </Grid>
       </SimpleForm>
+      <PremiumModal
+        uid={id || ''}
+        open={premiumModalOpen}
+        handleClose={() => setPremiumModalOpen(false)}
+        grant={grant}
+      />
     </>
   );
 };

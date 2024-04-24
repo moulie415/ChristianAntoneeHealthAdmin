@@ -16,7 +16,14 @@ import {getDownloadURL, ref, uploadBytes} from 'firebase/storage';
 import moment from 'moment';
 import {toast} from 'react-toastify';
 import {db, functions, storage} from '../App';
-import {Chat, Message, Profile, Sample, WeeklyItems} from '../types/Shared';
+import {
+  Chat,
+  Entitlement,
+  Message,
+  Profile,
+  Sample,
+  WeeklyItems,
+} from '../types/Shared';
 import {chunkArrayInGroups} from './chunkArrayInGroups';
 
 export const getUser = (uid: string) => {
@@ -191,4 +198,34 @@ export const saveSample = (
     value,
     createdate,
   });
+};
+
+export const grantEntitlement = async (
+  userId: string,
+  entitlementId: Entitlement,
+  startTime: number,
+  endTime: number,
+) => {
+  return httpsCallable<{
+    userId: string;
+    entitlementId: Entitlement;
+    startTime: number;
+    endTime: number;
+  }>(
+    functions,
+    'grantEntitlement',
+  )({userId, entitlementId, startTime, endTime});
+};
+
+export const revokeEntitlement = async (
+  userId: string,
+  entitlementId: Entitlement,
+) => {
+  return httpsCallable<{
+    userId: string;
+    entitlementId: Entitlement;
+  }>(
+    functions,
+    'revokeEntitlement',
+  )({userId, entitlementId});
 };

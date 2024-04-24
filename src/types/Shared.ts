@@ -6,6 +6,8 @@ export type Unit = 'metric' | 'imperial';
 
 export type StressLevel = 'low' | 'medium' | 'high';
 
+export type Entitlement = 'Premium' | 'Premium Plus';
+
 export enum TrainingAvailability {
   ONE_TWO = 'ONE_TWO',
   TWO_THREE = 'TWO_THREE',
