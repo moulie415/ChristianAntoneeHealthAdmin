@@ -128,7 +128,9 @@ const PremiumModal: React.FC<{
             </div>
           </div>
         )}
-        <Typography style={{width: 300}} fontStyle="italic">
+        <Typography
+          style={{width: 300, margin: '10px', textAlign: 'center'}}
+          fontStyle="italic">
           Changes will take effect when the user next opens the app
         </Typography>
         <div
