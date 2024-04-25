@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  CircularProgress,
   Modal,
   ToggleButton,
   ToggleButtonGroup,
@@ -142,6 +143,7 @@ const PremiumModal: React.FC<{
           <Button
             onClick={onSubmit}
             disabled={loading || (grant && !(startTime && endTime))}
+            endIcon={loading ? <CircularProgress size={20} /> : undefined}
             variant="contained">
             Submit
           </Button>
