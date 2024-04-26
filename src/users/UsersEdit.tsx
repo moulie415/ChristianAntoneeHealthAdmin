@@ -402,6 +402,14 @@ const MyForm = (props: ResourceProps) => {
               </Box>
             </Box>
             <Box display={{xs: 'block', sm: 'flex'}}>
+              <TextInput
+                source="notes"
+                multiline
+                fullWidth
+                variant="outlined"
+              />
+            </Box>
+            <Box display={{xs: 'block', sm: 'flex'}}>
               <Box flex={1} mr={{xs: 0, sm: '0.5em'}}>
                 <Labeled>
                   <PremiumField source="premium" />

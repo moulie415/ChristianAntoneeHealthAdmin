@@ -5,7 +5,7 @@ import {DatePicker} from '@mui/x-date-pickers';
 import * as _ from 'lodash';
 import moment from 'moment';
 import {useState} from 'react';
-import {useEditController, useRecordContext} from 'react-admin';
+import {useEditController, useRecordContext, useRefresh} from 'react-admin';
 import {useFormContext} from 'react-hook-form';
 import {toast} from 'react-toastify';
 import {
@@ -60,7 +60,9 @@ const MetricChart: React.FC<{
 
   const context = useFormContext();
 
-  const {save} = useEditController();
+  const {save} = useEditController({redirect: false});
+
+  const refresh = useRefresh();
 
   const [modalLoading, setModalLoading] = useState(false);
 
@@ -76,11 +78,22 @@ const MetricChart: React.FC<{
         );
         if (!pastValue && updateCurrent) {
           context.setValue(source, value, {shouldDirty: true});
+          handleClose();
           if (save) {
-            save({[source]: value});
+            save(
+              {[source]: value},
+              {
+                onError: () => {
+                  refresh();
+                  toast.error('Error submitting entry');
+                },
+                onSuccess: () => {
+                  toast.success('Sample saved successfully');
+                },
+              },
+            );
           }
         }
-        toast.success('Sample saved successfully');
       }
     } catch (e) {
       toast.error('Error submitting entry');
