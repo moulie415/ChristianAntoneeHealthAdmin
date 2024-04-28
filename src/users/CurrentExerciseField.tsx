@@ -1,4 +1,4 @@
-import {FormLabel, Typography} from '@mui/material';
+import {TableCell, TableRow} from '@mui/material';
 import React from 'react';
 import {useRecordContext} from 'react-admin';
 import {CurrentExercise} from '../types/Shared';
@@ -20,12 +20,12 @@ const CurrentExerciseField: React.FC = () => {
     }
   };
   return (
-    <>
-      <FormLabel style={{fontSize: 12}}>
+    <TableRow>
+      <TableCell>
         In the last 12 months how often have you engaged in regular exercise?
-      </FormLabel>
-      <Typography>{getReadable()}</Typography>
-    </>
+      </TableCell>
+      <TableCell>{getReadable()}</TableCell>
+    </TableRow>
   );
 };
 

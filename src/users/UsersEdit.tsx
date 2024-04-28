@@ -1,6 +1,17 @@
-import {Box, Button, Grid, Typography} from '@mui/material';
+import {
+  Box,
+  Button,
+  Grid,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+} from '@mui/material';
 import Chip from '@mui/material/Chip';
-import FormLabel from '@mui/material/FormLabel';
 import {
   collection,
   getDocs,
@@ -37,6 +48,7 @@ import {Plan, Profile, Sample} from '../types/Shared';
 import Aside from './Aside';
 import CurrentExerciseField from './CurrentExerciseField';
 import DietaryPreferenceField from './DietaryPreferenceField';
+import FitnessRatingField from './FitnessRatingField';
 import FullNameField from './FullNameField';
 import GoalSummaries from './GoalSummaries';
 import MetricChart from './MetricChart';
@@ -450,28 +462,55 @@ const MyForm = (props: ResourceProps) => {
 
             <Box display={{xs: 'block', sm: 'flex'}}>
               <Box flex={1} ml={{xs: 0, sm: '0.5em'}}>
-                <Typography variant="h6" style={{marginTop: 10}}>
+                <Typography variant="h6" style={{margin: '20px 0 10px'}}>
                   Health & lifestyle questionnaire
                 </Typography>
-                <StressField />
-                <SleepField />
-                <DietaryPreferenceField />
-                <CurrentExerciseField />
+                <TableContainer component={Paper}>
+                  <Table sx={{}} aria-label="simple table">
+                    <TableHead>
+                      <TableRow>
+                        <TableCell>Question</TableCell>
+                        <TableCell>Answer</TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      <StressField />
+                      <SleepField />
+                      <DietaryPreferenceField />
+                      <CurrentExerciseField />
+                      <FitnessRatingField />
+                    </TableBody>
+                  </Table>
+                </TableContainer>
               </Box>
             </Box>
             <Box display={{xs: 'block', sm: 'flex'}}>
               <Box flex={1} ml={{xs: 0, sm: '0.5em'}}>
-                <Typography variant="h6">
+                <Typography variant="h6" style={{margin: '20px 0 10px'}}>
                   Physical activity readiness questionnaire
                 </Typography>
-                {physicalReadinessQuestions.map(({question, source}) => {
-                  return (
-                    <div key={question}>
-                      <FormLabel style={{fontSize: 12}}>{question}</FormLabel>
-                      <BooleanField source={source} />
-                    </div>
-                  );
-                })}
+                <TableContainer component={Paper}>
+                  <Table sx={{}} aria-label="simple table">
+                    <TableHead>
+                      <TableRow>
+                        <TableCell>Question</TableCell>
+                        <TableCell>Answer</TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {physicalReadinessQuestions.map(({question, source}) => {
+                        return (
+                          <TableRow key={question}>
+                            <TableCell>{question}</TableCell>
+                            <TableCell>
+                              <BooleanField source={source} />
+                            </TableCell>
+                          </TableRow>
+                        );
+                      })}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
               </Box>
             </Box>
           </Grid>

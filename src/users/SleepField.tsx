@@ -1,4 +1,4 @@
-import {FormLabel, Typography} from '@mui/material';
+import {TableCell, TableRow} from '@mui/material';
 import React from 'react';
 import {useRecordContext} from 'react-admin';
 import {Sleep} from '../types/Shared';
@@ -18,12 +18,10 @@ const SleepField: React.FC = () => {
     }
   };
   return (
-    <>
-      <FormLabel style={{fontSize: 12}}>
-        How many hours of sleep do you get each night?
-      </FormLabel>
-      <Typography>{getReadable()}</Typography>
-    </>
+    <TableRow>
+      <TableCell>How many hours of sleep do you get each night?</TableCell>
+      <TableCell>{getReadable()}</TableCell>
+    </TableRow>
   );
 };
 

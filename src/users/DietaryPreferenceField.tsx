@@ -1,4 +1,4 @@
-import {FormLabel, Typography} from '@mui/material';
+import {TableCell, TableRow} from '@mui/material';
 import React from 'react';
 import {useRecordContext} from 'react-admin';
 import {DietaryPreference} from '../types/Shared';
@@ -26,12 +26,10 @@ const DietaryPreferenceField: React.FC = () => {
     }
   };
   return (
-    <>
-      <FormLabel style={{fontSize: 12}}>
-        How would you describe your dietary preferences?
-      </FormLabel>
-      <Typography>{getReadable()}</Typography>
-    </>
+    <TableRow>
+      <TableCell>How would you describe your dietary preferences?</TableCell>
+      <TableCell>{getReadable()}</TableCell>
+    </TableRow>
   );
 };
 
