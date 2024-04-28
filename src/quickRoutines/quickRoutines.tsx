@@ -89,15 +89,6 @@ export const QuickRoutineCreate = (props: ResourceProps) => {
             {id: 'none', name: 'No equipment'},
           ]}
         />
-        <SelectInput
-          source="duration"
-          validate={required()}
-          choices={[
-            {id: 15, name: 'Under 15 mins'},
-            {id: 30, name: 'Under 30 mins'},
-            {id: 45, name: 'Under 45 mins'},
-          ]}
-        />
 
         <SelectInput
           source="level"
@@ -168,15 +159,7 @@ export const QuickRoutineEdit = (props: ResourceProps) => {
             {id: 'none', name: 'No equipment'},
           ]}
         />
-        <SelectInput
-          source="duration"
-          validate={required()}
-          choices={[
-            {id: 15, name: 'Under 15 mins'},
-            {id: 30, name: 'Under 30 mins'},
-            {id: 45, name: 'Under 45 mins'},
-          ]}
-        />
+
         <SelectInput
           source="level"
           validate={required()}
