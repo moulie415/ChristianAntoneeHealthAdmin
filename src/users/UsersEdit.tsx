@@ -44,7 +44,7 @@ import {getBMIItems} from '../helpers/getBMI';
 import {getBMRItems} from '../helpers/getBMR';
 import useGetSamples from '../hooks/UseGetSamples';
 import CreatePlanButton from '../plans/CreatePlanButton';
-import {Plan, Profile, Sample} from '../types/Shared';
+import {Goal, Plan, Profile, Sample} from '../types/Shared';
 import Aside from './Aside';
 import CurrentExerciseField from './CurrentExerciseField';
 import DietaryPreferenceField from './DietaryPreferenceField';
@@ -125,6 +125,8 @@ const MyForm = (props: ResourceProps) => {
 
   const [premiumModalOpen, setPremiumModalOpen] = useState(false);
   const [grant, setGrant] = useState(false);
+
+  const targetsEditable = record?.goal === Goal.OTHER;
 
   useEffect(() => {
     const checkPlans = async () => {
@@ -379,6 +381,7 @@ const MyForm = (props: ResourceProps) => {
                   source="targets.workouts.number"
                   fullWidth
                   variant="outlined"
+                  disabled={!targetsEditable}
                 />
               </Box>
               <Box flex={1} ml={{xs: 0, sm: '0.5em'}}>
@@ -392,6 +395,7 @@ const MyForm = (props: ResourceProps) => {
                   source="targets.workouts.level"
                   fullWidth
                   variant="outlined"
+                  disabled={!targetsEditable}
                 />
               </Box>
             </Box>
@@ -402,6 +406,7 @@ const MyForm = (props: ResourceProps) => {
                   source="targets.calories"
                   variant="outlined"
                   fullWidth
+                  disabled={!targetsEditable}
                 />
               </Box>
               <Box flex={1} ml={{xs: 0, sm: '0.5em'}}>
@@ -410,6 +415,7 @@ const MyForm = (props: ResourceProps) => {
                   source="targets.mins"
                   fullWidth
                   variant="outlined"
+                  disabled={!targetsEditable}
                 />
               </Box>
             </Box>
