@@ -414,6 +414,26 @@ const MyForm = (props: ResourceProps) => {
               </Box>
             </Box>
             <Box display={{xs: 'block', sm: 'flex'}}>
+              <Box flex={1} mr={{xs: 0, sm: '0.5em'}}>
+                <TextInput
+                  disabled
+                  fullWidth
+                  label="Auth provider"
+                  variant="outlined"
+                  source="providerId"
+                />
+              </Box>
+              <Box flex={1} mr={{xs: 0, sm: '0.5em'}}>
+                <NumberInput
+                  label="Exercise prepare time"
+                  source="prepTime"
+                  fullWidth
+                  disabled
+                  variant="outlined"
+                />
+              </Box>
+            </Box>
+            <Box display={{xs: 'block', sm: 'flex'}}>
               <TextInput
                 source="notes"
                 multiline
@@ -421,6 +441,7 @@ const MyForm = (props: ResourceProps) => {
                 variant="outlined"
               />
             </Box>
+
             <Box display={{xs: 'block', sm: 'flex'}}>
               <Box flex={1} mr={{xs: 0, sm: '0.5em'}}>
                 <Labeled>
