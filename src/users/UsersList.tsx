@@ -86,7 +86,7 @@ const UsersList = () => {
       const userQuery = query(
         collection(db, 'users'),
         ...conditions,
-        orderBy('premium', 'desc'),
+        orderBy('signUpDate', 'desc'),
         limit(cursor.current),
       );
 
@@ -253,6 +253,7 @@ const UsersList = () => {
                 <TableCell>Premium</TableCell>
                 <TableCell>Up to date plan?</TableCell>
                 <TableCell>Marketing</TableCell>
+                <TableCell>Sign up date</TableCell>
                 <TableCell></TableCell>
               </TableRow>
             </TableHead>
@@ -275,28 +276,20 @@ const UsersList = () => {
                     !!bPremium &&
                     moment(bPremium.expirationDate).isBefore(moment());
 
+                  const aHasPremium = aPremium && !aExpired;
+                  const bHasPremium = bPremium && !bExpired;
+
                   if (b.upToDatePlan && !a.upToDatePlan) {
-                    if (aPremium && !bPremium) {
-                      if (!aExpired) {
-                        return -3;
-                      }
+                    if (aHasPremium && !bHasPremium) {
                       return -2;
                     } else {
                       return -1;
                     }
                   }
-                  if (aPremium && !bPremium) {
-                    if (!aExpired) {
-                      return -2;
-                    }
+                  if (aHasPremium && !bHasPremium) {
                     return -1;
                   }
 
-                  if (aPremium && bPremium) {
-                    if (!aExpired && bExpired) {
-                      return -1;
-                    }
-                  }
                   return 0;
                 })
                 .map(user => (
@@ -329,7 +322,11 @@ const UsersList = () => {
                     <TableCell>
                       {user.marketing ? <DoneIcon /> : <ClearIcon />}
                     </TableCell>
-                    <TableCell></TableCell>
+                    <TableCell>
+                      {user.signUpDate
+                        ? moment.unix(user.signUpDate).format('DD/MM/YYYY')
+                        : ''}
+                    </TableCell>
                     <TableCell>
                       {getUserPremium(user) &&
                         moment(getUserPremium(user).expirationDate).isAfter(
