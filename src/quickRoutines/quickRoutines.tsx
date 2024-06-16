@@ -41,6 +41,7 @@ export const QuickRoutineList = (props: ResourceProps) => (
           <ChipField source="name" />
         </SingleFieldList>
       </ReferenceArrayField>
+      <BooleanField source="premium" />
       <ShowButton label="" />
       <EditButton label="" />
       <DeleteButton label="" redirect={false} />
