@@ -86,7 +86,7 @@ const UsersList = () => {
       const userQuery = query(
         collection(db, 'users'),
         ...conditions,
-        orderBy('signUpDate', 'desc'),
+        orderBy(premiumToggle ? 'premium' : 'signUpDate', 'desc'),
         limit(cursor.current),
       );
 
