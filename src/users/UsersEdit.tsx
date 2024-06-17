@@ -32,6 +32,7 @@ import {
   SaveButton,
   SelectInput,
   SimpleForm,
+  TextField,
   TextInput,
   Toolbar,
   useRecordContext,
@@ -91,12 +92,6 @@ const physicalReadinessQuestions = [
     source: 'otherReason',
     question:
       'Do you know of any other reason why you should not do physical activity?',
-  },
-
-  {
-    source: 'willInformDoctor',
-    question:
-      'If you answered YES to any of the above questions, will you inform your doctor that you intend to increase your physical activity levels?',
   },
 ];
 
@@ -535,6 +530,14 @@ const MyForm = (props: ResourceProps) => {
                           </TableRow>
                         );
                       })}
+                      {record.otherReasonDescription && (
+                        <TableRow>
+                          <TableCell>Other reason description</TableCell>
+                          <TableCell>
+                            <TextField source="otherReasonDescription" />
+                          </TableCell>
+                        </TableRow>
+                      )}
                     </TableBody>
                   </Table>
                 </TableContainer>

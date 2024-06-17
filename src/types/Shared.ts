@@ -128,8 +128,6 @@ export interface PlanWorkout {
 }
 
 export interface PlanNutrition {
-  preWorkout: string;
-  postWorkout: string;
   general: string;
 }
 
@@ -301,7 +299,7 @@ export interface Profile {
   boneProblems?: boolean;
   drugPrescription?: boolean;
   otherReason?: boolean;
-  willInformDoctor?: boolean;
+  otherReasonDescription?: string;
 }
 
 export interface FitbitHeartRateResponse {

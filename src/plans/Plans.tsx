@@ -151,49 +151,7 @@ export const PlansCreate = (props: ResourceProps) => {
           </SimpleFormIterator>
         </ArrayInput>
         <Typography>Nutritional planning</Typography>
-        <Typography variant="subtitle2">Pre-workout</Typography>
-        <TextInput
-          source="nutrition.preWorkout"
-          multiline
-          label="Pre-workout"
-          defaultValue=""
-          style={{width: 400}}
-        />
-        <ArrayInput
-          defaultValue={[]}
-          source="nutrition.preWorkoutRecipes"
-          label="Pre-workout recipes">
-          <SimpleFormIterator inline>
-            <MyAutoCompleteInput
-              optionText="name"
-              label="Recipe"
-              reference="recipes"
-              style={{width: 350}}
-            />
-          </SimpleFormIterator>
-        </ArrayInput>
-        <Typography variant="subtitle2">Post-workout</Typography>
 
-        <TextInput
-          source="nutrition.postWorkout"
-          multiline
-          label="Post-workout"
-          defaultValue=""
-          style={{width: 400}}
-        />
-        <ArrayInput
-          defaultValue={[]}
-          source="nutrition.postWorkoutRecipes"
-          label="Post-workout recipes">
-          <SimpleFormIterator inline>
-            <MyAutoCompleteInput
-              optionText="name"
-              label="Recipe"
-              reference="recipes"
-              style={{width: 350}}
-            />
-          </SimpleFormIterator>
-        </ArrayInput>
         <Typography variant="subtitle2">General recommendations</Typography>
         <TextInput
           source="nutrition.general"
@@ -347,49 +305,7 @@ export const PlansEdit = (props: ResourceProps) => {
           </SimpleFormIterator>
         </ArrayInput>
         <Typography>Nutritional planning</Typography>
-        <Typography variant="subtitle2">Pre-workout</Typography>
-        <TextInput
-          source="nutrition.preWorkout"
-          multiline
-          label="Pre-workout"
-          defaultValue=""
-          style={{width: 400}}
-        />
-        <ArrayInput
-          defaultValue={[]}
-          source="nutrition.preWorkoutRecipes"
-          label="Pre-workout recipes">
-          <SimpleFormIterator inline>
-            <MyAutoCompleteInput
-              optionText="name"
-              label="Recipe"
-              reference="recipes"
-              style={{width: 350}}
-            />
-          </SimpleFormIterator>
-        </ArrayInput>
-        <Typography variant="subtitle2">Post-workout</Typography>
 
-        <TextInput
-          source="nutrition.postWorkout"
-          multiline
-          label="Post-workout"
-          defaultValue=""
-          style={{width: 400}}
-        />
-        <ArrayInput
-          defaultValue={[]}
-          source="nutrition.postWorkoutRecipes"
-          label="Post-workout recipes">
-          <SimpleFormIterator inline>
-            <MyAutoCompleteInput
-              optionText="name"
-              label="Recipe"
-              reference="recipes"
-              style={{width: 350}}
-            />
-          </SimpleFormIterator>
-        </ArrayInput>
         <Typography variant="subtitle2">General recommendations</Typography>
         <TextInput
           source="nutrition.general"
