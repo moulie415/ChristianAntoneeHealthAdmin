@@ -35,6 +35,7 @@ const MyMenu = () => {
   };
   return (
     <Menu>
+      <Menu.ResourceItem name="dashboard" />
       <Menu.ResourceItem name="exercises" />
       <Menu.ResourceItem name="tests" />
       <Menu.ResourceItem name="quickRoutines" />

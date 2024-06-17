@@ -1,4 +1,5 @@
 import BookIcon from '@mui/icons-material/Book';
+import DashboardIcon from '@mui/icons-material/Dashboard';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 import RestaurantIcon from '@mui/icons-material/Restaurant';
@@ -26,6 +27,7 @@ import CustomLoginPage from './auth/CustomLoginPage';
 import MyLayout from './common/MyLayout';
 import UserIcon from './common/UserIcon';
 import ChatContextProvider from './context/ChatContextProvider';
+import Dashboard from './dashboard/Dashboard';
 import {
   EducationCreate,
   EducationEdit,
@@ -133,6 +135,12 @@ const App = () => {
           darkTheme={softDarkTheme}
           dataProvider={dataProvider}
           authProvider={authProvider}>
+          <Resource
+            name="dashboard"
+            list={Dashboard}
+            icon={DashboardIcon}
+            options={{label: 'Dashboard'}}
+          />
           <Resource
             name="exercises"
             list={ExerciseList}
