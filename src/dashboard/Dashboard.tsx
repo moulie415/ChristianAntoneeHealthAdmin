@@ -1,5 +1,14 @@
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
-import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import GroupAddIcon from '@mui/icons-material/GroupAdd';
+import PeopleIcon from '@mui/icons-material/People';
+import {
+  Avatar,
+  Box,
+  Button,
+  ListItemAvatar,
+  ListItemButton,
+  ListItemText,
+} from '@mui/material';
 import {
   collection,
   getCountFromServer,
@@ -9,11 +18,48 @@ import {
 } from 'firebase/firestore';
 import moment from 'moment';
 import {FC, useEffect, useState} from 'react';
+import {Link, useNavigate} from 'react-router-dom';
 import {toast} from 'react-toastify';
 import {db} from '../App';
 import CardWithIcon from '../common/CardWithIcon';
-import UserIcon from '../common/UserIcon';
 import * as api from '../helpers/api';
+import {Profile} from '../types/Shared';
+
+const UserList: FC<{users: Profile[]; linkParam?: string}> = ({
+  users,
+  linkParam,
+}) => {
+  const navigate = useNavigate();
+
+  return (
+    <>
+      {users.slice(0, 10).map(user => {
+        return (
+          <ListItemButton
+            key={user.uid}
+            onClick={() => navigate(`/users/${user.uid}`)}>
+            <ListItemAvatar>
+              <Avatar src={user.avatar} />
+            </ListItemAvatar>
+            <ListItemText primary={`${user.name} ${user.surname || ''}`} />
+          </ListItemButton>
+        );
+      })}
+      {!!users.length && (
+        <Button
+          sx={{borderRadius: 0}}
+          component={Link}
+          to={`/users?${linkParam || ''}`}
+          size="small"
+          color="primary">
+          <Box p={1} sx={{color: 'primary.main'}}>
+            See all users
+          </Box>
+        </Button>
+      )}
+    </>
+  );
+};
 
 interface OverMetricObject {
   id: string;
@@ -39,8 +85,8 @@ const Dashboard = () => {
     [],
   );
   const [totalUserCount, setTotalUserCount] = useState(0);
-  const [premiumUserCount, setPremiumUserCount] = useState(0);
-  const [premiumPlusUserCount, setPremiumPlusUserCount] = useState(0);
+  const [premiumUsers, setPremiumUsers] = useState<Profile[]>([]);
+  const [premiumPlusUsers, setPremiumPlusUsers] = useState<Profile[]>([]);
   const [freeUserCount, setFreeUserCount] = useState(0);
   useEffect(() => {
     const fetchData = async () => {
@@ -54,25 +100,29 @@ const Dashboard = () => {
         const premiumQuery = query(users, where('premium', '!=', false));
         const premiumDocs = await getDocs(premiumQuery);
 
-        const premiumUsers = premiumDocs.docs.filter(doc => {
-          const data = doc.data();
-          const premium = data.premium?.['Premium'];
-          const hasExpired =
-            !!premium && moment(premium.expirationDate).isBefore(moment());
-          return premium && !hasExpired;
-        });
+        const premiumUsers = premiumDocs.docs
+          .filter(doc => {
+            const data = doc.data();
+            const premium = data.premium?.['Premium'];
+            const hasExpired =
+              !!premium && moment(premium.expirationDate).isBefore(moment());
+            return premium && !hasExpired;
+          })
+          .map(user => user.data());
 
-        setPremiumUserCount(premiumUsers.length);
-        const premiumPlusUsers = premiumDocs.docs.filter(doc => {
-          const data = doc.data();
-          const premiumPlus = data.premium?.['Premium Plus'];
-          const hasExpired =
-            !!premiumPlus &&
-            moment(premiumPlus.expirationDate).isBefore(moment());
-          return premiumPlus && !hasExpired;
-        });
+        setPremiumUsers(premiumUsers as Profile[]);
+        const premiumPlusUsers = premiumDocs.docs
+          .filter(doc => {
+            const data = doc.data();
+            const premiumPlus = data.premium?.['Premium Plus'];
+            const hasExpired =
+              !!premiumPlus &&
+              moment(premiumPlus.expirationDate).isBefore(moment());
+            return premiumPlus && !hasExpired;
+          })
+          .map(user => user.data());
 
-        setPremiumPlusUserCount(premiumPlusUsers.length);
+        setPremiumPlusUsers(premiumPlusUsers as Profile[]);
 
         const freeUserCount =
           totalUsers - premiumUsers.length - premiumPlusUsers.length;
@@ -109,7 +159,7 @@ const Dashboard = () => {
         <div style={{marginRight: '0.5em', flex: 1}}>
           <CardWithIcon
             to="/users"
-            icon={UserIcon}
+            icon={PeopleIcon}
             title="Total users"
             subtitle={totalUserCount}
             loading={loading}
@@ -118,7 +168,7 @@ const Dashboard = () => {
         <div style={{marginRight: '0.5em', flex: 1}}>
           <CardWithIcon
             to="/users"
-            icon={UserIcon}
+            icon={PeopleIcon}
             title="Free users"
             subtitle={freeUserCount}
             loading={loading}
@@ -127,20 +177,22 @@ const Dashboard = () => {
         <div style={{marginRight: '0.5em', flex: 1}}>
           <CardWithIcon
             to="/users"
-            icon={UserIcon}
+            icon={PeopleIcon}
             title="Premium users"
-            subtitle={premiumUserCount}
-            loading={loading}
-          />
+            subtitle={premiumUsers.length}
+            loading={loading}>
+            <UserList linkParam="premium=true" users={premiumUsers} />
+          </CardWithIcon>
         </div>
         <div style={{flex: 1}}>
           <CardWithIcon
             to="/users"
-            icon={PersonAddIcon}
+            icon={GroupAddIcon}
             title="Premium Plus users"
-            subtitle={premiumPlusUserCount}
-            loading={loading}
-          />
+            subtitle={premiumPlusUsers.length}
+            loading={loading}>
+            <UserList linkParam="premiumPlus=true" users={premiumPlusUsers} />
+          </CardWithIcon>
         </div>
       </div>
       <div style={{display: 'flex', marginTop: 10}}>

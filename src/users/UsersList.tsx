@@ -25,7 +25,7 @@ import {
 } from 'firebase/firestore';
 import moment from 'moment';
 import {useCallback, useEffect, useRef, useState} from 'react';
-import {useNavigate} from 'react-router-dom';
+import {useNavigate, useSearchParams} from 'react-router-dom';
 import {toast} from 'react-toastify';
 import {db} from '../App';
 import {chunkArrayInGroups} from '../helpers/chunkArrayInGroups';
@@ -58,17 +58,50 @@ const PremiumField: React.FC<{user: any}> = ({user}) => {
   );
 };
 
-type PremiumToggle = 'premium' | 'premiumPlus';
+type PremiumToggle = 'premium' | 'premiumPlus' | undefined;
 
 const UsersList = () => {
   const [loading, setLoading] = useState(false);
   const [users, setUsers] = useState<any[]>([]);
-  const [marketing, setMarketing] = useState<boolean>();
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const premiumPlusParam = searchParams.get('premiumPlus');
+  const premiumParam = searchParams.get('premium');
+
+  const marketingParam = searchParams.get('marketing');
+
+  const [marketing, setMarketing] = useState<boolean | undefined>(
+    marketingParam ? (marketingParam === 'true' ? true : false) : undefined,
+  );
   const [emailFilter, setEmailFilter] = useState('');
 
   const tableRef = useRef<HTMLDivElement>(null);
 
-  const [premiumToggle, setPremiumToggle] = useState<PremiumToggle>();
+  const [premiumToggle, setPremiumToggle] = useState<PremiumToggle>(
+    premiumPlusParam ? 'premiumPlus' : premiumParam ? 'premium' : undefined,
+  );
+
+  useEffect(() => {
+    const searchParams: {[key: string]: string} = {};
+    if (marketing) {
+      searchParams.marketing = 'true';
+    } else if (marketing === false) {
+      searchParams.marketing = 'false';
+    } else {
+      delete searchParams.marketing;
+    }
+    if (premiumToggle === 'premium') {
+      searchParams.premium = 'true';
+      delete searchParams.premiumPlus;
+    } else if (premiumToggle === 'premiumPlus') {
+      searchParams.premiumPlus = 'true';
+      delete searchParams.premium;
+    } else {
+      delete searchParams.premiumPlus;
+      delete searchParams.premium;
+    }
+    setSearchParams(searchParams);
+  }, [marketing, premiumToggle, setSearchParams]);
 
   const cursor = useRef(100);
   const isAtEnd = useRef(false);
