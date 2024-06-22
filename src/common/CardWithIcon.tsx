@@ -1,16 +1,24 @@
-import {Box, Card, Divider, Typography} from '@mui/material';
+import {Box, Card, CircularProgress, Divider, Typography} from '@mui/material';
 import {FC, ReactNode, createElement} from 'react';
 import {Link, To} from 'react-router-dom';
 
 interface Props {
   icon: FC<any>;
-  to: To;
+  to?: To;
   title?: string;
   subtitle?: ReactNode;
   children?: ReactNode;
+  loading?: boolean;
 }
 
-const CardWithIcon = ({icon, title, subtitle, to, children}: Props) => (
+const CardWithIcon = ({
+  icon,
+  title,
+  subtitle,
+  to,
+  children,
+  loading,
+}: Props) => (
   <Card
     sx={{
       minHeight: 52,
@@ -22,7 +30,7 @@ const CardWithIcon = ({icon, title, subtitle, to, children}: Props) => (
         color: 'inherit',
       },
     }}>
-    <Link to={to}>
+    <Link to={to || '/'}>
       <Box
         sx={{
           position: 'relative',
@@ -49,7 +57,9 @@ const CardWithIcon = ({icon, title, subtitle, to, children}: Props) => (
           },
         }}>
         <Box width="3em" className="icon">
-          {createElement(icon, {fontSize: 'large'})}
+          {createElement(loading ? CircularProgress : icon, {
+            fontSize: 'large',
+          })}
         </Box>
         <Box textAlign="right">
           <Typography color="textSecondary">{title}</Typography>

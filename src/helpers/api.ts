@@ -229,3 +229,27 @@ export const revokeEntitlement = async (
     'revokeEntitlement',
   )({userId, entitlementId});
 };
+
+export interface OverviewMetric {
+  object: string;
+  id: string;
+  name: string;
+  description: string;
+  unit: string;
+  period: string;
+  value: number;
+  last_updated_at: number;
+  last_updated_at_iso8601: string;
+}
+
+export interface OverviewMetricsResponse {
+  object: string;
+  metrics: OverviewMetric[];
+}
+
+export const getOverviewMetrics = async () => {
+  return httpsCallable<OverviewMetricsResponse>(
+    functions,
+    'getOverviewMetrics',
+  )();
+};
