@@ -93,7 +93,8 @@ const Dashboard = () => {
       try {
         setLoading(true);
         const users = collection(db, 'users');
-        const snapshot = await getCountFromServer(users);
+        const q = query(users, where('signUpDate', '!=', null));
+        const snapshot = await getCountFromServer(q);
         const totalUsers = snapshot.data().count;
         setTotalUserCount(totalUsers);
 
