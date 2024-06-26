@@ -139,9 +139,8 @@ const Dashboard = () => {
     const fetchOverviewMetrics = async () => {
       try {
         setOverviewMetricsLoading(true);
-        const metrics = await api.getOverviewMetrics();
-        const response = metrics.data as api.OverviewMetricsResponse;
-        setOverviewMetrics(response.metrics);
+        const {data} = await api.getOverviewMetrics();
+        setOverviewMetrics(data.metrics);
         setOverviewMetricsLoading(false);
       } catch (e) {
         if (e instanceof Error) {

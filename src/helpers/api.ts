@@ -248,7 +248,7 @@ export interface OverviewMetricsResponse {
 }
 
 export const getOverviewMetrics = async () => {
-  return httpsCallable<OverviewMetricsResponse>(
+  return httpsCallable<null, OverviewMetricsResponse>(
     functions,
     'getOverviewMetrics',
   )();
