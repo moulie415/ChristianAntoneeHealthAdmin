@@ -12,7 +12,7 @@ const WelcomeMessageField: React.FC<TextFieldProps> = props => {
   return (
     <div>
       <TextField source="welcomeMessage" {...props} />
-      <div style={{fontStyle: 'italic', marginTop: 10}}>
+      <div style={{fontStyle: 'italic', marginTop: 10, marginBottom: 20}}>
         Example: {previewMessage}
       </div>
     </div>

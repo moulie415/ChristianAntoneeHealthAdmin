@@ -4,6 +4,8 @@ import {
   Edit,
   EditButton,
   List,
+  NumberField,
+  NumberInput,
   ReferenceArrayField,
   required,
   ResourceProps,
@@ -36,6 +38,10 @@ export const SettingsList = (props: ResourceProps) => (
           <ChipField source="name" />
         </SingleFieldList>
       </ReferenceArrayField>
+      <NumberField
+        source="premiumPlusMaxSubscriptions"
+        label="Premium Plus max subscriptions"
+      />
       <ShowButton label="" />
       <EditButton label="" />
     </Datagrid>
@@ -59,6 +65,11 @@ export const SettingsShow = (props: ResourceProps) => (
         </SingleFieldList>
       </ReferenceArrayField>
       <WelcomeMessageField source="welcomeMessage" />
+      <NumberField
+        source="premiumPlusMaxSubscriptions"
+        label="Premium Plus max subscriptions"
+        fullWidth
+      />
     </SimpleShowLayout>
   </Show>
 );
@@ -89,6 +100,10 @@ export const SettingsEdit = (props: ResourceProps) => (
         fullWidth
         validate={[required()]}
         source="welcomeMessage"
+      />
+      <NumberInput
+        source="premiumPlusMaxSubscriptions"
+        label="Premium Plus max subscriptions"
       />
     </SimpleForm>
   </Edit>

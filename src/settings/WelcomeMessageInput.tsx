@@ -7,7 +7,7 @@ const WelcomeMessageInput: React.FC<TextInputProps> = props => {
   const previewMessage = field.value?.replaceAll('{{name}}', 'Nigel');
 
   return (
-    <div>
+    <div style={{marginBottom: 20}}>
       <TextInput multiline fullWidth {...props} />
       <div style={{fontStyle: 'italic'}}>Example: {previewMessage}</div>
     </div>
