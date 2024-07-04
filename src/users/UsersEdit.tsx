@@ -24,6 +24,7 @@ import moment from 'moment';
 import {useEffect, useState} from 'react';
 import {
   BooleanField,
+  BooleanInput,
   DateInput,
   Edit,
   Labeled,
@@ -263,7 +264,7 @@ const MyForm = (props: ResourceProps) => {
               <Box flex={1} mr={{xs: 0, sm: '0.5em'}}>
                 <TextInput
                   source="name"
-                  disabled
+                  readOnly
                   variant="outlined"
                   fullWidth
                 />
@@ -272,7 +273,7 @@ const MyForm = (props: ResourceProps) => {
                 <TextInput
                   source="surname"
                   fullWidth
-                  disabled
+                  readOnly
                   variant="outlined"
                 />
               </Box>
@@ -282,7 +283,7 @@ const MyForm = (props: ResourceProps) => {
                 <TextInput
                   source="email"
                   fullWidth
-                  disabled
+                  readOnly
                   variant="outlined"
                 />
               </Box>
@@ -291,7 +292,7 @@ const MyForm = (props: ResourceProps) => {
                   label="Date of birth"
                   source="dob"
                   fullWidth
-                  disabled
+                  readOnly
                   variant="outlined"
                 />
               </Box>
@@ -302,7 +303,7 @@ const MyForm = (props: ResourceProps) => {
                   source="weight"
                   label="Weight (kg)"
                   fullWidth
-                  disabled
+                  readOnly
                   variant="outlined"
                 />
               </Box>
@@ -311,7 +312,7 @@ const MyForm = (props: ResourceProps) => {
                   source="height"
                   label="height (cm)"
                   fullWidth
-                  disabled
+                  readOnly
                   variant="outlined"
                 />
               </Box>
@@ -321,13 +322,18 @@ const MyForm = (props: ResourceProps) => {
                 <TextInput
                   source="gender"
                   label="Sex"
-                  disabled
+                  readOnly
                   variant="outlined"
                   fullWidth
                 />
               </Box>
               <Box flex={1} ml={{xs: 0, sm: '0.5em'}}>
-                <NumberInput source="phone" fullWidth variant="outlined" />
+                <NumberInput
+                  source="phone"
+                  fullWidth
+                  variant="outlined"
+                  defaultValue=""
+                />
               </Box>
             </Box>
             <Box display={{xs: 'block', sm: 'flex'}}>
@@ -335,7 +341,7 @@ const MyForm = (props: ResourceProps) => {
                 <TextInput
                   source="equipment"
                   label="Access to equipment"
-                  disabled
+                  readOnly
                   variant="outlined"
                   fullWidth
                 />
@@ -345,7 +351,7 @@ const MyForm = (props: ResourceProps) => {
                   source="experience"
                   label="Experience level"
                   fullWidth
-                  disabled
+                  readOnly
                   variant="outlined"
                 />
               </Box>
@@ -353,7 +359,7 @@ const MyForm = (props: ResourceProps) => {
             <Box display={{xs: 'block', sm: 'flex'}}>
               <Box flex={1} mr={{xs: 0, sm: '0.5em'}}>
                 <TextInput
-                  disabled
+                  readOnly
                   fullWidth
                   label="Area of focus"
                   variant="outlined"
@@ -362,7 +368,7 @@ const MyForm = (props: ResourceProps) => {
               </Box>
               <Box flex={1} mr={{xs: 0, sm: '0.5em'}}>
                 <TextInput
-                  disabled
+                  readOnly
                   fullWidth
                   variant="outlined"
                   source="goal"
@@ -376,7 +382,7 @@ const MyForm = (props: ResourceProps) => {
                   source="targets.workouts.number"
                   fullWidth
                   variant="outlined"
-                  disabled={!targetsEditable}
+                  readOnly={!targetsEditable}
                 />
               </Box>
               <Box flex={1} ml={{xs: 0, sm: '0.5em'}}>
@@ -390,7 +396,7 @@ const MyForm = (props: ResourceProps) => {
                   source="targets.workouts.level"
                   fullWidth
                   variant="outlined"
-                  disabled={!targetsEditable}
+                  readOnly={!targetsEditable}
                 />
               </Box>
             </Box>
@@ -401,7 +407,7 @@ const MyForm = (props: ResourceProps) => {
                   source="targets.calories"
                   variant="outlined"
                   fullWidth
-                  disabled={!targetsEditable}
+                  readOnly={!targetsEditable}
                 />
               </Box>
               <Box flex={1} ml={{xs: 0, sm: '0.5em'}}>
@@ -410,18 +416,19 @@ const MyForm = (props: ResourceProps) => {
                   source="targets.mins"
                   fullWidth
                   variant="outlined"
-                  disabled={!targetsEditable}
+                  readOnly={!targetsEditable}
                 />
               </Box>
             </Box>
             <Box display={{xs: 'block', sm: 'flex'}}>
               <Box flex={1} mr={{xs: 0, sm: '0.5em'}}>
                 <TextInput
-                  disabled
+                  readOnly
                   fullWidth
                   label="Auth provider"
                   variant="outlined"
                   source="providerId"
+                  defaultValue=""
                 />
               </Box>
               <Box flex={1} mr={{xs: 0, sm: '0.5em'}}>
@@ -429,7 +436,7 @@ const MyForm = (props: ResourceProps) => {
                   label="Exercise prepare time"
                   source="prepTime"
                   fullWidth
-                  disabled
+                  readOnly
                   variant="outlined"
                 />
               </Box>
@@ -440,6 +447,13 @@ const MyForm = (props: ResourceProps) => {
                 multiline
                 fullWidth
                 variant="outlined"
+                defaultValue=""
+              />
+            </Box>
+            <Box display={{xs: 'block', sm: 'flex'}}>
+              <BooleanInput
+                source="freeBiometrics"
+                label="All biometrics free regardless of premium"
               />
             </Box>
 
