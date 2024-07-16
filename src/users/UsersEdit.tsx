@@ -57,6 +57,7 @@ import MetricChart from './MetricChart';
 import PremiumModal from './PremiumModal';
 import SleepField from './SleepField';
 import StressField from './StressField';
+import UserNotes from './UserNotes';
 import WorkoutsTable from './WorkoutsTable';
 
 const physicalReadinessQuestions = [
@@ -138,7 +139,7 @@ const MyForm = (props: ResourceProps) => {
   }, [id]);
 
   const MyToolbar = () => (
-    <Toolbar>
+    <Toolbar sx={{position: 'sticky', bottom: 0, zIndex: 2}}>
       <SaveButton label="Save" />
     </Toolbar>
   );
@@ -442,19 +443,13 @@ const MyForm = (props: ResourceProps) => {
               </Box>
             </Box>
             <Box display={{xs: 'block', sm: 'flex'}}>
-              <TextInput
-                source="notes"
-                multiline
-                fullWidth
-                variant="outlined"
-                defaultValue=""
-              />
-            </Box>
-            <Box display={{xs: 'block', sm: 'flex'}}>
               <BooleanInput
                 source="freeBiometrics"
                 label="All biometrics free regardless of premium"
               />
+            </Box>
+            <Box display={{xs: 'block', sm: 'flex'}}>
+              <UserNotes />
             </Box>
 
             <Box display={{xs: 'block', sm: 'flex'}}>
@@ -628,7 +623,8 @@ export const UsersEdit = (props: ResourceProps) => {
     <Edit
       title={<FullNameField size="32" sx={{margin: '5px 0'}} />}
       aside={<Aside />}
-      {...props}>
+      {...props}
+      sx={{'& .MuiPaper-root': {overflow: 'visible'}}}>
       <MyForm {...props} />
     </Edit>
   );

@@ -300,6 +300,7 @@ export interface Profile {
   drugPrescription?: boolean;
   otherReason?: boolean;
   otherReasonDescription?: string;
+  notes?: string;
 }
 
 export interface FitbitHeartRateResponse {
