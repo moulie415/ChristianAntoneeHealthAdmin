@@ -125,10 +125,13 @@ export const QuickRoutineCreate = (props: ResourceProps) => {
           validate={required()}
           source="thumbnail"
           label="Thumbnail"
-          accept="image/*">
+          accept={{'image/*': ['.jpeg', '.png']}}>
           <ImageField source="src" title="title" />
         </ImageInput>
-        <FileInput source="preview" label="Preview video" accept="video/*">
+        <FileInput
+          source="preview"
+          label="Preview video"
+          accept={{'video/*': ['.mp4', '.mov', '.avi']}}>
           <FileField source="src" title="title" />
         </FileInput>
         <BooleanInput source="premium" />
@@ -195,10 +198,13 @@ export const QuickRoutineEdit = (props: ResourceProps) => {
           validate={required()}
           source="thumbnail"
           label="Thumbnail"
-          accept="image/*">
+          accept={{'image/*': ['.jpeg', '.png']}}>
           <ImageField source="src" title="title" />
         </ImageInput>
-        <FileInput source="preview" label="Preview video" accept="video/*">
+        <FileInput
+          source="preview"
+          label="Preview video"
+          accept={{'video/*': ['.mp4', '.mov', '.avi']}}>
           <FileField source="src" title="title" />
         </FileInput>
         <BooleanInput source="premium" />

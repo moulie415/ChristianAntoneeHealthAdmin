@@ -46,7 +46,7 @@ export const TestShow = (props: ResourceProps) => (
     <SimpleShowLayout>
       <TextField source="id" />
       <TextField source="name" />
-      <TextField source="summary" style={{width: 350}} multiline />
+      <TextField source="summary" style={{width: 350}} />
       <BooleanField source="premium" />
       <TextField source="metric" />
       <TextField source="source" />
@@ -78,7 +78,7 @@ export const TestCreate = (props: ResourceProps) => (
       <FileInput
         source="video"
         label="Video"
-        accept="video/*"
+        accept={{'video/*': ['.mp4', '.mov', '.avi']}}
         defaultValue={null}>
         <FileField source="src" title="title" />
       </FileInput>
@@ -86,7 +86,7 @@ export const TestCreate = (props: ResourceProps) => (
         source="thumbnail"
         validate={required()}
         label="Thumbnail"
-        accept="image/*">
+        accept={{'image/*': ['.jpeg', '.png']}}>
         <ImageField source="src" title="title" />
       </ImageInput>
       <BooleanInput source="premium" />
@@ -123,7 +123,7 @@ export const TestEdit = (props: ResourceProps) => (
       <FileInput
         source="video"
         label="Video"
-        accept="video/*"
+        accept={{'video/*': ['.mp4', '.mov', '.avi']}}
         defaultValue={null}>
         <FileField source="src" title="title" />
       </FileInput>
@@ -131,7 +131,7 @@ export const TestEdit = (props: ResourceProps) => (
         source="thumbnail"
         validate={required()}
         label="Thumbnail"
-        accept="image/*">
+        accept={{'image/*': ['.jpeg', '.png']}}>
         <ImageField source="src" title="title" />
       </ImageInput>
       <BooleanInput source="premium" />

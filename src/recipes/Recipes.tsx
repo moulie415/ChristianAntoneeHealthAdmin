@@ -70,14 +70,14 @@ export const RecipesCreate = (props: ResourceProps) => (
       <ImageInput
         source="image"
         label="Image"
-        accept="image/*"
+        accept={{'image/*': ['.jpeg', '.png']}}
         validate={required()}>
         <ImageField source="src" title="title" />
       </ImageInput>
       <FileInput
         source="recipe"
         label="Recipe"
-        accept="application/pdf"
+        accept={{'application/pdf': ['.pdf']}}
         validate={required()}>
         <FileField source="src" title="title" />
       </FileInput>
@@ -98,14 +98,14 @@ export const RecipesEdit = (props: ResourceProps) => (
       <ImageInput
         source="image"
         label="Image"
-        accept="image/*"
+        accept={{'image/*': ['.jpeg', '.png']}}
         validate={required()}>
         <ImageField source="src" title="title" />
       </ImageInput>
       <FileInput
         source="recipe"
         label="Recipe"
-        accept="application/pdf"
+        accept={{'application/pdf': ['.pdf']}}
         validate={required()}>
         <FileField source="src" title="title" />
       </FileInput>

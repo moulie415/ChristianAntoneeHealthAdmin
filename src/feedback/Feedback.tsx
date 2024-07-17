@@ -28,7 +28,7 @@ export const FeedbackList = (props: ResourceProps) => (
 export const FeedbackShow = (props: ResourceProps) => (
   <Show {...props}>
     <SimpleShowLayout>
-      <TextField source="feedback" multiline />
+      <TextField source="feedback" />
       <NumberField source="rating" />
       <ReferenceField label="User" source="id" reference="users">
         <TextField source="name" />

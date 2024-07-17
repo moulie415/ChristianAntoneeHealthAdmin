@@ -155,17 +155,17 @@ const MyForm = (props: ResourceProps) => {
   const bmiItems = getBMIItems(
     weightSamples,
     heightSamples,
-    record.weight,
-    record.height,
+    record?.weight,
+    record?.height,
   );
 
   const bmrItems = getBMRItems(
     weightSamples,
     heightSamples,
-    record.weight,
-    record.height,
-    record.gender,
-    record.dob,
+    record?.weight,
+    record?.height,
+    record?.gender,
+    record?.dob,
   );
 
   const charts: {
@@ -539,7 +539,7 @@ const MyForm = (props: ResourceProps) => {
                           </TableRow>
                         );
                       })}
-                      {record.otherReasonDescription && (
+                      {record?.otherReasonDescription && (
                         <TableRow>
                           <TableCell>Other reason description</TableCell>
                           <TableCell>

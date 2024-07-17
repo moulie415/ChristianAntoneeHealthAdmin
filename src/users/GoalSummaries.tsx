@@ -79,15 +79,15 @@ const GoalSummaries: React.FC = () => {
   useEffect(() => {
     const getWeeklyItems = async () => {
       setLoading(true);
-      const items = await api.getWeeklyItems(profile.uid);
+      const items = await api.getWeeklyItems(profile?.uid || '');
       setWeeklyItems(items);
       setLoading(false);
     };
 
-    if (profile.uid) {
+    if (profile?.uid) {
       getWeeklyItems();
     }
-  }, [profile.uid]);
+  }, [profile?.uid]);
 
   const quickRoutinesObj =
     data &&
@@ -115,7 +115,7 @@ const GoalSummaries: React.FC = () => {
     workoutGoal,
     minsGoal,
     workoutLevelTitleString,
-  } = getGoalsData(weeklyItems, quickRoutinesObj, profile.targets);
+  } = getGoalsData(weeklyItems, quickRoutinesObj, profile?.targets);
 
   const goals: GoalSet[] = [
     {
@@ -145,7 +145,7 @@ const GoalSummaries: React.FC = () => {
         Weekly Targets
       </Typography>
       <Grid container>
-        {profile.targets &&
+        {profile?.targets &&
           goals.map(({goal, score, title, key}) => {
             return (
               <GoalCircle title={title} key={key} goal={goal} score={score} />

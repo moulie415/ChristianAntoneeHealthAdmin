@@ -151,15 +151,9 @@ export const EducationCreate = (props: ResourceProps) => {
           validate={[required()]}
           source="image"
           label="Image"
-          accept="image/*">
+          accept={{'image/*': ['.jpeg', '.png']}}>
           <ImageField source="src" title="title" />
         </ImageInput>
-        {/* <RichTextInput
-          validate={[required()]}
-          source="body"
-          multiline
-          fullWidth
-        /> */}
         <CustomBodyInput />
         <BooleanInput source="premium" />
       </SimpleForm>
@@ -179,10 +173,12 @@ export const EducationEdit = (props: ResourceProps) => (
           {id: 'nutritional', name: 'Nutritional Info'},
         ]}
       />
-      <ImageInput source="image" label="Image" accept="image/*">
+      <ImageInput
+        source="image"
+        label="Image"
+        accept={{'image/*': ['.jpeg', '.png']}}>
         <ImageField source="src" title="title" />
       </ImageInput>
-      {/* <RichTextInput source="body" multiline fullWidth /> */}
       <CustomBodyInput />
       <BooleanInput source="premium" />
     </SimpleForm>

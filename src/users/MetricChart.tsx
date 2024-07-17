@@ -73,7 +73,7 @@ const MetricChart: React.FC<{
         await saveSample(
           source,
           value,
-          profile.uid,
+          profile?.uid || '',
           pastValue ? date.toDate() : new Date(),
         );
         if (!pastValue && updateCurrent) {

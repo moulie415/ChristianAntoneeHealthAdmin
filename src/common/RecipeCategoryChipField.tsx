@@ -4,7 +4,7 @@ import {recipeCategories} from '../recipes/Recipes';
 
 const RecipeCategoryChipField = () => {
   const record = useRecordContext();
-  const label = recipeCategories.find(c => c.id === record.category)?.name;
+  const label = recipeCategories.find(c => c.id === record?.category)?.name;
   return <Chip label={label} />;
 };
 

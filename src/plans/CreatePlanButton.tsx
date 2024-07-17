@@ -5,12 +5,11 @@ import {useNavigate} from 'react-router-dom';
 const CreatePlanButton: React.FC = () => {
   const record = useRecordContext();
   const navigate = useNavigate();
-  const {id} = record;
 
   return (
     <Button
       onClick={async () => {
-        navigate(`/plans/create?source={"user":"${id}"}`);
+        navigate(`/plans/create?source={"user":"${record?.id}"}`);
       }}
       variant="contained"
       color="primary"

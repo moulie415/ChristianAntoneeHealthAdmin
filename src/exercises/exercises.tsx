@@ -114,8 +114,8 @@ export const ExerciseShow = (props: ResourceProps) => (
     <SimpleShowLayout>
       <TextField source="id" />
       <TextField source="name" />
-      <TextField source="description" multiline />
-      <TextField source="parameters" multiline />
+      <TextField source="description" />
+      <TextField source="parameters" />
       <ChipField source="area" />
       <ChipField source="level" />
       <ChipField source="warmUp" />
@@ -159,48 +159,40 @@ export const ExerciseCreate = (props: ResourceProps) => (
           {id: '', name: 'None'},
         ]}
       />
-      {/* <SelectInput
-        source="warmUp"
-        defaultValue=""
-        choices={[
-          {id: 'circulatory', name: 'circulatory'},
-          {id: 'softTissue', name: 'soft tissue preparation'},
-          {id: 'dynamicStretching', name: 'dynamic stretching'},
-          {id: '', name: 'None'},
-        ]}
-      />
-      <SelectInput
-        source="coolDown"
-        defaultValue=""
-        choices={[
-          {id: 'circulatory', name: 'circulatory'},
-          {id: 'staticStretching', name: 'static stretching'},
-          {id: '', name: 'None'},
-        ]}
-      /> */}
       <ArrayInput source="equipment" defaultValue={[]}>
         <SimpleFormIterator>
-          <SelectInput choices={equipment} label="Equipment" />
+          <SelectInput
+            source="equipment"
+            choices={equipment}
+            label="Equipment"
+          />
         </SimpleFormIterator>
       </ArrayInput>
       <ArrayInput source="muscles" defaultValue={[]}>
         <SimpleFormIterator>
-          <SelectInput choices={muscles} label="Muscle" />
+          <SelectInput source="muscles" choices={muscles} label="Muscle" />
         </SimpleFormIterator>
       </ArrayInput>
       <ArrayInput source="musclesSecondary" defaultValue={[]}>
         <SimpleFormIterator>
-          <SelectInput choices={muscles} label="Muscle" />
+          <SelectInput
+            source="musclesSecondary"
+            choices={muscles}
+            label="Muscle"
+          />
         </SimpleFormIterator>
       </ArrayInput>
       <FileInput
         validate={required()}
         source="video"
         label="Video"
-        accept="video/*">
+        accept={{'video/*': ['.mp4', '.mov', '.avi']}}>
         <FileField source="src" title="title" />
       </FileInput>
-      <ImageInput source="thumbnail" label="Thumbnail" accept="image/*">
+      <ImageInput
+        source="thumbnail"
+        label="Thumbnail"
+        accept={{'image/*': ['.jpeg', '.png']}}>
         <ImageField source="src" title="title" />
       </ImageInput>
       <BooleanInput source="premium" />
@@ -238,48 +230,40 @@ export const ExerciseEdit = (props: ResourceProps) => (
           {id: '', name: 'None'},
         ]}
       />
-      {/* <SelectInput
-        source="warmUp"
-        defaultValue=""
-        choices={[
-          {id: 'circulatory', name: 'circulatory'},
-          {id: 'softTissue', name: 'soft tissue preparation'},
-          {id: 'dynamicStretching', name: 'dynamic stretching'},
-          {id: '', name: 'None'},
-        ]}
-      />
-      <SelectInput
-        source="coolDown"
-        defaultValue=""
-        choices={[
-          {id: 'circulatory', name: 'circulatory'},
-          {id: 'staticStretching', name: 'static stretching'},
-          {id: '', name: 'None'},
-        ]}
-      /> */}
       <ArrayInput source="equipment" defaultValue={[]}>
         <SimpleFormIterator>
-          <SelectInput choices={equipment} label="Equipment" />
+          <SelectInput
+            source="equipment"
+            choices={equipment}
+            label="Equipment"
+          />
         </SimpleFormIterator>
       </ArrayInput>
       <ArrayInput source="muscles" defaultValue={[]}>
         <SimpleFormIterator>
-          <SelectInput choices={muscles} label="Muscle" />
+          <SelectInput source="muscles" choices={muscles} label="Muscle" />
         </SimpleFormIterator>
       </ArrayInput>
       <ArrayInput source="musclesSecondary" defaultValue={[]}>
         <SimpleFormIterator>
-          <SelectInput choices={muscles} label="Muscle" />
+          <SelectInput
+            source="musclesSecondary"
+            choices={muscles}
+            label="Muscle"
+          />
         </SimpleFormIterator>
       </ArrayInput>
       <FileInput
         validate={required()}
         source="video"
         label="Video"
-        accept="video/*">
+        accept={{'video/*': ['.mp4', '.mov', '.avi']}}>
         <FileField source="src" title="title" />
       </FileInput>
-      <ImageInput source="thumbnail" label="Thumbnail" accept="image/*">
+      <ImageInput
+        source="thumbnail"
+        label="Thumbnail"
+        accept={{'image/*': ['.jpeg', '.png']}}>
         <ImageField source="src" title="title" />
       </ImageInput>
       <BooleanInput source="premium" />

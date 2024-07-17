@@ -144,6 +144,9 @@ export interface Plan {
   tests: string[];
   education: string[];
   createdate: Timestamp;
+  lastupdate: Timestamp;
+  createdby: string;
+  updatedby: string;
 }
 
 export interface CalendarType {

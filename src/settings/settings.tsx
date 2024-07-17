@@ -68,7 +68,6 @@ export const SettingsShow = (props: ResourceProps) => (
       <NumberField
         source="premiumPlusMaxSubscriptions"
         label="Premium Plus max subscriptions"
-        fullWidth
       />
     </SimpleShowLayout>
   </Show>

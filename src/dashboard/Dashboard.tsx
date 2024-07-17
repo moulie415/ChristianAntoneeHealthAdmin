@@ -24,7 +24,6 @@ import {db} from '../App';
 import CardWithIcon from '../common/CardWithIcon';
 import * as api from '../helpers/api';
 import {Profile} from '../types/Shared';
-import { useQuery } from '@tanstack/react-query';
 
 const UserList: FC<{users: Profile[]; linkParam?: string}> = ({
   users,
@@ -90,9 +89,6 @@ const Dashboard = () => {
   const [premiumPlusUsers, setPremiumPlusUsers] = useState<Profile[]>([]);
   const [freeUserCount, setFreeUserCount] = useState(0);
 
-
-  const {} = useQuery()
-  
   useEffect(() => {
     const fetchData = async () => {
       try {

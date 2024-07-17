@@ -21,6 +21,7 @@ const FullNameField = (props: Props) => {
       component="div"
       sx={props.sx}>
       <AvatarField
+        {...props}
         record={record}
         size={size}
         sx={{

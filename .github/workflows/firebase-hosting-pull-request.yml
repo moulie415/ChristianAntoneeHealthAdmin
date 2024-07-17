@@ -22,7 +22,7 @@ jobs:
           touch FIREBASE_CONFIG.ts
           echo "$FIREBASE_CONFIG" >> FIREBASE_CONFIG.ts
       - name: Install deps
-        run: npm i
+        run: npm i -f
       - name: Audit deps
         run: npm run audit-deps
       - name: Build
