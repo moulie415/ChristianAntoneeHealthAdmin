@@ -5,8 +5,9 @@ import {
   Grid,
   Typography,
 } from '@mui/material';
-import React, {useEffect, useState} from 'react';
-import {useGetList, useRecordContext} from 'react-admin';
+import {useQuery} from '@tanstack/react-query';
+import React from 'react';
+import {useRecordContext} from 'react-admin';
 import * as api from '../helpers/api';
 import {getGoalsData} from '../helpers/goals';
 import {Profile, QuickRoutine} from '../types/Shared';
@@ -62,44 +63,35 @@ const GoalCircle: React.FC<{
 
 const GoalSummaries: React.FC = () => {
   const profile = useRecordContext<Profile>();
-  const [loadingWeeklyItems, setLoading] = useState(false);
 
-  const [weeklyItems, setWeeklyItems] = useState({
-    quickRoutines: {},
-    tests: {},
-    workouts: {},
-  });
-
-  const {data, isLoading} = useGetList<QuickRoutine>('quickRoutines', {
-    pagination: {perPage: 500, page: 1},
-  });
-
-  const loading = loadingWeeklyItems || isLoading;
-
-  useEffect(() => {
-    const getWeeklyItems = async () => {
-      setLoading(true);
+  const {data: weeklyItems, isPending} = useQuery({
+    queryKey: ['weeklyItems', profile?.uid],
+    queryFn: async () => {
       const items = await api.getWeeklyItems(profile?.uid || '');
-      setWeeklyItems(items);
-      setLoading(false);
-    };
+      return items;
+    },
+  });
 
-    if (profile?.uid) {
-      getWeeklyItems();
-    }
-  }, [profile?.uid]);
+  const {data: quickRoutinesObj} = useQuery({
+    queryKey: ['quickRoutines'],
+    queryFn: async () => {
+      const data = await api.getQuickRoutines();
 
-  const quickRoutinesObj =
-    data &&
-    data.reduce((acc: {[id: string]: QuickRoutine}, cur) => {
-      acc[cur.id] = {
-        ...cur,
-        id: cur.id,
-      };
-      return acc;
-    }, {});
+      const quickRoutinesObj = Object.values(data).reduce(
+        (acc: {[id: string]: QuickRoutine}, cur) => {
+          acc[cur.id] = {
+            ...cur,
+            id: cur.id,
+          };
+          return acc;
+        },
+        {},
+      );
+      return quickRoutinesObj;
+    },
+  });
 
-  if (loading || !quickRoutinesObj) {
+  if (isPending || !quickRoutinesObj) {
     return (
       <div style={{marginTop: 20, display: 'flex', justifyContent: 'center'}}>
         <CircularProgress />
@@ -115,7 +107,11 @@ const GoalSummaries: React.FC = () => {
     workoutGoal,
     minsGoal,
     workoutLevelTitleString,
-  } = getGoalsData(weeklyItems, quickRoutinesObj, profile?.targets);
+  } = getGoalsData(
+    weeklyItems || {workouts: {}, tests: {}, quickRoutines: {}},
+    quickRoutinesObj,
+    profile?.targets,
+  );
 
   const goals: GoalSet[] = [
     {

@@ -21,6 +21,7 @@ import {
   Entitlement,
   Message,
   Profile,
+  QuickRoutine,
   Sample,
   WeeklyItems,
 } from '../types/Shared';
@@ -145,6 +146,20 @@ export const setUnread = (uid: string, unread: {[key: string]: number}) => {
 
 export const setWebPushToken = (uid: string, webPushToken: string) => {
   return updateDoc(doc(db, 'users', uid), {webPushToken});
+};
+
+export const getQuickRoutines = async () => {
+  const snapshot = await getDocs(query(collection(db, 'quickRoutines')));
+  return snapshot.docs.reduce((acc: {[id: string]: QuickRoutine}, cur) => {
+    const quickRoutine: any = cur.data();
+    acc[cur.id] = {
+      ...quickRoutine,
+      id: cur.id,
+      createdate: quickRoutine.createdate?.toDate(),
+      lastupdate: quickRoutine.lastupdate?.toDate(),
+    };
+    return acc;
+  }, {});
 };
 
 export const getWeeklyItems = async (uid: string): Promise<WeeklyItems> => {
