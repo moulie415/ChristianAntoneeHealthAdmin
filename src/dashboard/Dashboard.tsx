@@ -9,6 +9,7 @@ import {
   ListItemButton,
   ListItemText,
 } from '@mui/material';
+import {useQuery} from '@tanstack/react-query';
 import {
   collection,
   getCountFromServer,
@@ -17,7 +18,7 @@ import {
   where,
 } from 'firebase/firestore';
 import moment from 'moment';
-import {FC, useEffect, useState} from 'react';
+import {FC, useEffect} from 'react';
 import {Link, useNavigate} from 'react-router-dom';
 import {toast} from 'react-toastify';
 import {db} from '../App';
@@ -78,81 +79,63 @@ const relevantMetrics: OverMetricObject[] = [
 ];
 
 const Dashboard = () => {
-  const [loading, setLoading] = useState(false);
+  const {data, isPending, error} = useQuery({
+    queryKey: ['userData'],
+    queryFn: async () => {
+      const users = collection(db, 'users');
+      const q = query(users, where('signUpDate', '!=', null));
+      const snapshot = await getCountFromServer(q);
+      const totalUsers = snapshot.data().count;
 
-  const [overviewMetricsLoading, setOverviewMetricsLoading] = useState(false);
-  const [overviewMetrics, setOverviewMetrics] = useState<api.OverviewMetric[]>(
-    [],
-  );
-  const [totalUserCount, setTotalUserCount] = useState(0);
-  const [premiumUsers, setPremiumUsers] = useState<Profile[]>([]);
-  const [premiumPlusUsers, setPremiumPlusUsers] = useState<Profile[]>([]);
-  const [freeUserCount, setFreeUserCount] = useState(0);
+      const premiumQuery = query(users, where('premium', '!=', false));
+      const premiumDocs = await getDocs(premiumQuery);
+
+      const premiumUsers = premiumDocs.docs
+        .filter(doc => {
+          const data = doc.data();
+          const premium = data.premium?.['Premium'];
+          const hasExpired =
+            !!premium && moment(premium.expirationDate).isBefore(moment());
+          return premium && !hasExpired;
+        })
+        .map(user => user.data()) as Profile[];
+
+      const premiumPlusUsers = premiumDocs.docs
+        .filter(doc => {
+          const data = doc.data();
+          const premiumPlus = data.premium?.['Premium Plus'];
+          const hasExpired =
+            !!premiumPlus &&
+            moment(premiumPlus.expirationDate).isBefore(moment());
+          return premiumPlus && !hasExpired;
+        })
+        .map(user => user.data()) as Profile[];
+
+      const freeUserCount =
+        totalUsers - premiumUsers.length - premiumPlusUsers.length;
+
+      return {totalUsers, freeUserCount, premiumPlusUsers, premiumUsers};
+    },
+  });
+
+  const {
+    data: overviewMetrics,
+    isPending: isOverviewMetricsPending,
+    error: overviewMetricsError,
+  } = useQuery({
+    queryKey: ['overviewMetrics'],
+    queryFn: async () => {
+      const {data} = await api.getOverviewMetrics();
+      return data.metrics;
+    },
+  });
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const users = collection(db, 'users');
-        const q = query(users, where('signUpDate', '!=', null));
-        const snapshot = await getCountFromServer(q);
-        const totalUsers = snapshot.data().count;
-        setTotalUserCount(totalUsers);
-
-        const premiumQuery = query(users, where('premium', '!=', false));
-        const premiumDocs = await getDocs(premiumQuery);
-
-        const premiumUsers = premiumDocs.docs
-          .filter(doc => {
-            const data = doc.data();
-            const premium = data.premium?.['Premium'];
-            const hasExpired =
-              !!premium && moment(premium.expirationDate).isBefore(moment());
-            return premium && !hasExpired;
-          })
-          .map(user => user.data());
-
-        setPremiumUsers(premiumUsers as Profile[]);
-        const premiumPlusUsers = premiumDocs.docs
-          .filter(doc => {
-            const data = doc.data();
-            const premiumPlus = data.premium?.['Premium Plus'];
-            const hasExpired =
-              !!premiumPlus &&
-              moment(premiumPlus.expirationDate).isBefore(moment());
-            return premiumPlus && !hasExpired;
-          })
-          .map(user => user.data());
-
-        setPremiumPlusUsers(premiumPlusUsers as Profile[]);
-
-        const freeUserCount =
-          totalUsers - premiumUsers.length - premiumPlusUsers.length;
-
-        setFreeUserCount(freeUserCount);
-        setLoading(false);
-      } catch (e) {
-        if (e instanceof Error) {
-          toast.error('Error fetching user data: ' + e.message);
-        }
-      }
-    };
-
-    const fetchOverviewMetrics = async () => {
-      try {
-        setOverviewMetricsLoading(true);
-        const {data} = await api.getOverviewMetrics();
-        setOverviewMetrics(data.metrics);
-        setOverviewMetricsLoading(false);
-      } catch (e) {
-        if (e instanceof Error) {
-          toast.error('Error fetching overview metrics: ' + e.message);
-        }
-      }
-    };
-    fetchData();
-    fetchOverviewMetrics();
-  }, []);
+    const err = error || overviewMetricsError;
+    if (err && err instanceof Error) {
+      toast.error(err.message);
+    }
+  }, [error, overviewMetricsError]);
 
   return (
     <div>
@@ -162,8 +145,8 @@ const Dashboard = () => {
             to="/users"
             icon={PeopleIcon}
             title="Total users"
-            subtitle={totalUserCount}
-            loading={loading}
+            subtitle={data?.totalUsers}
+            loading={isPending}
           />
         </div>
         <div style={{marginRight: '0.5em', flex: 1}}>
@@ -171,8 +154,8 @@ const Dashboard = () => {
             to="/users"
             icon={PeopleIcon}
             title="Free users"
-            subtitle={freeUserCount}
-            loading={loading}
+            subtitle={data?.freeUserCount}
+            loading={isPending}
           />
         </div>
         <div style={{marginRight: '0.5em', flex: 1}}>
@@ -180,9 +163,12 @@ const Dashboard = () => {
             to="/users"
             icon={PeopleIcon}
             title="Premium users"
-            subtitle={premiumUsers.length}
-            loading={loading}>
-            <UserList linkParam="premium=true" users={premiumUsers} />
+            subtitle={data?.premiumUsers.length}
+            loading={isPending}>
+            <UserList
+              linkParam="premium=true"
+              users={data?.premiumUsers || []}
+            />
           </CardWithIcon>
         </div>
         <div style={{flex: 1}}>
@@ -190,15 +176,18 @@ const Dashboard = () => {
             to="/users"
             icon={GroupAddIcon}
             title="Premium Plus users"
-            subtitle={premiumPlusUsers.length}
-            loading={loading}>
-            <UserList linkParam="premiumPlus=true" users={premiumPlusUsers} />
+            subtitle={data?.premiumPlusUsers.length}
+            loading={isPending}>
+            <UserList
+              linkParam="premiumPlus=true"
+              users={data?.premiumPlusUsers || []}
+            />
           </CardWithIcon>
         </div>
       </div>
       <div style={{display: 'flex', marginTop: 10}}>
         {relevantMetrics.map(metric => {
-          const overviewMetric = overviewMetrics.find(m => m.id === metric.id);
+          const overviewMetric = overviewMetrics?.find(m => m.id === metric.id);
 
           return (
             <div key={metric.id} style={{marginRight: '0.5em', flex: 0.25}}>
@@ -206,7 +195,7 @@ const Dashboard = () => {
                 icon={metric.icon}
                 title={metric.description}
                 subtitle={overviewMetric?.value || 0}
-                loading={overviewMetricsLoading}
+                loading={isOverviewMetricsPending}
               />
             </div>
           );

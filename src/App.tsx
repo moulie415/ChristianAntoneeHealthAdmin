@@ -8,6 +8,7 @@ import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import TimerIcon from '@mui/icons-material/Timer';
 import {LocalizationProvider} from '@mui/x-date-pickers';
 import {AdapterMoment} from '@mui/x-date-pickers/AdapterMoment';
+import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import {ReCaptchaV3Provider, initializeAppCheck} from 'firebase/app-check';
 import {User, getAuth, onAuthStateChanged} from 'firebase/auth';
 import firebase from 'firebase/compat/app';
@@ -104,6 +105,8 @@ const App = () => {
   }, []);
   const [user, setUser] = useState<User | null>();
 
+  const queryClient = new QueryClient();
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async user => {
       if (user) {
@@ -126,100 +129,102 @@ const App = () => {
   }, []);
 
   return (
-    <LocalizationProvider dateAdapter={AdapterMoment}>
-      <ChatContextProvider user={user}>
-        <Admin
-          loginPage={CustomLoginPage}
-          layout={MyLayout}
-          theme={softLightTheme}
-          darkTheme={softDarkTheme}
-          dataProvider={dataProvider}
-          authProvider={authProvider}>
-          <Resource
-            name="dashboard"
-            list={Dashboard}
-            icon={DashboardIcon}
-            options={{label: 'Dashboard'}}
-          />
-          <Resource
-            name="exercises"
-            list={ExerciseList}
-            show={ExerciseShow}
-            create={ExerciseCreate}
-            edit={ExerciseEdit}
-            icon={FitnessCenterIcon}
-          />
-          <Resource
-            name="tests"
-            list={TestList}
-            show={TestShow}
-            create={TestCreate}
-            edit={TestEdit}
-            icon={TimerIcon}
-          />
-          <Resource
-            name="quickRoutines"
-            list={QuickRoutineList}
-            show={QuickRoutineShow}
-            create={QuickRoutineCreate}
-            edit={QuickRoutineEdit}
-            options={{label: 'Workouts'}}
-            icon={FitnessCenterIcon}
-          />
-          <Resource
-            name="education"
-            list={EducationList}
-            show={EducationShow}
-            create={EducationCreate}
-            edit={EducationEdit}
-            icon={BookIcon}
-          />
-          <Resource
-            name="settings"
-            list={SettingsList}
-            show={SettingsShow}
-            edit={SettingsEdit}
-            icon={SettingsIcon}
-          />
-          <Resource
-            name="users"
-            icon={UserIcon}
-            edit={UsersEdit}
-            list={UsersList}
-          />
+    <QueryClientProvider client={queryClient}>
+      <LocalizationProvider dateAdapter={AdapterMoment}>
+        <ChatContextProvider user={user}>
+          <Admin
+            loginPage={CustomLoginPage}
+            layout={MyLayout}
+            theme={softLightTheme}
+            darkTheme={softDarkTheme}
+            dataProvider={dataProvider}
+            authProvider={authProvider}>
+            <Resource
+              name="dashboard"
+              list={Dashboard}
+              icon={DashboardIcon}
+              options={{label: 'Dashboard'}}
+            />
+            <Resource
+              name="exercises"
+              list={ExerciseList}
+              show={ExerciseShow}
+              create={ExerciseCreate}
+              edit={ExerciseEdit}
+              icon={FitnessCenterIcon}
+            />
+            <Resource
+              name="tests"
+              list={TestList}
+              show={TestShow}
+              create={TestCreate}
+              edit={TestEdit}
+              icon={TimerIcon}
+            />
+            <Resource
+              name="quickRoutines"
+              list={QuickRoutineList}
+              show={QuickRoutineShow}
+              create={QuickRoutineCreate}
+              edit={QuickRoutineEdit}
+              options={{label: 'Workouts'}}
+              icon={FitnessCenterIcon}
+            />
+            <Resource
+              name="education"
+              list={EducationList}
+              show={EducationShow}
+              create={EducationCreate}
+              edit={EducationEdit}
+              icon={BookIcon}
+            />
+            <Resource
+              name="settings"
+              list={SettingsList}
+              show={SettingsShow}
+              edit={SettingsEdit}
+              icon={SettingsIcon}
+            />
+            <Resource
+              name="users"
+              icon={UserIcon}
+              edit={UsersEdit}
+              list={UsersList}
+            />
 
-          <Resource
-            name="plans"
-            list={PlansList}
-            show={PlansShow}
-            edit={PlansEdit}
-            create={PlansCreate}
-            icon={EventAvailableIcon}
-          />
-          <Resource
-            name="recipes"
-            list={RecipesList}
-            show={RecipesShow}
-            edit={RecipesEdit}
-            create={RecipesCreate}
-            icon={RestaurantIcon}
-          />
-          <Resource
-            options={{label: 'Feedback'}}
-            name="feedback"
-            list={FeedbackList}
-            show={FeedbackShow}
-            icon={ThumbUpIcon}
-          />
-          <CustomRoutes>
-            <Route path="messaging" element={<Messaging />} />
-            <Route path="messaging/:id" element={<Chat />} />
-          </CustomRoutes>
-        </Admin>
+            <Resource
+              name="plans"
+              list={PlansList}
+              show={PlansShow}
+              edit={PlansEdit}
+              create={PlansCreate}
+              icon={EventAvailableIcon}
+            />
+            <Resource
+              name="recipes"
+              list={RecipesList}
+              show={RecipesShow}
+              edit={RecipesEdit}
+              create={RecipesCreate}
+              icon={RestaurantIcon}
+            />
+            <Resource
+              options={{label: 'Feedback'}}
+              name="feedback"
+              list={FeedbackList}
+              show={FeedbackShow}
+              icon={ThumbUpIcon}
+            />
+            <CustomRoutes>
+              <Route path="messaging" element={<Messaging />} />
+              <Route path="messaging/:id" element={<Chat />} />
+            </CustomRoutes>
+          </Admin>
 
-        <ToastContainer />
-      </ChatContextProvider>
-    </LocalizationProvider>
+          <ToastContainer />
+        </ChatContextProvider>
+      </LocalizationProvider>
+    </QueryClientProvider>
   );
 };
 
