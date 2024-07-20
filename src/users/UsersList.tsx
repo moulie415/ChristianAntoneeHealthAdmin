@@ -15,6 +15,7 @@ import {
   ToggleButton,
   ToggleButtonGroup,
 } from '@mui/material';
+import {keepPreviousData, useQuery} from '@tanstack/react-query';
 import {
   collection,
   getDocs,
@@ -24,7 +25,7 @@ import {
   where,
 } from 'firebase/firestore';
 import moment from 'moment';
-import {useCallback, useEffect, useRef, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import {useNavigate, useSearchParams} from 'react-router-dom';
 import {toast} from 'react-toastify';
 import {db} from '../App';
@@ -60,9 +61,12 @@ const PremiumField: React.FC<{user: any}> = ({user}) => {
 
 type PremiumToggle = 'premium' | 'premiumPlus' | undefined;
 
+interface UserWithPlans extends Profile {
+  plans?: Plan[];
+  upToDatePlan?: Plan;
+}
+
 const UsersList = () => {
-  const [loading, setLoading] = useState(false);
-  const [users, setUsers] = useState<any[]>([]);
   const [searchParams, setSearchParams] = useSearchParams();
 
   const premiumPlusParam = searchParams.get('premiumPlus');
@@ -103,12 +107,11 @@ const UsersList = () => {
     setSearchParams(searchParams);
   }, [marketing, premiumToggle, setSearchParams]);
 
-  const cursor = useRef(100);
-  const isAtEnd = useRef(false);
+  const [cursor, setCursor] = useState(10);
 
-  const getUsers = useCallback(async () => {
-    try {
-      setLoading(true);
+  const {data, error, isPending, isFetching} = useQuery({
+    queryKey: ['users', cursor, premiumToggle, marketing],
+    queryFn: async () => {
       const conditions = [];
       if (premiumToggle === 'premiumPlus' || premiumToggle === 'premium') {
         conditions.push(where('premium', '!=', false));
@@ -120,7 +123,7 @@ const UsersList = () => {
         collection(db, 'users'),
         ...conditions,
         orderBy(premiumToggle ? 'premium' : 'signUpDate', 'desc'),
-        limit(cursor.current),
+        limit(cursor),
       );
 
       const c = await getDocs(userQuery);
@@ -138,7 +141,6 @@ const UsersList = () => {
         const snapshot = await getDocs(planQuery);
         plans.push(...(snapshot.docs.map(doc => doc.data()) as Plan[]));
       }
-      setLoading(false);
       return c.docs
         .filter(doc => {
           const user = doc.data() as Profile;
@@ -160,7 +162,7 @@ const UsersList = () => {
           return true;
         })
         .map(doc => {
-          const data = doc.data();
+          const data = doc.data() as Profile;
 
           const userPlans = plans.filter(plan => plan.user === data.uid);
           const upToDatePlan = userPlans?.find(plan => {
@@ -170,27 +172,17 @@ const UsersList = () => {
               );
             });
           });
-          return {...data, plans: userPlans, upToDatePlan};
+          return {...data, plans: userPlans, upToDatePlan} as UserWithPlans;
         });
-    } catch (e) {
-      if (e instanceof Error) {
-        toast.error('Error fetching users: ' + e.message);
-      } else {
-        toast.error('Error fetching users');
-      }
-    }
-    setLoading(false);
-  }, [marketing, premiumToggle]);
+    },
+    placeholderData: keepPreviousData,
+  });
 
   useEffect(() => {
-    const init = async () => {
-      const users = await getUsers();
-      if (users) {
-        setUsers(users);
-      }
-    };
-    init();
-  }, [getUsers]);
+    if (error && error instanceof Error) {
+      toast.error('Error fetching users: ' + error.message);
+    }
+  }, [error]);
 
   const navigate = useNavigate();
 
@@ -217,15 +209,8 @@ const UsersList = () => {
     if (table) {
       const isAtBottom =
         table.scrollTop + table.clientHeight >= table.scrollHeight - 5;
-      if (isAtBottom && !isAtEnd.current) {
-        cursor.current = cursor.current + 100;
-
-        const newUsers = await getUsers();
-        if (newUsers && newUsers?.length > users.length) {
-          setUsers(newUsers);
-        } else {
-          isAtEnd.current = true;
-        }
+      if (isAtBottom && !(cursor > (data?.length || 1))) {
+        setCursor(cursor + 10);
       }
     }
   };
@@ -235,7 +220,7 @@ const UsersList = () => {
       <div style={{marginBottom: 10, marginTop: 50}}>
         <ToggleButtonGroup
           style={{marginRight: 10}}
-          disabled={loading}
+          disabled={isFetching}
           color="primary"
           value={premiumToggle}
           exclusive
@@ -246,7 +231,7 @@ const UsersList = () => {
         </ToggleButtonGroup>
         <ToggleButtonGroup
           color="primary"
-          disabled={loading}
+          disabled={isFetching}
           value={marketing}
           exclusive
           onChange={handleMarketingToggleChange}
@@ -256,13 +241,13 @@ const UsersList = () => {
         </ToggleButtonGroup>
         <Input
           value={emailFilter}
-          disabled={loading}
+          disabled={isFetching}
           style={{marginLeft: 20, width: 200}}
           placeholder="Filter via email"
           onChange={handleEmailFilterChange}
         />
       </div>
-      {loading ? (
+      {isPending ? (
         <div
           style={{
             height: '90vh',
@@ -291,7 +276,7 @@ const UsersList = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {users
+              {data
                 ?.filter(
                   user =>
                     !emailFilter ||
@@ -371,7 +356,7 @@ const UsersList = () => {
                                 `/plans/create?source={"user":"${user.uid}"}`,
                               );
                             }}
-                            disabled={loading}
+                            disabled={isFetching}
                             variant="contained"
                             color="primary"
                             style={{marginTop: 10}}>
