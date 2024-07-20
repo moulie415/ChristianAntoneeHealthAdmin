@@ -200,18 +200,6 @@ export const PlansCreate = (props: ResourceProps) => {
 };
 
 export const PlansEdit = (props: ResourceProps) => {
-  // React.useEffect(() => {
-  //   const checkIfSent = async () => {
-  //     setLoading(true);
-  //     if (user) {
-  //       const sent = await isSent(user);
-  //       setSent(sent);
-  //       setLoading(false);
-  //     }
-  //   };
-  //   checkIfSent();
-  // }, [setSent, user]);
-
   return (
     <Edit {...props}>
       <SimpleForm>

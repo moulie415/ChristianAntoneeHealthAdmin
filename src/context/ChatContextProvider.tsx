@@ -117,7 +117,6 @@ const ChatContextProvider = ({
   useEffect(() => {
     const subscriptions: Unsubscribe[] = [];
     if (Object.values(chats)) {
-
       const uids = Object.keys(chats);
       for (const uid of uids) {
         const unsubscribe = onSnapshot(
@@ -226,7 +225,6 @@ const ChatContextProvider = ({
 
   useEffect(() => {
     const requestPermission = async () => {
-
       const permission = await Notification.requestPermission();
       if (permission === 'granted') {
         const messaging = getMessaging();
