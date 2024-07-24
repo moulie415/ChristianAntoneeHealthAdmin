@@ -161,25 +161,17 @@ export const ExerciseCreate = (props: ResourceProps) => (
       />
       <ArrayInput source="equipment" defaultValue={[]}>
         <SimpleFormIterator>
-          <SelectInput
-            source="equipment"
-            choices={equipment}
-            label="Equipment"
-          />
+          <SelectInput source="" choices={equipment} label="Equipment" />
         </SimpleFormIterator>
       </ArrayInput>
       <ArrayInput source="muscles" defaultValue={[]}>
         <SimpleFormIterator>
-          <SelectInput source="muscles" choices={muscles} label="Muscle" />
+          <SelectInput source="" choices={muscles} label="Muscle" />
         </SimpleFormIterator>
       </ArrayInput>
       <ArrayInput source="musclesSecondary" defaultValue={[]}>
         <SimpleFormIterator>
-          <SelectInput
-            source="musclesSecondary"
-            choices={muscles}
-            label="Muscle"
-          />
+          <SelectInput source="" choices={muscles} label="Muscle" />
         </SimpleFormIterator>
       </ArrayInput>
       <FileInput
@@ -232,25 +224,17 @@ export const ExerciseEdit = (props: ResourceProps) => (
       />
       <ArrayInput source="equipment" defaultValue={[]}>
         <SimpleFormIterator>
-          <SelectInput
-            source="equipment"
-            choices={equipment}
-            label="Equipment"
-          />
+          <SelectInput source="" choices={equipment} label="Equipment" />
         </SimpleFormIterator>
       </ArrayInput>
       <ArrayInput source="muscles" defaultValue={[]}>
         <SimpleFormIterator>
-          <SelectInput source="muscles" choices={muscles} label="Muscle" />
+          <SelectInput source="" choices={muscles} label="Muscle" />
         </SimpleFormIterator>
       </ArrayInput>
       <ArrayInput source="musclesSecondary" defaultValue={[]}>
         <SimpleFormIterator>
-          <SelectInput
-            source="musclesSecondary"
-            choices={muscles}
-            label="Muscle"
-          />
+          <SelectInput source="" choices={muscles} label="Muscle" />
         </SimpleFormIterator>
       </ArrayInput>
       <FileInput
