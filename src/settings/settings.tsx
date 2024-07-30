@@ -3,6 +3,8 @@ import {
   Datagrid,
   Edit,
   EditButton,
+  FileField,
+  FileInput,
   List,
   NumberField,
   NumberInput,
@@ -100,6 +102,13 @@ export const SettingsEdit = (props: ResourceProps) => (
         validate={[required()]}
         source="welcomeMessage"
       />
+      <FileInput
+        source="welcomeVideo"
+        label="Premium plus welcome video"
+        accept={{'video/*': ['.mp4', '.mov', '.avi']}}
+        defaultValue={null}>
+        <FileField source="src" title="title" />
+      </FileInput>
       <NumberInput
         source="premiumPlusMaxSubscriptions"
         label="Premium Plus max subscriptions"
