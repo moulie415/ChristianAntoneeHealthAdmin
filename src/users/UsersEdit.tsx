@@ -21,7 +21,7 @@ import {
   where,
 } from 'firebase/firestore';
 import moment from 'moment';
-import {useEffect, useState} from 'react';
+import {Fragment, useEffect, useState} from 'react';
 import {
   BooleanField,
   BooleanInput,
@@ -33,7 +33,6 @@ import {
   SaveButton,
   SelectInput,
   SimpleForm,
-  TextField,
   TextInput,
   Toolbar,
   useRecordContext,
@@ -59,43 +58,6 @@ import SleepField from './SleepField';
 import StressField from './StressField';
 import UserNotes from './UserNotes';
 import WorkoutsTable from './WorkoutsTable';
-
-const physicalReadinessQuestions = [
-  {
-    source: 'heartCondition',
-    question:
-      'Has your doctor ever said that you have a heart condition and that your should only do physical activity recommended by a doctor?',
-  },
-  {
-    source: 'activityChestPain',
-    question: 'Do your feel pain in your chest when you do physical activity?',
-  },
-  {
-    source: 'chestPain',
-    question:
-      'In the past month, have you had chest pain when you were not doing physical activity?',
-  },
-  {
-    source: 'loseBalanceConsciousness',
-    question:
-      'Do you lose your balance because of dizziness or do you ever lose consciousness?',
-  },
-  {
-    source: 'boneProblems',
-    question:
-      'Do you have a bone or joint problem (for example, back, knee or hip) that could be made worse by a change in your physical activity?',
-  },
-  {
-    source: 'drugPrescription',
-    question:
-      'Is your doctor currently prescribing drugs for your blood pressure or heart condition?',
-  },
-  {
-    source: 'otherReason',
-    question:
-      'Do you know of any other reason why you should not do physical activity?',
-  },
-];
 
 const getPlans = async (uid: string): Promise<Plan[]> => {
   const q = query(
@@ -253,6 +215,54 @@ const MyForm = (props: ResourceProps) => {
       samples: metabolicAgeSamples,
     },
   ];
+
+  const physicalReadinessQuestions: {
+    source: keyof Profile;
+    question: string;
+    description?: string;
+    descriptionHeader?: string;
+  }[] = [
+    {
+      source: 'heartCondition',
+      question:
+        'Has your doctor ever said that you have a heart condition and that your should only do physical activity recommended by a doctor?',
+    },
+    {
+      source: 'activityChestPain',
+      question:
+        'Do your feel pain in your chest when you do physical activity?',
+    },
+    {
+      source: 'chestPain',
+      question:
+        'In the past month, have you had chest pain when you were not doing physical activity?',
+    },
+    {
+      source: 'loseBalanceConsciousness',
+      question:
+        'Do you lose your balance because of dizziness or do you ever lose consciousness?',
+    },
+    {
+      source: 'boneProblems',
+      question:
+        'Do you have a bone or joint problem (for example, back, knee or hip) that could be made worse by a change in your physical activity?',
+      description: record?.boneProblemsDescription,
+      descriptionHeader: 'Bone problem details',
+    },
+    {
+      source: 'drugPrescription',
+      question:
+        'Is your doctor currently prescribing drugs for your blood pressure or heart condition?',
+    },
+    {
+      source: 'otherReason',
+      question:
+        'Do you know of any other reason why you should not do physical activity?',
+      description: record?.otherReasonDescription,
+      descriptionHeader: 'Other reason description',
+    },
+  ];
+
   return (
     <>
       <SimpleForm toolbar={<MyToolbar />}>
@@ -529,23 +539,34 @@ const MyForm = (props: ResourceProps) => {
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {physicalReadinessQuestions.map(({question, source}) => {
-                        return (
-                          <TableRow key={question}>
-                            <TableCell>{question}</TableCell>
-                            <TableCell>
-                              <BooleanField source={source} />
-                            </TableCell>
-                          </TableRow>
-                        );
-                      })}
-                      {record?.otherReasonDescription && (
-                        <TableRow>
-                          <TableCell>Other reason description</TableCell>
-                          <TableCell>
-                            <TextField source="otherReasonDescription" />
-                          </TableCell>
-                        </TableRow>
+                      {physicalReadinessQuestions.map(
+                        ({
+                          question,
+                          source,
+                          description,
+                          descriptionHeader,
+                        }) => {
+                          return (
+                            <Fragment key={question}>
+                              <TableRow>
+                                <TableCell style={{width: 350}}>
+                                  {question}
+                                </TableCell>
+                                <TableCell>
+                                  <BooleanField source={source} />
+                                </TableCell>
+                              </TableRow>
+                              {!!description && (
+                                <TableRow>
+                                  <TableCell>{descriptionHeader}</TableCell>
+                                  <TableCell>
+                                    <Typography>{description}</Typography>
+                                  </TableCell>
+                                </TableRow>
+                              )}
+                            </Fragment>
+                          );
+                        },
                       )}
                     </TableBody>
                   </Table>

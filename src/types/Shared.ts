@@ -300,6 +300,7 @@ export interface Profile {
   chestPain?: boolean;
   loseBalanceConsciousness?: boolean;
   boneProblems?: boolean;
+  boneProblemsDescription?: string;
   drugPrescription?: boolean;
   otherReason?: boolean;
   otherReasonDescription?: string;
