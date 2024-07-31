@@ -97,13 +97,7 @@ export const PlansCreate = (props: ResourceProps) => {
                   validate={[required()]}
                   label="Time to complete (seconds)"
                 />
-                <TextInput
-                  source="resistanceScale"
-                  label="Resistance scale"
-                  defaultValue=""
-                />
                 <TextInput source="weight" label="Weight" defaultValue="" />
-                <TextInput source="duration" label="Duration" defaultValue="" />
                 <TextInput
                   source="restTime"
                   label="Rest time"
@@ -111,18 +105,13 @@ export const PlansCreate = (props: ResourceProps) => {
                 />
                 <TextInput
                   source="notes"
-                  label="Additional notes"
+                  label="Notes"
                   multiline
                   defaultValue=""
                 />
               </SimpleFormIterator>
             </ArrayInput>
             <DuplicateExercisesButton source="exercises" />
-            <ArrayInput label="Instructions" source="steps" defaultValue={[]}>
-              <SimpleFormIterator>
-                <TextInput label="Instruction" multiline source="" />
-              </SimpleFormIterator>
-            </ArrayInput>
             <ArrayInput validate={[required()]} source="dates" label="Dates">
               <SimpleFormIterator inline>
                 <DateInput label="Date" source="" />
@@ -234,13 +223,7 @@ export const PlansEdit = (props: ResourceProps) => {
                   validate={[required()]}
                   label="Time to complete (seconds)"
                 />
-                <TextInput
-                  source="resistanceScale"
-                  label="Resistance scale"
-                  defaultValue=""
-                />
                 <TextInput source="weight" label="Weight" defaultValue="" />
-                <TextInput source="duration" label="Duration" defaultValue="" />
                 <TextInput
                   source="restTime"
                   label="Rest time"
@@ -249,17 +232,12 @@ export const PlansEdit = (props: ResourceProps) => {
                 <TextInput
                   source="notes"
                   multiline
-                  label="Additional notes"
+                  label="Notes"
                   defaultValue=""
                 />
               </SimpleFormIterator>
             </ArrayInput>
             <DuplicateExercisesButton source="exercises" />
-            <ArrayInput label="Instructions" source="steps" defaultValue={[]}>
-              <SimpleFormIterator>
-                <TextInput label="Instruction" multiline source="" />
-              </SimpleFormIterator>
-            </ArrayInput>
             <ArrayInput
               {...props}
               validate={[required()]}

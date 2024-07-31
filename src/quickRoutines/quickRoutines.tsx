@@ -116,11 +116,6 @@ export const QuickRoutineCreate = (props: ResourceProps) => {
           </SimpleFormIterator>
         </ArrayInput>
         <DuplicateExercisesButton source="exerciseIds" />
-        {/* <ArrayInput label="Instructions" source="steps">
-          <SimpleFormIterator>
-            <TextInput label="Instruction" />
-          </SimpleFormIterator>
-        </ArrayInput> */}
         <ImageInput
           validate={required()}
           source="thumbnail"
@@ -189,11 +184,7 @@ export const QuickRoutineEdit = (props: ResourceProps) => {
           </SimpleFormIterator>
         </ArrayInput>
         <DuplicateExercisesButton source="exerciseIds" />
-        {/* <ArrayInput label="Instructions" source="steps">
-          <SimpleFormIterator>
-            <TextInput label="Instruction" multiline />
-          </SimpleFormIterator>
-        </ArrayInput> */}
+
         <ImageInput
           validate={required()}
           source="thumbnail"

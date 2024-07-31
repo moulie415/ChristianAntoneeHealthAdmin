@@ -111,16 +111,13 @@ export interface PlanExercise {
   exercise: string;
   sets: string;
   reps: string;
-  duration: string;
-  resistanceScale: string;
   restTime: string;
-  additionalNotes: string;
+  notes: string;
   time?: number;
 }
 
 export interface PlanWorkout {
   name: string;
-  steps?: string[];
   dates: string[];
   exercises: PlanExercise[];
   today?: boolean;
@@ -367,8 +364,6 @@ export interface Exercise {
   resistance?: string;
   thumbnail?: Thumbnail;
   video?: Video;
-  resistanceScale?: string;
-  duration?: string;
   notes?: string;
   weight?: string;
   time?: number;
@@ -404,14 +399,11 @@ export interface QuickRoutine {
   id: string;
   name: string;
   area: Area;
-  duration: number;
   equipment: Equipment;
   level: Level;
   premium: boolean;
   exerciseIds: string[];
   thumbnail?: {src: string; title: string};
-  instructions?: string;
-  steps?: string[];
   preview?: {src: string; title: string};
 }
 
