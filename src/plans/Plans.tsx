@@ -99,8 +99,8 @@ export const PlansCreate = (props: ResourceProps) => {
                 />
                 <TextInput source="weight" label="Weight" defaultValue="" />
                 <TextInput
-                  source="restTime"
-                  label="Rest time"
+                  source="prepTime"
+                  label="Prep time"
                   defaultValue=""
                 />
                 <TextInput
@@ -225,8 +225,8 @@ export const PlansEdit = (props: ResourceProps) => {
                 />
                 <TextInput source="weight" label="Weight" defaultValue="" />
                 <TextInput
-                  source="restTime"
-                  label="Rest time"
+                  source="prepTime"
+                  label="Prep time"
                   defaultValue=""
                 />
                 <TextInput

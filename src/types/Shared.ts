@@ -111,7 +111,7 @@ export interface PlanExercise {
   exercise: string;
   sets: string;
   reps: string;
-  restTime: string;
+  prepTime?: number;
   notes: string;
   time?: number;
 }
