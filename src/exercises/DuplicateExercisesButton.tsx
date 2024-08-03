@@ -3,12 +3,14 @@ import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography';
 import React, {useState} from 'react';
+import {useInput} from 'react-admin';
 import {useFormContext} from 'react-hook-form';
 
 const DuplicateExercisesButton: React.FC<{source: string}> = ({source}) => {
+  const {field} = useInput({source});
   const context = useFormContext();
 
-  const exercises = context?.getValues(source);
+  const exercises = context?.getValues(field.name);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -61,7 +63,7 @@ const DuplicateExercisesButton: React.FC<{source: string}> = ({source}) => {
                 for (let i = 0; i <= value; i++) {
                   arr.push(...exercises);
                 }
-                context.setValue(source, arr, {shouldDirty: true});
+                context.setValue(field.name, arr, {shouldDirty: true});
               }}>
               Duplicate
             </Button>
