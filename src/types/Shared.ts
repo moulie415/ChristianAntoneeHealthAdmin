@@ -80,12 +80,12 @@ export interface StepSample {
 
 export interface ExerciseEvent {
   value: number;
-  time: Date;
+  time: Timestamp;
 }
 
 export interface PauseEvent {
   paused: boolean;
-  time: Date;
+  time: Timestamp;
 }
 
 export enum EquipmentItem {
@@ -171,15 +171,16 @@ export interface SavedWorkout {
   calories?: number;
   seconds: number;
   difficulty: number;
-  createdate: Date;
+  createdate: Timestamp;
   saved?: boolean;
   planWorkout?: PlanWorkout;
   averageHeartRate: number;
   heartRateSamples: Sample[];
+  calorieSamples: Sample[];
   exerciseEvents: ExerciseEvent[];
   pauseEvents: PauseEvent[];
-  startTime: Date;
-  endTime: Date;
+  startTime: Timestamp;
+  endTime: Timestamp;
   fitbitData: ActivitiesHeart[];
   planId: string;
 }
@@ -198,15 +199,16 @@ export interface SavedQuickRoutine {
   calories: number;
   seconds: number;
   difficulty: number;
-  createdate: Date;
+  createdate: Timestamp;
   quickRoutineId: string;
   saved?: boolean;
   averageHeartRate: number;
   heartRateSamples: Sample[];
+  calorieSamples: Sample[];
   exerciseEvents: ExerciseEvent[];
   pauseEvents: PauseEvent[];
-  startTime: Date;
-  endTime: Date;
+  startTime: Timestamp;
+  endTime: Timestamp;
   fitbitData: ActivitiesHeart[];
 }
 

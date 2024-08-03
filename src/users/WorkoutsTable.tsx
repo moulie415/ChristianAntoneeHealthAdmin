@@ -1,9 +1,5 @@
 import {
-  Box,
   Button,
-  CircularProgress,
-  Fade,
-  Modal,
   Paper,
   Table,
   TableBody,
@@ -13,30 +9,20 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
+import {useQuery} from '@tanstack/react-query';
 import {
   collection,
   getDocs,
   limitToLast,
   orderBy,
   query,
-  where,
 } from 'firebase/firestore';
 import moment from 'moment';
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 import {useRecordContext} from 'react-admin';
-import {toast} from 'react-toastify';
-import {
-  CartesianGrid,
-  Label,
-  Line,
-  LineChart,
-  ReferenceLine,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from 'recharts';
 import {db} from '../App';
+import {SavedQuickRoutine, SavedWorkout} from '../types/Shared';
+import WorkoutsModal from './WorkoutsModal';
 
 function pad(num: number) {
   return ('0' + num).slice(-2);
@@ -49,194 +35,88 @@ function hhmmss(secs: number) {
   return `${pad(hours)}:${pad(minutes)}:${pad(secs)}`;
 }
 
-const getWorkouts = async (uid: string): Promise<any[]> => {
+const getWorkouts = async (
+  uid: string,
+  type: 'savedWorkouts' | 'savedQuickRoutines',
+): Promise<(SavedWorkout | SavedQuickRoutine)[]> => {
   const q = query(
-    collection(db, 'users', uid, 'savedWorkouts'),
+    collection(db, 'users', uid, type),
     orderBy('createdate'),
-    limitToLast(50),
+    limitToLast(5),
   );
   const workouts = await getDocs(q);
   return workouts.docs
     .map(d => {
       return {...d.data(), id: d.id};
     })
-    .reverse();
+    .reverse() as (SavedWorkout | SavedQuickRoutine)[];
 };
 
-const getGarminSummary = async (userId: string, startTime: number) => {
-  const q = query(
-    collection(db, 'garminActivities'),
-    where('userId', '==', userId),
-    where(
-      'startTimeInSeconds',
-      '<',
-      moment.unix(startTime).add(30, 'minutes').unix(),
-    ),
-    where(
-      'startTimeInSeconds',
-      '>',
-      moment.unix(startTime).subtract(30, 'minutes').unix(),
-    ),
-  );
-  const summaries = await getDocs(q);
-  return summaries.docs?.[0]?.data();
-};
-
-const getGarminActivityDetails = async (activityId: string) => {
-  const q = query(
-    collection(db, 'garminActivityDetails'),
-    where('activityId', '==', activityId),
-  );
-
-  const details = await getDocs(q);
-  return details.docs?.[0]?.data();
-};
-
-const WorkoutsTable = () => {
+const WorkoutsTable: React.FC<{
+  type: 'savedWorkouts' | 'savedQuickRoutines';
+}> = ({type}) => {
   const record = useRecordContext();
-  const [workouts, setWorkouts] = useState<any[]>([]);
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const [loadingDetails, setLoadingDetails] = useState(false);
 
-  const [selectedActivity, setSelectedActivity] = useState('');
-  const [selectedWorkout, setSelectedWorkout] = useState<any>();
+  const [selectedWorkout, setSelectedWorkout] = useState<
+    SavedWorkout | SavedQuickRoutine
+  >();
 
-  const [activityDetailsObj, setActivityDetailsObj] = useState<{
-    [key: string]: any;
-  }>({});
-
-  useEffect(() => {
-    const checkWorkouts = async () => {
-      try {
-        if (record && record.uid) {
-          const workouts = await getWorkouts(record.uid);
-          setWorkouts(workouts);
-          if (record.garminUserId) {
-            const newWorkouts: any[] = [];
-            for (let i = 0; i < workouts.length; i++) {
-              const workout = workouts[i];
-              if (workout.startTime) {
-                const summary = await getGarminSummary(
-                  record.garminUserId,
-                  workout.startTime.seconds,
-                );
-
-                if (summary) {
-                  newWorkouts.push({
-                    ...workout,
-                    calories: `${summary.activeKilocalories} (Garmin)`,
-                    averageHeartRate: `${summary.averageHeartRateInBeatsPerMinute} (Garmin)`,
-                    maxHeartRate: `${summary.maxHeartRateInBeatsPerMinute}  (Garmin)`,
-                    activityId: summary.activityId,
-                    garminSummary: true,
-                  });
-                  continue;
-                }
-              }
-              newWorkouts.push(workout);
-            }
-            setWorkouts(newWorkouts);
-          }
-        }
-      } catch (e) {
-        toast.error('Error fetching workouts');
-      }
-    };
-
-    checkWorkouts();
-  }, [record]);
-
-  const getActivityDetails = async (activityId: string) => {
-    try {
-      setSelectedActivity(activityId);
-      if (activityDetailsObj[activityId]) return;
-      setLoadingDetails(true);
-      const details = await getGarminActivityDetails(activityId);
-      setActivityDetailsObj({...activityDetailsObj, [activityId]: details});
-    } catch (e) {
-      toast.error('Error fetching details');
-    }
-    setLoadingDetails(false);
-  };
-
-  const data = activityDetailsObj[selectedActivity];
-
-  const samples = data?.samples.reduce((acc: any, cur: any, index: number) => {
-    const next = data.samples[index + 1];
-    const event = selectedWorkout.exerciseEvents?.find(
-      (event: any) =>
-        next &&
-        event.time?.seconds > cur.startTimeInSeconds &&
-        event.time?.seconds < next?.startTimeInSeconds,
-    );
-    if (event) {
-      return [
-        ...acc,
-        cur,
-        {
-          heartRate: Math.round((cur.heartRate + next.heartRate) / 2),
-          startTimeInSeconds: event.time?.seconds,
-        },
-      ];
-    }
-    return [...acc, cur];
-  }, []);
+  const {isPending, data} = useQuery({
+    queryKey: [type, record?.uid],
+    queryFn: async () => {
+      const workouts = await getWorkouts(record?.uid, type);
+      return workouts;
+    },
+  });
 
   return (
     <>
       <Typography variant="h6" gutterBottom>
-        Completed workouts
+        {`Completed ${type === 'savedWorkouts' ? 'plan ' : ''}workouts`}
       </Typography>
-      <TableContainer style={{}} component={Paper}>
-        <Table sx={{minWidth: 700}} aria-label="customized table">
-          <TableHead>
-            <TableRow>
-              <TableCell>Date</TableCell>
-              <TableCell>Workout</TableCell>
-              <TableCell>Duration</TableCell>
-              <TableCell>Calories</TableCell>
-              <TableCell>RPE</TableCell>
-              <TableCell>Average heart rate (bpm)</TableCell>
-              <TableCell>Max heart rate (bpm)</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {workouts?.map(workout => {
-              return (
-                <TableRow key={workout.id}>
-                  <TableCell>
-                    {moment
-                      .unix(
-                        workout.startTime
-                          ? workout.startTime.seconds
-                          : workout.createdate.seconds,
-                      )
-                      .format('DD/MM/YYYY')}
-                  </TableCell>
-                  <TableCell>{workout?.planWorkout?.name}</TableCell>
-                  <TableCell>{hhmmss(workout.seconds)}</TableCell>
-                  <TableCell>
-                    {workout.calories?.toFixed
-                      ? workout.calories.toFixed(1)
-                      : workout.calories}
-                  </TableCell>
-                  <TableCell>{`${workout.difficulty}/10`}</TableCell>
-                  <TableCell>
-                    {workout.averageHeartRate ? workout.averageHeartRate : ''}
-                  </TableCell>
-                  <TableCell>
-                    {workout.maxHeartRate ? workout.maxHeartRate : ''}
-                  </TableCell>
-                  {workout.garminSummary && (
+      <div>
+        <TableContainer style={{}} component={Paper}>
+          <Table
+            sx={{
+              minWidth: 700,
+            }}
+            aria-label="customized table">
+            <TableHead>
+              <TableRow>
+                <TableCell>Date</TableCell>
+                {type === 'savedWorkouts' && <TableCell>Name</TableCell>}
+                <TableCell>RPE</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {data?.map(workout => {
+                return (
+                  <TableRow key={workout.id}>
+                    <TableCell>
+                      {moment
+                        .unix(
+                          workout.startTime
+                            ? workout.startTime.seconds
+                            : workout.createdate.seconds,
+                        )
+                        .format('DD/MM/YY')}
+                    </TableCell>
+                    {'planWorkout' in workout && (
+                      <TableCell>{workout?.planWorkout?.name}</TableCell>
+                    )}
+                    <TableCell>{`${workout.difficulty}/10`}</TableCell>
+
                     <TableCell>
                       <Button
                         onClick={async () => {
                           handleOpen();
-                          getActivityDetails(workout.activityId);
-                          setSelectedWorkout(workout);
+                          if (workout) {
+                            setSelectedWorkout(workout);
+                          }
                         }}
                         variant="contained"
                         color="primary"
@@ -244,88 +124,20 @@ const WorkoutsTable = () => {
                         View breakdown
                       </Button>
                     </TableCell>
-                  )}
-                </TableRow>
-              );
-            })}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <Modal
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
+                  </TableRow>
+                );
+              })}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </div>
+      <WorkoutsModal
+        handleClose={handleClose}
         open={open}
-        onClose={handleClose}
-        closeAfterTransition
-        // slots={{backdrop: Backdrop}}
-        // slotProps={{
-        //   backdrop: {
-        //     timeout: 500,
-        //   },
-        // }}
-      >
-        <Fade in={open}>
-          <Box
-            sx={{
-              position: 'absolute',
-              top: '50%',
-              left: '50%',
-              transform: 'translate(-50%, -50%)',
-              width: 1280,
-              bgcolor: 'background.paper',
-              boxShadow: 24,
-              borderRadius: 5,
-              p: 4,
-            }}>
-            {loadingDetails && !data?.samples ? (
-              <CircularProgress />
-            ) : (
-              <ResponsiveContainer height={720}>
-                <LineChart margin={{bottom: 20}} data={samples}>
-                  <YAxis>
-                    <Label value="Heart rate (bpm)" angle={270} dx={-20} />
-                  </YAxis>
-                  <XAxis
-                    minTickGap={120}
-                    tickFormatter={unixTime => {
-                      return moment.unix(unixTime).format('HH:mm');
-                    }}
-                    dataKey="startTimeInSeconds">
-                    <Label value="Time" dy={20} />
-                  </XAxis>
-                  <Line
-                    type="monotone"
-                    dataKey="heartRate"
-                    stroke="red"
-                    dot={false}
-                  />
-
-                  <Tooltip
-                    formatter={value => [`${value} bpm`, 'Heart rate']}
-                    labelFormatter={label => {
-                      return moment.unix(label).format('HH:mm');
-                    }}
-                  />
-                  <CartesianGrid stroke="#ccc" />
-                  {selectedWorkout?.exerciseEvents.map((event: any) => {
-                    return (
-                      <ReferenceLine
-                        stroke="blue"
-                        key={`${event?.time.seconds} ${event.value}`}
-                        x={event?.time?.seconds}>
-                        <Label
-                          value={event.value}
-                          position="insideBottomRight"
-                        />
-                      </ReferenceLine>
-                    );
-                  })}
-                </LineChart>
-              </ResponsiveContainer>
-            )}
-          </Box>
-        </Fade>
-      </Modal>
+        selectedWorkout={selectedWorkout}
+        data={data}
+        isPending={isPending}
+      />
     </>
   );
 };

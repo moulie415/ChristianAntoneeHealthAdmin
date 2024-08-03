@@ -499,7 +499,8 @@ const MyForm = (props: ResourceProps) => {
                 </Box>
               </Box>
             </Box>
-            <WorkoutsTable />
+            <WorkoutsTable type="savedWorkouts" />
+            <WorkoutsTable type="savedQuickRoutines" />
 
             <Box display={{xs: 'block', sm: 'flex'}}>
               <Box flex={1} ml={{xs: 0, sm: '0.5em'}}>
