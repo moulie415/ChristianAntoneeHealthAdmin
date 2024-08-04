@@ -17,21 +17,26 @@ import {
   orderBy,
   query,
 } from 'firebase/firestore';
+import _ from 'lodash';
 import moment from 'moment';
+import {useState} from 'react';
 import {useRecordContext} from 'react-admin';
 import {useNavigate} from 'react-router-dom';
 import {db} from '../App';
 import {getQuickRoutines} from '../helpers/api';
 import {SavedQuickRoutine, SavedWorkout} from '../types/Shared';
 
+const FETCH_AMOUNT = 5;
+
 const getWorkouts = async (
   uid: string,
   type: 'savedWorkouts' | 'savedQuickRoutines',
+  page: number,
 ): Promise<(SavedWorkout | SavedQuickRoutine)[]> => {
   const q = query(
     collection(db, 'users', uid, type),
     orderBy('createdate'),
-    limitToLast(5),
+    limitToLast(FETCH_AMOUNT * page),
   );
   const workouts = await getDocs(q);
   return workouts.docs
@@ -46,13 +51,19 @@ const WorkoutsTable: React.FC<{
 }> = ({type}) => {
   const record = useRecordContext();
 
+  const [page, setPage] = useState(1);
+
   const {data} = useQuery({
-    queryKey: [type, record?.uid],
+    queryKey: [type, record?.uid, page],
     queryFn: async () => {
-      const workouts = await getWorkouts(record?.uid, type);
+      const workouts = await getWorkouts(record?.uid, type, page);
       return workouts;
     },
   });
+
+  const [minDate, setMinDate] = useState(new Date());
+
+  const currentMinDate = _.minBy(data, 'createdate')?.createdate;
 
   const {data: quickRoutines} = useQuery({
     queryKey: ['quickRoutines'],
@@ -125,6 +136,18 @@ const WorkoutsTable: React.FC<{
             </TableBody>
           </Table>
         </TableContainer>
+        {data &&
+          data.length > FETCH_AMOUNT - 1 &&
+          currentMinDate &&
+          moment(minDate).unix() !== currentMinDate.seconds && (
+            <Button
+              onClick={() => {
+                setMinDate(currentMinDate.toDate());
+                setPage(page + 1);
+              }}>
+              Load more
+            </Button>
+          )}
       </div>
     </>
   );
