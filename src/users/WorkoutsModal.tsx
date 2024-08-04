@@ -28,8 +28,6 @@ const WorkoutsModal: React.FC<{
   const {heartRateSamples, calorieSamples, exerciseEvents, pauseEvents} =
     selectedWorkout;
 
-  // Convert heart rate samples to seconds
-
   const heartRateSamplesInSeconds = heartRateSamples.reduce(
     (
       acc: {value: number; startDate: number; endDate: number}[],
@@ -44,34 +42,39 @@ const WorkoutsModal: React.FC<{
           event.time?.seconds < moment(next.startDate).unix()
         );
       });
+      const pauseEvent = pauseEvents?.find(event => {
+        return (
+          next &&
+          event.time?.seconds > moment(cur.startDate).unix() &&
+          event.time?.seconds < moment(next.startDate).unix()
+        );
+      });
+      const current = {
+        ...cur,
+        startDate: moment(cur.startDate).unix(),
+        endDate: moment(cur.endDate).unix(),
+      };
+      const newArr = [...acc, current];
+
       if (exerciseEvent) {
-        return [
-          ...acc,
-          {
-            ...cur,
-            startDate: moment(cur.startDate).unix(),
-            endDate: moment(cur.endDate).unix(),
-          },
-          {
-            value: Math.round((cur.value + next.value) / 2),
-            startDate: exerciseEvent.time.seconds,
-            endDate: exerciseEvent.time.seconds,
-          },
-        ];
+        newArr.push({
+          value: Math.round((cur.value + next.value) / 2),
+          startDate: exerciseEvent.time.seconds,
+          endDate: exerciseEvent.time.seconds,
+        });
       }
-      return [
-        ...acc,
-        {
-          ...cur,
-          startDate: moment(cur.startDate).unix(),
-          endDate: moment(cur.endDate).unix(),
-        },
-      ];
+      if (pauseEvent) {
+        newArr.push({
+          value: Math.round((cur.value + next.value) / 2),
+          startDate: pauseEvent.time.seconds,
+          endDate: pauseEvent.time.seconds,
+        });
+      }
+      return newArr;
     },
     [],
   );
 
-  // Calculate cumulative calories
   let cumulativeCalories = 0;
   const calorieSamplesInSeconds = calorieSamples.map(sample => {
     cumulativeCalories += sample.value;
@@ -184,28 +187,25 @@ const WorkoutsModal: React.FC<{
                     <ReferenceLine
                       xAxisId="left"
                       yAxisId="left"
-                      alwaysShow
+                      // cursor={'planWorkout' in selectedWorkout ? selectedWorkout.workout[event.value]}
                       key={`exercise-${event.time.seconds}`}
                       x={event.time.seconds}
-                      stroke="blue">
-                      <Label value={event.value} position="insideBottomRight" />
-                    </ReferenceLine>
+                      stroke={colors.appBlue}
+                    />
                   );
                 })}
-                {/* {pauseEvents.map(event => {
-                  const eventTimeInSeconds = moment(event.time.toDate()).unix(); // Convert Firestore timestamp to Unix time in seconds
+                {pauseEvents.map(event => {
                   return (
                     <ReferenceLine
-                      key={`pause-${eventTimeInSeconds}`}
-                      x={eventTimeInSeconds}
-                      stroke="orange">
-                      <Label
-                        value={`Pause: ${event.paused ? 'Paused' : 'Resumed'}`}
-                        position="insideBottomRight"
-                      />
-                    </ReferenceLine>
+                      xAxisId="left"
+                      yAxisId="left"
+                      key={`pause-${event.time.seconds}`}
+                      x={event.time.seconds}
+                      cursor={`Workout: ${event.paused ? 'Paused' : 'Resumed'}`}
+                      stroke={colors.appGreen}
+                    />
                   );
-                })} */}
+                })}
               </LineChart>
             </ResponsiveContainer>
           )}

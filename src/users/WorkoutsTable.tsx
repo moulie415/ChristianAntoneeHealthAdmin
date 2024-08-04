@@ -86,11 +86,7 @@ const WorkoutsTable: React.FC<{
       </Typography>
       <div>
         <TableContainer style={{}} component={Paper}>
-          <Table
-            sx={{
-              minWidth: 700,
-            }}
-            aria-label="customized table">
+          <Table aria-label="customized table">
             <TableHead>
               <TableRow>
                 <TableCell>Date</TableCell>

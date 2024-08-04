@@ -500,6 +500,7 @@ const MyForm = (props: ResourceProps) => {
               </Box>
             </Box>
             <WorkoutsTable type="savedWorkouts" />
+            <div style={{marginTop: 10}} />
             <WorkoutsTable type="savedQuickRoutines" />
 
             <Box display={{xs: 'block', sm: 'flex'}}>
