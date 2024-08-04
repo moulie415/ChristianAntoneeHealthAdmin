@@ -21,6 +21,7 @@ import moment from 'moment';
 import {useState} from 'react';
 import {useRecordContext} from 'react-admin';
 import {db} from '../App';
+import {getQuickRoutines} from '../helpers/api';
 import {SavedQuickRoutine, SavedWorkout} from '../types/Shared';
 import WorkoutsModal from './WorkoutsModal';
 
@@ -73,6 +74,11 @@ const WorkoutsTable: React.FC<{
     },
   });
 
+  const {data: quickRoutines} = useQuery({
+    queryKey: ['quickRoutines'],
+    queryFn: getQuickRoutines,
+  });
+
   return (
     <>
       <Typography variant="h6" gutterBottom>
@@ -88,7 +94,7 @@ const WorkoutsTable: React.FC<{
             <TableHead>
               <TableRow>
                 <TableCell>Date</TableCell>
-                {type === 'savedWorkouts' && <TableCell>Name</TableCell>}
+                <TableCell>Name</TableCell>
                 <TableCell>RPE</TableCell>
               </TableRow>
             </TableHead>
@@ -105,9 +111,15 @@ const WorkoutsTable: React.FC<{
                         )
                         .format('DD/MM/YY')}
                     </TableCell>
-                    {'planWorkout' in workout && (
-                      <TableCell>{workout?.planWorkout?.name}</TableCell>
-                    )}
+
+                    <TableCell style={{maxWidth: 100}}>
+                      {'planWorkout' in workout
+                        ? workout?.planWorkout?.name
+                        : 'quickRoutineId' in workout
+                        ? quickRoutines?.[workout.quickRoutineId]?.name
+                        : ''}
+                    </TableCell>
+
                     <TableCell>{`${workout.difficulty}/10`}</TableCell>
 
                     <TableCell>
@@ -135,7 +147,6 @@ const WorkoutsTable: React.FC<{
         handleClose={handleClose}
         open={open}
         selectedWorkout={selectedWorkout}
-        data={data}
         isPending={isPending}
       />
     </>
