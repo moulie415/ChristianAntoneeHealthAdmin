@@ -165,6 +165,8 @@ export interface CalendarType {
   allowedAvailabilities: string[];
 }
 
+export type CalorieCalculationType = 'sample' | 'heartRate' | 'estimate';
+
 export interface SavedWorkout {
   id?: string;
   workout: string[];
@@ -183,6 +185,7 @@ export interface SavedWorkout {
   endTime: Timestamp;
   fitbitData: ActivitiesHeart[];
   planId: string;
+  calorieCalculationType: CalorieCalculationType;
 }
 
 export interface SavedTest {
@@ -210,6 +213,7 @@ export interface SavedQuickRoutine {
   startTime: Timestamp;
   endTime: Timestamp;
   fitbitData: ActivitiesHeart[];
+  calorieCalculationType: CalorieCalculationType;
 }
 
 export type MessageType = 'text' | 'image' | 'video' | 'audio' | 'document';

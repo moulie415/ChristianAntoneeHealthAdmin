@@ -18,23 +18,11 @@ import {
   query,
 } from 'firebase/firestore';
 import moment from 'moment';
-import {useState} from 'react';
 import {useRecordContext} from 'react-admin';
+import {useNavigate} from 'react-router-dom';
 import {db} from '../App';
 import {getQuickRoutines} from '../helpers/api';
 import {SavedQuickRoutine, SavedWorkout} from '../types/Shared';
-import WorkoutsModal from './WorkoutsModal';
-
-function pad(num: number) {
-  return ('0' + num).slice(-2);
-}
-function hhmmss(secs: number) {
-  let minutes = Math.floor(secs / 60);
-  secs = secs % 60;
-  const hours = Math.floor(minutes / 60);
-  minutes = minutes % 60;
-  return `${pad(hours)}:${pad(minutes)}:${pad(secs)}`;
-}
 
 const getWorkouts = async (
   uid: string,
@@ -58,14 +46,6 @@ const WorkoutsTable: React.FC<{
 }> = ({type}) => {
   const record = useRecordContext();
 
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-
-  const [selectedWorkout, setSelectedWorkout] = useState<
-    SavedWorkout | SavedQuickRoutine
-  >();
-
   const {isPending, data} = useQuery({
     queryKey: [type, record?.uid],
     queryFn: async () => {
@@ -78,6 +58,8 @@ const WorkoutsTable: React.FC<{
     queryKey: ['quickRoutines'],
     queryFn: getQuickRoutines,
   });
+
+  const navigate = useNavigate();
 
   return (
     <>
@@ -120,11 +102,16 @@ const WorkoutsTable: React.FC<{
 
                     <TableCell>
                       <Button
-                        onClick={async () => {
-                          handleOpen();
-                          if (workout) {
-                            setSelectedWorkout(workout);
-                          }
+                        onClick={() => {
+                          navigate(
+                            `/users/${record?.uid}/workout-breakdown/${
+                              workout.id
+                            }${
+                              type === 'savedWorkouts'
+                                ? '?planWorkout=true'
+                                : ''
+                            }`,
+                          );
                         }}
                         variant="contained"
                         color="primary"
@@ -139,12 +126,6 @@ const WorkoutsTable: React.FC<{
           </Table>
         </TableContainer>
       </div>
-      <WorkoutsModal
-        handleClose={handleClose}
-        open={open}
-        selectedWorkout={selectedWorkout}
-        isPending={isPending}
-      />
     </>
   );
 };
