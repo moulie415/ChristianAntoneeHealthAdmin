@@ -4,16 +4,16 @@ import React from 'react';
 import {
   CartesianGrid,
   Label,
-  Legend,
   Line,
   LineChart,
+  ReferenceLine,
   ResponsiveContainer,
   Tooltip,
   XAxis,
   YAxis,
 } from 'recharts';
-import {SavedQuickRoutine, SavedWorkout} from '../types/Shared';
 import colors from '../colors';
+import {SavedQuickRoutine, SavedWorkout} from '../types/Shared';
 
 const WorkoutsModal: React.FC<{
   handleClose: () => void;
@@ -29,11 +29,47 @@ const WorkoutsModal: React.FC<{
     selectedWorkout;
 
   // Convert heart rate samples to seconds
-  const heartRateSamplesInSeconds = heartRateSamples.map(sample => ({
-    ...sample,
-    startDate: moment(sample.startDate).unix(),
-    endDate: moment(sample.startDate).unix(),
-  }));
+
+  const heartRateSamplesInSeconds = heartRateSamples.reduce(
+    (
+      acc: {value: number; startDate: number; endDate: number}[],
+      cur,
+      index,
+    ) => {
+      const next = heartRateSamples[index + 1];
+      const exerciseEvent = exerciseEvents?.find(event => {
+        return (
+          next &&
+          event.time?.seconds > moment(cur.startDate).unix() &&
+          event.time?.seconds < moment(next.startDate).unix()
+        );
+      });
+      if (exerciseEvent) {
+        return [
+          ...acc,
+          {
+            ...cur,
+            startDate: moment(cur.startDate).unix(),
+            endDate: moment(cur.endDate).unix(),
+          },
+          {
+            value: Math.round((cur.value + next.value) / 2),
+            startDate: exerciseEvent.time.seconds,
+            endDate: exerciseEvent.time.seconds,
+          },
+        ];
+      }
+      return [
+        ...acc,
+        {
+          ...cur,
+          startDate: moment(cur.startDate).unix(),
+          endDate: moment(cur.endDate).unix(),
+        },
+      ];
+    },
+    [],
+  );
 
   // Calculate cumulative calories
   let cumulativeCalories = 0;
@@ -101,6 +137,11 @@ const WorkoutsModal: React.FC<{
                   <Label value="Time" dy={20} />
                 </XAxis>
                 <XAxis
+                  domain={[
+                    selectedWorkout.startTime.seconds,
+                    selectedWorkout.endTime.seconds,
+                  ]}
+                  type="number"
                   xAxisId="left"
                   minTickGap={120}
                   tickFormatter={unixTime =>
@@ -138,21 +179,20 @@ const WorkoutsModal: React.FC<{
                   }
                 />
                 <CartesianGrid stroke="#ccc" />
-                {/* {exerciseEvents.map(event => {
-                  const eventTimeInSeconds = moment(event.time.toDate()).unix(); // Convert Firestore timestamp to Unix time in seconds
+                {exerciseEvents.map(event => {
                   return (
                     <ReferenceLine
-                      key={`exercise-${eventTimeInSeconds}`}
-                      x={eventTimeInSeconds}
+                      xAxisId="left"
+                      yAxisId="left"
+                      alwaysShow
+                      key={`exercise-${event.time.seconds}`}
+                      x={event.time.seconds}
                       stroke="blue">
-                      <Label
-                        value={`Exercise: ${event.value}`}
-                        position="insideBottomRight"
-                      />
+                      <Label value={event.value} position="insideBottomRight" />
                     </ReferenceLine>
                   );
                 })}
-                {pauseEvents.map(event => {
+                {/* {pauseEvents.map(event => {
                   const eventTimeInSeconds = moment(event.time.toDate()).unix(); // Convert Firestore timestamp to Unix time in seconds
                   return (
                     <ReferenceLine
