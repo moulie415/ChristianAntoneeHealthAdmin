@@ -46,7 +46,7 @@ const WorkoutsTable: React.FC<{
 }> = ({type}) => {
   const record = useRecordContext();
 
-  const {isPending, data} = useQuery({
+  const {data} = useQuery({
     queryKey: [type, record?.uid],
     queryFn: async () => {
       const workouts = await getWorkouts(record?.uid, type);

@@ -6,6 +6,7 @@ import {CircularProgress, Typography} from '@mui/material';
 import {useQuery} from '@tanstack/react-query';
 import {doc, getDoc} from 'firebase/firestore';
 import moment from 'moment';
+import {Fragment} from 'react';
 import {useParams, useSearchParams} from 'react-router-dom';
 import {
   CartesianGrid,
@@ -33,6 +34,27 @@ function hhmmss(secs: number) {
   minutes = minutes % 60;
   return `${pad(hours)}:${pad(minutes)}:${pad(secs)}`;
 }
+
+interface LegendItem {
+  color: string;
+  label: string;
+}
+
+const legendItems: LegendItem[] = [
+  {
+    color: colors.appRed,
+    label: 'Heart rate',
+  },
+  {
+    color: colors.secondaryDark,
+    label: 'Calories',
+  },
+  {
+    color: colors.appBlue,
+    label: 'Exercise change',
+  },
+  {color: colors.appGreen, label: 'Pause/Unpause events'},
+];
 
 const getWorkout = async (
   uid: string,
@@ -136,7 +158,7 @@ const WorkoutBreakdown = () => {
 
   return (
     <div style={{}}>
-      <Typography variant="h5" align="center">
+      <Typography style={{paddingTop: 10}} variant="h5" align="center">
         {`${
           'planWorkout' in workout
             ? workout?.planWorkout?.name
@@ -177,7 +199,7 @@ const WorkoutBreakdown = () => {
         <Typography>{hhmmss(workout.seconds)}</Typography>
       </div>
 
-      <ResponsiveContainer height={720}>
+      <ResponsiveContainer height={600}>
         <LineChart style={{padding: 10}} margin={{bottom: 20}}>
           <YAxis
             yAxisId="left"
@@ -249,8 +271,9 @@ const WorkoutBreakdown = () => {
                 // cursor={'planWorkout' in workout ? workout.workout[event.value]}
                 key={`exercise-${event.time.seconds}`}
                 x={event.time.seconds}
-                stroke={colors.appBlue}
-              />
+                stroke={colors.appBlue}>
+                <Label value={event.value} position="insideBottomRight" />
+              </ReferenceLine>
             );
           })}
           {pauseEvents?.map(event => {
@@ -267,6 +290,28 @@ const WorkoutBreakdown = () => {
           })}
         </LineChart>
       </ResponsiveContainer>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          flexDirection: 'row',
+          alignItems: 'center',
+          marginBottom: 10,
+        }}>
+        {legendItems.map(item => (
+          <Fragment key={item.label}>
+            <div
+              style={{
+                width: 10,
+                height: 10,
+                backgroundColor: item.color,
+              }}
+            />
+
+            <Typography style={{margin: '0 10px'}}>{item.label}</Typography>
+          </Fragment>
+        ))}
+      </div>
     </div>
   );
 };
